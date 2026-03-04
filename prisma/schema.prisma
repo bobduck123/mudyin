@@ -1,0 +1,404 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Authentication & Users ─────────────────────────────────────────────────
+model User {
+  id            String     @id @default(cuid())
+  email         String     @unique
+  password      String?    // NextAuth handles this, optional for OAuth
+  name          String
+  dateOfBirth   DateTime
+  ageGroup      String     // "13-17", "18-25", "26+", "<13"
+  phoneNumber   String?
+
+  // Relations
+  profile       UserProfile?
+  verification  MemberVerification?
+  photos        GalleryPhoto[]
+  posts         CommunityPost[]
+  comments      Comment[]
+  likes         Like[]
+  notifications Notification[]
+  collections   GalleryCollection[]
+  programEnrollments UserProgramEnrollment[]
+
+  // Self-relations for followers/following
+  followers     User[]     @relation("UserFollows")
+  following     User[]     @relation("UserFollows")
+
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+model MemberVerification {
+  id                          String     @id @default(cuid())
+  userId                      String     @unique
+  user                        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  verificationStatus          String     @default("pending") // "verified", "pending_parental", "rejected"
+  verificationToken           String?    @unique
+  verificationTokenExpiresAt  DateTime?
+  verifiedAt                  DateTime?
+
+  parentalConsentEmail        String?
+  parentalConsentToken        String?    @unique
+  parentalConsentTokenExpiresAt DateTime?
+  parentalConsentVerified     Boolean    @default(false)
+  parentalConsentVerifiedAt   DateTime?
+
+  createdAt                   DateTime   @default(now())
+  updatedAt                   DateTime   @updatedAt
+}
+
+model UserProfile {
+  id              String     @id @default(cuid())
+  userId          String     @unique
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  bio             String?
+  avatar          String?    // Cloudinary URL
+  program         String?    // "YSMP", "Thrive Tribe", "Healing Centre"
+  badges          String[]   @default([]) // ["100_days_ysmp", "community_contributor"]
+  privacyLevel    String     @default("public") // "public", "members_only", "private"
+
+  updatedAt       DateTime   @updatedAt
+}
+
+// ─── Gallery ────────────────────────────────────────────────────────────────
+model GalleryPhoto {
+  id              String     @id @default(cuid())
+  uploaderId      String
+  uploader        User       @relation(fields: [uploaderId], references: [id], onDelete: Cascade)
+
+  title           String
+  description     String?
+  imageUrl        String     // Cloudinary URL
+  imageAlt        String     // Required for accessibility
+  tags            String[]   @default([])
+  program         String?    // "YSMP", "Thrive Tribe", "Healing Centre"
+  event           String?    // "YSMP Open Day 2026"
+
+  permissions     String     @default("public") // "public", "members_only", "verified_members_only"
+  hasCopyright    Boolean    @default(true) // Affirms ownership/permission
+  flaggedForReview Boolean   @default(false)
+
+  likes           Like[]
+  comments        Comment[]
+  collections     GalleryCollection[] @relation("PhotoCollections")
+
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([uploaderId])
+  @@index([program])
+  @@index([event])
+  @@index([createdAt])
+  @@index([flaggedForReview])
+}
+
+// ─── Community ──────────────────────────────────────────────────────────────
+model CommunityPost {
+  id              String     @id @default(cuid())
+  authorId        String
+  author          User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  content         String
+  images          String[]   @default([]) // Array of Cloudinary URLs
+  tags            String[]   @default([])
+  program         String?    // "YSMP", "Thrive Tribe"
+
+  visibility      String     @default("public") // "public", "members_only"
+  isPinned        Boolean    @default(false)
+  isFeatured      Boolean    @default(false)
+  flaggedForReview Boolean   @default(false)
+
+  isStory         Boolean    @default(false)  // Sprint 6: story flag
+  storyFrames     StoryFrame[] @relation("StoryFrames")
+  celebrationData CelebrationPost?
+
+  likes           Like[]
+  comments        Comment[]
+
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([authorId])
+  @@index([program])
+  @@index([createdAt])
+  @@index([isPinned])
+  @@index([isFeatured])
+  @@index([isStory])
+}
+
+model Comment {
+  id              String     @id @default(cuid())
+  authorId        String
+  author          User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  postId          String?
+  post            CommunityPost? @relation(fields: [postId], references: [id], onDelete: Cascade)
+  photoId         String?
+  photo           GalleryPhoto? @relation(fields: [photoId], references: [id], onDelete: Cascade)
+
+  content         String
+  parentCommentId String?    // For threaded comments
+
+  flaggedForReview Boolean   @default(false)
+
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model Like {
+  id              String     @id @default(cuid())
+  userId          String
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  postId          String?
+  post            CommunityPost? @relation(fields: [postId], references: [id], onDelete: Cascade)
+  photoId         String?
+  photo           GalleryPhoto? @relation(fields: [photoId], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime   @default(now())
+
+  @@unique([userId, postId, photoId])
+}
+
+// ─── Gallery Collections ────────────────────────────────────────────────────
+model GalleryCollection {
+  id              String     @id @default(cuid())
+  name            String
+  description     String     @default("")
+  createdById     String
+  createdBy       User       @relation(fields: [createdById], references: [id], onDelete: Cascade)
+
+  photos          GalleryPhoto[] @relation("PhotoCollections")
+
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+// ─── Notifications ──────────────────────────────────────────────────────────
+model Notification {
+  id              String     @id @default(cuid())
+  userId          String
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type            String     // "like", "comment", "follow", "mention"
+  title           String
+  message         String
+  relatedUserId   String?    // Who triggered the notification
+  photoId         String?    // Related photo ID
+  postId          String?    // Related post ID
+  commentId       String?    // Related comment ID
+
+  isRead          Boolean    @default(false)
+  readAt          DateTime?
+
+  createdAt       DateTime   @default(now())
+
+  @@index([userId, createdAt])
+  @@index([userId, isRead])
+}
+
+// ─── Moderation & Safety (Sprint 7) ─────────────────────────────────────────
+model FlaggedContent {
+  id              String     @id @default(cuid())
+  contentType     String     // "photo", "post", "comment"
+  contentId       String
+
+  reason          String     // "inappropriate", "harmful", "copyright", "spam", "self-harm"
+  description     String?
+  flaggedBy       String?    // userId if user-reported, "system" if auto-flagged
+
+  status          String     @default("pending") // "pending", "reviewed", "dismissed", "removed", "appealed"
+  priority        String     @default("medium") // "low", "medium", "high", "critical"
+  severity        Int        @default(50) // 0-100 severity score
+
+  reviewedBy      String?    // Moderator userId
+  reviewedAt      DateTime?
+  reviewNotes     String?
+
+  actionTaken     String?    // "none", "warn", "remove_content", "ban_user", "temp_ban"
+  appealedAt      DateTime?
+  appealNotes     String?
+
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([status])
+  @@index([priority])
+  @@index([severity])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id              String     @id @default(cuid())
+  userId          String?
+  action          String     // "create_post", "flag_content", "ban_user", "verify_user", "appeal_ban", "review_content"
+  details         Json?      // Flexible details object
+  ipAddress       String?
+  userAgent       String?
+
+  createdAt       DateTime   @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+// ─── Ban/Block List (Sprint 7 Enhanced) ─────────────────────────────────────
+model BannedUser {
+  id              String     @id @default(cuid())
+  userId          String     @unique
+
+  reason          String
+  severity        String     @default("temporary") // "warning", "temporary", "permanent"
+  bannedBy        String?    // Moderator userId
+
+  bannedAt        DateTime   @default(now())
+  unbanAt         DateTime?  // NULL = permanent ban
+
+  appealedAt      DateTime?
+  appealStatus    String?    // "pending", "approved", "denied"
+  appealNotes     String?
+
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([severity])
+  @@index([appealStatus])
+}
+
+// ─── Crisis Resources (Sprint 7) ─────────────────────────────────────────────
+model CrisisResource {
+  id              String     @id @default(cuid())
+  name            String     // "Lifeline", "Kids Helpline", etc.
+  description     String?
+  phone           String?
+  sms             String?
+  web             String?
+  email           String?
+  region          String?    // "Australia", "NSW", etc.
+  available24hrs  Boolean    @default(true)
+  languages       String[]   @default([])
+  supportTypes    String[]   // ["mental-health", "self-harm", "suicide", "abuse", "domestic-violence"]
+
+  isActive        Boolean    @default(true)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([isActive])
+  @@index([region])
+}
+
+// ─── Moderator Roles (Sprint 7) ──────────────────────────────────────────────
+model ModeratorRole {
+  id              String     @id @default(cuid())
+  userId          String     @unique
+
+  role            String     // "moderator", "admin", "senior_moderator"
+  permissions     String[]   @default([]) // ["review_content", "ban_users", "view_logs", "manage_appeals"]
+
+  assignedBy      String?    // Admin who assigned role
+  assignedAt      DateTime   @default(now())
+  revokedAt       DateTime?
+
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([role])
+}
+
+// ─── User Reports (Sprint 7) ─────────────────────────────────────────────────
+model UserReport {
+  id              String     @id @default(cuid())
+  reportedUserId  String
+  reportedBy      String?    // userId if user-reported, "system" if automated
+
+  reason          String     // "harassment", "scam", "impersonation", "spam", "abuse"
+  description     String?
+  evidence        String[]   // URLs or attachment links
+
+  status          String     @default("pending") // "pending", "investigating", "resolved", "dismissed"
+  resolution      String?    // How the report was resolved
+
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([reportedUserId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ─── Program Spaces & Celebrations (Sprint 6) ───────────────────────────────
+model UserProgramEnrollment {
+  id              String     @id @default(cuid())
+  userId          String
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  program         String     // "YSMP", "Thrive Tribe", "Healing Centre"
+  enrolledAt      DateTime   @default(now())
+
+  @@unique([userId, program])
+  @@index([userId])
+  @@index([program])
+  @@index([enrolledAt])
+}
+
+model CelebrationMilestone {
+  id              String     @id @default(cuid())
+  program         String     // "YSMP", "Thrive Tribe", "Healing Centre"
+  daysRequired    Int        // 50, 100, 365
+
+  badgeId         String     // References AVAILABLE_BADGES key
+  celebrationTitle String    // "100 Days Strong!", "One Year Celebration!"
+  celebrationTemplate String  // Message template with {name}, {program}, {days}
+
+  createdAt       DateTime   @default(now())
+
+  @@unique([program, daysRequired])
+  @@index([program])
+}
+
+model CelebrationPost {
+  id              String     @id @default(cuid())
+  postId          String     @unique
+  post            CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  userId          String
+  milestoneId     String
+
+  isAutoGenerated Boolean    @default(true)
+  createdAt       DateTime   @default(now())
+
+  @@index([userId])
+  @@index([postId])
+}
+
+// ─── Stories (Sprint 6) ──────────────────────────────────────────────────────
+model StoryFrame {
+  id              String     @id @default(cuid())
+  storyId         String
+  story           CommunityPost @relation("StoryFrames", fields: [storyId], references: [id], onDelete: Cascade)
+
+  imageUrl        String     // Cloudinary URL
+  caption         String?    // Frame-level caption
+  duration        Int        @default(5) // seconds per frame
+  frameOrder      Int        // Order in story (1, 2, 3...)
+
+  createdAt       DateTime   @default(now())
+
+  @@index([storyId])
+}

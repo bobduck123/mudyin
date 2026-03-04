@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start:*)",
+      "Bash(taskkill:*)",
+      "Bash(pkill:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(ls:*)",
+      "Bash(npx prisma migrate dev:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx prisma generate:*)",
+      "Bash(npm run dev:*)",
+      "Bash(python3:*)",
+      "Bash(cut:*)",
+      "Bash(echo:*)",
+      "Bash(node -e \"\nconst { execSync } = require\\(''child_process''\\);\ntry {\n  const result = execSync\\(''npx tsc --noEmit'', { encoding: ''utf8'', stdio: ''pipe'' }\\);\n  console.log\\(''STDOUT:'', result\\);\n  console.log\\(''SUCCESS''\\);\n} catch\\(e\\) {\n  console.log\\(''STDOUT:'', e.stdout\\);\n  console.log\\(''STDERR:'', e.stderr\\);\n  console.log\\(''EXIT CODE:'', e.status\\);\n}\n\")",
+      "Bash(node -e \"\nconst { execSync } = require\\(''child_process''\\);\ntry {\n  execSync\\(''npx tsc --noEmit'', { encoding: ''utf8'', stdio: ''pipe'' }\\);\n  console.log\\(''EXIT CODE: 0 - No TypeScript errors!''\\);\n} catch\\(e\\) {\n  console.log\\(''EXIT CODE:'', e.status\\);\n  console.log\\(''ERRORS:'', e.stdout || e.stderr\\);\n}\n\")",
+      "Bash(npm run lint:*)",
+      "Bash(npx next lint)",
+      "Bash(npx next lint:*)",
+      "Bash(npx eslint:*)",
+      "Bash(findstr:*)",
+      "Bash(python -c:*)",
+      "Bash(npx next build:*)",
+      "Bash(node_modules/.bin/next build:*)",
+      "Bash(node_modules/.bin/tsc:*)",
+      "Bash(node -e \"\nconst { execSync } = require\\(''child_process''\\);\ntry {\n  const result = execSync\\(''node_modules/.bin/tsc --noEmit'', { cwd: process.cwd\\(\\), encoding: ''utf8'', stdio: [''pipe'',''pipe'',''pipe''] }\\);\n  console.log\\(''stdout:'', result\\);\n} catch\\(e\\) {\n  console.log\\(''stderr:'', e.stderr\\);\n  console.log\\(''stdout:'', e.stdout\\);\n  console.log\\(''status:'', e.status\\);\n}\n\")",
+      "Bash(node -e \"\nconst { execSync } = require\\(''child_process''\\);\ntry {\n  const result = execSync\\(''npx tsc --noEmit'', { cwd: process.cwd\\(\\), encoding: ''utf8'', stdio: [''pipe'',''pipe'',''pipe''] }\\);\n  console.log\\(''stdout:'', result\\);\n} catch\\(e\\) {\n  console.log\\(''stderr:'', e.stderr\\);\n  console.log\\(''stdout:'', e.stdout\\);\n  console.log\\(''status:'', e.status\\);\n}\n\")",
+      "Bash(node -e \"\nconst { execSync } = require\\(''child_process''\\);\ntry {\n  const result = execSync\\(''npx next lint'', { cwd: process.cwd\\(\\), encoding: ''utf8'', stdio: [''pipe'',''pipe'',''pipe''] }\\);\n  console.log\\(''stdout:'', result\\);\n  console.log\\(''PASSED''\\);\n} catch\\(e\\) {\n  console.log\\(''stderr:'', e.stderr.substring\\(0,2000\\)\\);\n  console.log\\(''stdout:'', e.stdout.substring\\(0,2000\\)\\);\n  console.log\\(''status:'', e.status\\);\n}\n\")",
+      "Bash(cat:*)",
+      "Bash(node -e \"\nconst { execSync } = require\\(''child_process''\\);\ntry {\n  const result = execSync\\(''npx eslint src/app/api src/lib src/hooks src/components --ext .ts,.tsx'', { cwd: process.cwd\\(\\), encoding: ''utf8'', stdio: [''pipe'',''pipe'',''pipe''] }\\);\n  console.log\\(''PASSED - no issues''\\);\n  if \\(result\\) console.log\\(result\\);\n} catch\\(e\\) {\n  const out = \\(e.stdout || ''''\\) + \\(e.stderr || ''''\\);\n  // Show first 3000 chars\n  console.log\\(out.substring\\(0, 3000\\)\\);\n  console.log\\(''status:'', e.status\\);\n}\n\")",
+      "Bash(node -e \"\nconst { execSync } = require\\(''child_process''\\);\ntry {\n  const result = execSync\\(''npx eslint src/components src/app --ext .ts,.tsx'', { cwd: process.cwd\\(\\), encoding: ''utf8'', stdio: [''pipe'',''pipe'',''pipe''] }\\);\n  console.log\\(''PASSED - 0 errors, 0 warnings''\\);\n} catch\\(e\\) {\n  const out = \\(e.stdout || ''''\\) + \\(e.stderr || ''''\\);\n  // Count errors vs warnings\n  const errors = \\(out.match\\(/\\\\d+ errors/g\\) || []\\).join\\('', ''\\);\n  const warnings = \\(out.match\\(/\\\\d+ warnings/g\\) || []\\).join\\('', ''\\);\n  console.log\\(''Errors:'', errors, ''| Warnings:'', warnings\\);\n  console.log\\(''Exit:'', e.status\\);\n}\n\")",
+      "Bash(node -e \"\nconst { execSync } = require\\(''child_process''\\);\ntry {\n  const result = execSync\\(''npx eslint src --ext .ts,.tsx'', { cwd: process.cwd\\(\\), encoding: ''utf8'', stdio: [''pipe'',''pipe'',''pipe''] }\\);\n  console.log\\(''LINT PASSED - 0 errors, 0 warnings''\\);\n  if \\(result.trim\\(\\)\\) console.log\\(result\\);\n} catch\\(e\\) {\n  const out = \\(e.stdout || ''''\\) + \\(e.stderr || ''''\\);\n  console.log\\(out.substring\\(0, 3000\\)\\);\n  console.log\\(''Exit:'', e.status\\);\n}\n\")",
+      "Bash(node -e \"\nconst { execSync } = require\\(''child_process''\\);\ntry {\n  const result = execSync\\(''npx eslint src --ext .ts,.tsx'', { cwd: process.cwd\\(\\), encoding: ''utf8'', stdio: [''pipe'',''pipe'',''pipe''] }\\);\n  console.log\\(''LINT PASSED''\\);\n  if \\(result.trim\\(\\)\\) console.log\\(result\\);\n} catch\\(e\\) {\n  const out = \\(e.stdout || ''''\\) + \\(e.stderr || ''''\\);\n  console.log\\(out.substring\\(0, 4000\\)\\);\n  console.log\\(''Exit:'', e.status\\);\n}\n\")",
+      "Bash(node -e \"\nconst { execSync } = require\\(''child_process''\\);\ntry {\n  const result = execSync\\(''npx next build'', { cwd: process.cwd\\(\\), encoding: ''utf8'', stdio: [''pipe'',''pipe'',''pipe''], timeout: 240000 }\\);\n  console.log\\(''BUILD PASSED''\\);\n  // Print last 30 lines for route table\n  const lines = result.split\\(''\\\\n''\\);\n  console.log\\(lines.slice\\(-35\\).join\\(''\\\\n''\\)\\);\n} catch\\(e\\) {\n  const out = \\(e.stdout || ''''\\) + \\(e.stderr || ''''\\);\n  // Find error lines\n  const errorLines = out.split\\(''\\\\n''\\).filter\\(l => l.includes\\(''Error''\\) || l.includes\\(''error''\\) || l.includes\\(''Type''\\)\\);\n  console.log\\(''Error lines:'', errorLines.slice\\(0, 20\\).join\\(''\\\\n''\\)\\);\n  console.log\\(''Exit:'', e.status\\);\n  // Full output\n  console.log\\(out.substring\\(0, 4000\\)\\);\n}\n\")"
+    ]
+  }
+}
