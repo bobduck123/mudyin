@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { requireSessionUser } from '@/lib/api-auth'
 
 // GET - Fetch single photo with comments
 export async function GET(
@@ -69,15 +70,10 @@ export async function PUT(
   context: { params: Promise<{ photoId: string }> }
 ) {
   try {
-    const userId = request.headers.get('x-user-id')
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
     const { photoId } = await context.params
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
-    }
 
     const body = await request.json()
 
@@ -147,15 +143,10 @@ export async function DELETE(
   context: { params: Promise<{ photoId: string }> }
 ) {
   try {
-    const userId = request.headers.get('x-user-id')
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
     const { photoId } = await context.params
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
-    }
 
     // Check ownership
     const photo = await prisma.galleryPhoto.findUnique({

@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { ShoppingCart, Plus, Store, X } from 'lucide-react'
+import { ShoppingCart, Plus, Store, X, ArrowRight, Sparkles } from 'lucide-react'
 import { PageHero } from '@/components/layout/PageHero'
 import { marketplaceProducts, type MarketplaceProduct } from '@/lib/marketplace-data'
 
@@ -14,27 +14,42 @@ type CartItem = {
   product: MarketplaceProduct
 }
 
-const peopleStories = [
+const trailCollections = [
   {
-    id: 's1',
-    person: 'Aunty Marnie',
-    role: 'Weaving Circle Mentor',
-    narrative: 'Every basket sold helps fund two more young people to join our weekly weaving circle.',
-    trail: 'Cultural Continuity',
+    id: 'cultural',
+    title: 'Cultural Continuity',
+    story: 'From weaving circles to shared homes, each item carries practice forward.',
+    image: '/images/culture-country.jpg',
   },
   {
-    id: 's2',
-    person: 'Jalen',
-    role: 'YSMP Participant',
-    narrative: 'The hoodie project taught me design, planning, and how to run a small community drop.',
-    trail: 'Youth Leadership',
+    id: 'community',
+    title: 'Community Strength',
+    story: 'Products seed group participation, mentoring, and practical support.',
+    image: '/images/community-gathering.jpg',
   },
   {
-    id: 's3',
-    person: 'Healing Team',
-    role: 'Wellness Facilitators',
-    narrative: 'Tea bundles support weekly healing sessions and transport for families attending workshops.',
-    trail: 'Wellbeing Access',
+    id: 'wellbeing',
+    title: 'Wellbeing Access',
+    story: 'Purchases sustain transport, sessions, and local healing pathways.',
+    image: '/images/healing-services.jpg',
+  },
+]
+
+const pathwayNarratives = [
+  {
+    id: 'p1',
+    title: 'Program Funding Pathways',
+    text: 'Purchases feed directly into participation support, transport, and session access.',
+  },
+  {
+    id: 'p2',
+    title: 'Community Outcomes',
+    text: 'Revenue supports collective outcomes: retention, wellbeing, and intergenerational continuity.',
+  },
+  {
+    id: 'p3',
+    title: 'Maker Stories',
+    text: 'Each collection is linked to people, circles, and practical local change.',
   },
 ]
 
@@ -77,9 +92,7 @@ export default function MarketplacePage() {
     if (existing) {
       setCart(
         cart.map((item) =>
-          item.productId === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+          item.productId === product.id ? { ...item, quantity: item.quantity + 1 } : item
         )
       )
       return
@@ -99,98 +112,97 @@ export default function MarketplacePage() {
     )
   }
 
-  const cartTotal = cart.reduce(
-    (total, item) => total + item.product.price * item.quantity,
-    0
-  )
+  const cartTotal = cart.reduce((total, item) => total + item.product.price * item.quantity, 0)
 
   return (
     <div style={{ backgroundColor: 'var(--color-background)' }}>
       <PageHero
         title="Marketplace"
-        subtitle="Community-made goods"
-        description="Discover products created by Mudyin participants and partners. Every purchase supports cultural programs and local community outcomes."
+        subtitle="Story first, impact always"
+        description="Browse community-made goods through story trails and impact collections. Commerce follows culture here."
+        image="/images/community-gathering.jpg"
+        imageAlt="Community makers and stories driving marketplace impact"
         breadcrumbs={[{ label: 'Marketplace' }]}
       />
 
-      <section className="section-padding py-16">
+      <section className="section-spacing section-padding">
         <div className="container-wide">
           <div className="mb-10">
             <p className="text-xs uppercase tracking-[0.18em] mb-3" style={{ color: 'rgba(255,255,255,0.55)' }}>
-              Story Trails
+              Story Trail Entry
             </p>
             <div className="grid md:grid-cols-3 gap-4">
-              {peopleStories.map((story) => (
-                <article
-                  key={story.id}
-                  className="rounded-2xl p-5"
-                  style={{
-                    backgroundColor: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(195,121,32,0.36)',
-                  }}
-                >
-                  <p className="text-xs uppercase tracking-wider mb-2" style={{ color: 'var(--color-flag-yellow)' }}>
-                    {story.trail}
-                  </p>
-                  <h3 className="font-display text-xl mb-1">{story.person}</h3>
-                  <p className="text-xs mb-3" style={{ color: 'rgba(255,255,255,0.56)' }}>
-                    {story.role}
-                  </p>
-                  <p className="text-sm" style={{ color: 'rgba(255,255,255,0.78)' }}>
-                    {story.narrative}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <div className="mb-8 rounded-2xl p-6 blak-motif-organic" style={{ backgroundColor: 'rgba(2,2,2,0.75)', border: '1px solid rgba(243,222,44,0.25)' }}>
-            <p className="text-xs uppercase tracking-[0.18em] mb-3" style={{ color: 'rgba(255,255,255,0.58)' }}>
-              Collection Ceremonies
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {impactThemes.map((theme) => (
+              {trailCollections.map((trail) => (
                 <button
-                  key={theme.id}
-                  onClick={() => setImpactTheme(theme.id)}
-                  className="px-4 py-2 rounded-full text-sm transition-all"
-                  style={
-                    impactTheme === theme.id
-                      ? { backgroundColor: 'var(--color-flag-yellow)', color: '#020202' }
-                      : { border: '1px solid rgba(255,255,255,0.22)', color: 'rgba(255,255,255,0.78)' }
-                  }
+                  key={trail.id}
+                  onClick={() => setImpactTheme(trail.id)}
+                  className="text-left rounded-2xl overflow-hidden group relative min-h-[210px] healing-border"
                 >
-                  {theme.label}
+                  <Image
+                    src={trail.image}
+                    alt={trail.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        'radial-gradient(circle at 50% 52%, rgba(200,167,93,0.08) 0 12%, rgba(184,117,85,0.09) 24%, transparent 44%), linear-gradient(180deg, rgba(2,2,2,0.48) 0 56%, rgba(184,117,85,0.12) 100%)',
+                    }}
+                  />
+                  <div className="absolute inset-0 p-5 flex flex-col justify-end">
+                    <p className="text-xs uppercase tracking-[0.16em] mb-2" style={{ color: 'rgba(255,255,255,0.64)' }}>
+                      Collection Ceremony
+                    </p>
+                    <h3 className="font-display text-3xl mb-2 leading-none">{trail.title}</h3>
+                    <p className="text-sm mb-3" style={{ color: 'rgba(255,255,255,0.82)' }}>{trail.story}</p>
+                    <span className="inline-flex items-center gap-1 text-xs" style={{ color: 'rgba(255,255,255,0.8)' }}>
+                      Follow this trail <ArrowRight size={14} />
+                    </span>
+                  </div>
                 </button>
               ))}
             </div>
           </div>
 
           <div className="grid lg:grid-cols-12 gap-4 mb-8">
-            <div className="lg:col-span-7 rounded-2xl p-8" style={{ background: 'linear-gradient(135deg, rgba(210,168,85,0.12), rgba(157,193,131,0.06))', border: '1px solid rgba(210,168,85,0.3)' }}>
+            <div className="lg:col-span-7 rounded-2xl p-8 healing-panel healing-border">
               <p className="text-xs uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.55)' }}>
                 Community Commerce
               </p>
               <h2 className="font-display text-3xl font-semibold mb-2">
-                Buy from Mob, build impact
+                Story before product. Impact before checkout.
               </h2>
-              <p style={{ color: 'rgba(255,255,255,0.65)' }}>
-                Discover community-made products and support cultural programs through people-first story trails and impact-led collections.
+              <p style={{ color: 'rgba(255,255,255,0.68)' }}>
+                This marketplace is a browsing experience for belonging and systems change.
+                Program funding pathways, community outcomes, and maker stories remain at the front.
               </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {impactThemes.map((theme) => (
+                  <button
+                    key={theme.id}
+                    onClick={() => setImpactTheme(theme.id)}
+                    className="healing-chip"
+                    style={impactTheme === theme.id ? { opacity: 1 } : { opacity: 0.82 }}
+                  >
+                    {theme.label}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="lg:col-span-5 grid grid-cols-2 gap-4" data-decorative="true">
-              <div className="card-dark rounded-2xl p-6">
-                <p className="text-xs uppercase tracking-wider mb-2" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                  Products
-                </p>
-                <p className="font-display text-3xl">{marketplaceProducts.length}</p>
-              </div>
-              <div className="card-dark rounded-2xl p-6">
-                <p className="text-xs uppercase tracking-wider mb-2" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                  Cart Total
-                </p>
-                <p className="font-display text-3xl">${cartTotal.toFixed(2)}</p>
-              </div>
+
+            <div className="lg:col-span-5 space-y-3">
+              {pathwayNarratives.map((card) => (
+                <article key={card.id} className="rounded-2xl p-4 healing-panel healing-border">
+                  <p className="text-xs uppercase tracking-[0.14em] mb-1" style={{ color: 'rgba(255,255,255,0.56)' }}>
+                    Header Narrative
+                  </p>
+                  <h3 className="font-display text-xl">{card.title}</h3>
+                  <p className="text-sm mt-1" style={{ color: 'rgba(255,255,255,0.72)' }}>{card.text}</p>
+                </article>
+              ))}
             </div>
           </div>
 
@@ -200,12 +212,8 @@ export default function MarketplacePage() {
                 <button
                   key={item}
                   onClick={() => setCategory(item)}
-                  className="px-4 py-2 rounded-full text-sm transition-all"
-                  style={
-                    category === item
-                      ? { backgroundColor: 'var(--color-ochre-500)', color: 'var(--color-charcoal-950)' }
-                      : { border: '1px solid rgba(65,70,72,0.6)', color: 'rgba(255,255,255,0.72)' }
-                  }
+                  className="healing-chip"
+                  style={category === item ? { opacity: 1 } : { opacity: 0.78 }}
                 >
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </button>
@@ -236,11 +244,7 @@ export default function MarketplacePage() {
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.35, delay: index * 0.04 }}
-                    className="rounded-2xl overflow-hidden group"
-                    style={{
-                      backgroundColor: 'rgba(255,255,255,0.03)',
-                      border: '1px solid rgba(65,70,72,0.45)',
-                    }}
+                    className="rounded-2xl overflow-hidden group healing-panel healing-border"
                   >
                     <Image
                       src={product.imageUrl}
@@ -255,9 +259,18 @@ export default function MarketplacePage() {
                         {product.vendorName}
                       </p>
                       <h3 className="font-display text-xl mb-2">{product.name}</h3>
-                      <p className="text-sm mb-4 min-h-[60px]" style={{ color: 'rgba(255,255,255,0.62)' }}>
+                      <p className="text-sm mb-3 min-h-[60px]" style={{ color: 'rgba(255,255,255,0.62)' }}>
                         {product.description}
                       </p>
+                      <div className="mb-4 rounded-lg p-2.5 healing-border" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                        <p className="text-[11px] uppercase tracking-[0.14em] mb-1" style={{ color: 'rgba(255,255,255,0.48)' }}>
+                          Impact Outcome
+                        </p>
+                        <p className="text-xs flex items-center gap-1.5" style={{ color: 'rgba(255,255,255,0.78)' }}>
+                          <Sparkles size={13} />
+                          Supports {product.impact} initiatives
+                        </p>
+                      </div>
                       <div className="flex justify-between items-center mb-4">
                         <span className="text-2xl font-display" style={{ color: 'var(--color-ochre-400)' }}>
                           ${product.price}
@@ -274,10 +287,7 @@ export default function MarketplacePage() {
                         </span>
                       </div>
                       <div className="flex gap-2 items-center">
-                        <Link
-                          href={`/marketplace/vendor/${product.vendorId}`}
-                          className="btn-ghost text-xs"
-                        >
+                        <Link href={`/marketplace/vendor/${product.vendorId}`} className="btn-ghost text-xs">
                           View Vendor
                         </Link>
                         <button
@@ -294,17 +304,17 @@ export default function MarketplacePage() {
               </div>
 
               {filteredProducts.length === 0 && (
-                <div className="card-dark rounded-2xl p-8 text-center">
+                <div className="card-dark rounded-2xl p-8 text-center healing-border">
                   <Store className="mx-auto mb-3" style={{ color: 'var(--color-ochre-400)' }} />
                   <p style={{ color: 'rgba(255,255,255,0.62)' }}>
-                    No products in this category yet.
+                    No products in this collection yet.
                   </p>
                 </div>
               )}
             </div>
 
             {showCart && (
-              <aside className="card-dark rounded-2xl p-5 h-fit">
+              <aside className="card-dark rounded-2xl p-5 h-fit healing-border">
                 <h3 className="font-display text-xl mb-4">Your Cart</h3>
                 {cart.length === 0 ? (
                   <p style={{ color: 'rgba(255,255,255,0.62)' }}>Your cart is empty.</p>
@@ -358,7 +368,7 @@ export default function MarketplacePage() {
 
       {showSellModal && (
         <div className="fixed inset-0 z-50 p-4 flex items-center justify-center" style={{ backgroundColor: 'rgba(0,0,0,0.6)' }}>
-          <div className="w-full max-w-xl rounded-2xl p-6" style={{ backgroundColor: 'rgba(20,20,20,0.98)', border: '1px solid rgba(65,70,72,0.6)' }}>
+          <div className="w-full max-w-xl rounded-2xl p-6 healing-panel healing-border">
             <div className="flex justify-between items-center mb-5">
               <h3 className="font-display text-2xl">Sell a Product</h3>
               <button onClick={() => setShowSellModal(false)} className="btn-ghost p-2">

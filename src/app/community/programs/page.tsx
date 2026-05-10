@@ -1,5 +1,6 @@
 import { cache, Suspense } from 'react'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { PageHero } from '@/components/layout/PageHero'
 import { prisma } from '@/lib/db'
 import { isDbUnavailableError } from '@/lib/demo-fallback'
@@ -8,31 +9,35 @@ export const dynamic = 'force-dynamic'
 
 interface ProgramData {
   name: string
-  emoji: string
+  motif: string
   description: string
   memberCount: number
   postCount: number
+  accent: string
   recentPost?: {
     content: string
     authorName: string
   }
 }
 
-const PROGRAM_CARDS: Array<Pick<ProgramData, 'name' | 'emoji' | 'description'>> = [
+const PROGRAM_CARDS: Array<Pick<ProgramData, 'name' | 'motif' | 'description' | 'accent'>> = [
   {
     name: 'YSMP',
-    emoji: '🌟',
+    motif: 'Training Circle',
     description: 'Connect with YSMP members, share your journey, and celebrate milestones together.',
+    accent: 'rgba(223,206,214,0.24)',
   },
   {
     name: 'Thrive Tribe',
-    emoji: '🌱',
+    motif: 'Wellbeing Circle',
     description: 'A community celebrating resilience, connection, and collective wellness growth.',
+    accent: 'rgba(223,206,214,0.24)',
   },
   {
     name: 'Healing Centre',
-    emoji: '💚',
+    motif: 'Healing Circle',
     description: 'A culturally grounded space for wellness, healing, and inner peace.',
+    accent: 'rgba(223,206,214,0.24)',
   },
 ]
 
@@ -93,11 +98,20 @@ async function ProgramsContent() {
         <Link
           key={program.name}
           href={`/community/programs/${encodeURIComponent(program.name)}`}
+          className="h-full"
         >
-          <div className="card-dark p-6 hover:bg-white/5 transition cursor-pointer group h-full flex flex-col">
+          <div
+            className="rounded-2xl p-6 transition-all cursor-pointer group h-full flex flex-col grounded-lines"
+            style={{
+              backgroundColor: 'rgba(2,2,2,0.72)',
+              border: `1px solid ${program.accent}`,
+            }}
+          >
             <div className="mb-4">
-              <span className="text-4xl mb-3 block">{program.emoji}</span>
-              <h3 className="text-2xl font-bold text-white group-hover:text-ochre-400 transition">
+              <p className="text-xs uppercase tracking-[0.14em] mb-2" style={{ color: 'rgba(255,255,255,0.56)' }}>
+                {program.motif}
+              </p>
+              <h3 className="text-2xl font-display text-white group-hover:text-ochre-400 transition">
                 {program.name}
               </h3>
             </div>
@@ -133,9 +147,9 @@ async function ProgramsContent() {
               </div>
             )}
 
-            <button className="btn-primary w-full mt-4 group-hover:bg-sage-600 transition">
-              Enter Community -&gt;
-            </button>
+            <span className="btn-primary w-full mt-4 inline-flex items-center justify-center gap-2 text-sm">
+              Enter Community <ArrowRight size={14} />
+            </span>
           </div>
         </Link>
       ))}
@@ -148,17 +162,25 @@ export default function ProgramsPage() {
     <>
       <PageHero
         title="Program Communities"
-        subtitle="Choose your community and join members on a shared journey"
-        image="/images/programs-hero.jpg"
+        subtitle="Choose your circle and move in shared rhythm"
+        description="Each program community has its own identity and energy while staying connected to one shared core."
+        image="/images/community-gathering.jpg"
       />
 
-      <section className="py-12">
-        <div className="container mx-auto px-4">
+      <section className="section-spacing section-padding">
+        <div className="container-wide">
+          <div className="healing-panel rounded-2xl p-6 mb-8">
+            <p className="text-xs uppercase tracking-[0.16em] mb-2" style={{ color: 'rgba(255,255,255,0.58)' }}>
+              Ritual Interaction: choose your circle
+            </p>
+            <h2 className="font-display text-3xl">Distinct communities under one shared home</h2>
+          </div>
+
           <Suspense
             fallback={
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[...Array(3)].map((_, i) => (
-                  <div key={i} className="card-dark p-6 animate-pulse">
+                  <div key={i} className="card-dark p-6">
                     <div className="h-10 bg-white/10 rounded w-3/4 mb-4" />
                     <div className="space-y-2 mb-4">
                       <div className="h-3 bg-white/10 rounded w-full" />

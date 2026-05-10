@@ -7,18 +7,18 @@ import { programs } from '@/lib/data'
 export const metadata: Metadata = {
   title: 'Enroll — Join a Mudyin Program',
   description:
-    'Enroll in the Young Spirit Mentoring Program, Thrive Tribe, or Healing Centre services. Aboriginal-led programs for youth and community in Campbelltown and beyond.',
+    'Request a place in the Young Spirit Mentoring Program, Thrive Tribe, or Healing Centre services. Aboriginal-led programs for youth and community in Campbelltown and beyond.',
   openGraph: {
-    title: 'Enroll in a Mudyin Program',
-    description: 'Take the first step. Enroll in Aboriginal-led mentoring, healing, and community programs today.',
+    title: 'Request a place in a Mudyin program',
+    description: 'Take the first step. Send a program request for Aboriginal-led mentoring, healing, and community programs.',
   },
 }
 
 const steps = [
   { step: '01', title: 'Choose a Program', desc: 'Select the program that fits your needs or your young person\'s stage of life.' },
-  { step: '02', title: 'Complete the Form', desc: 'Fill out the online enrollment form. It takes about 10 minutes.' },
-  { step: '03', title: 'We\'ll Be in Touch', desc: 'Our team will contact you within 2 business days to confirm and discuss next steps.' },
-  { step: '04', title: 'Welcome to Country', desc: 'Attend your first session and become part of the Mudyin family.' },
+  { step: '02', title: 'Complete the Form', desc: 'Fill out the online request form. It takes about 10 minutes.' },
+  { step: '03', title: 'We\'ll Be in Touch', desc: 'Our team will contact you within 2 business days to discuss next steps.' },
+  { step: '04', title: 'Confirm Together', desc: 'The team will confirm availability before a place or appointment is set.' },
 ]
 
 export default function EnrollPage() {
@@ -30,7 +30,7 @@ export default function EnrollPage() {
         style={{ backgroundColor: 'var(--color-background)' }}
       >
         <div className="container-mid text-center">
-          <span className="section-label">Enrollment</span>
+          <span className="section-label">Program Requests</span>
           <h1
             className="font-display font-semibold mt-2 mb-5"
             style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--color-foreground)' }}
@@ -54,7 +54,7 @@ export default function EnrollPage() {
               className="font-display font-semibold text-3xl mb-3"
               style={{ color: 'var(--color-foreground)' }}
             >
-              How Enrollment Works
+              How Requests Work
             </h2>
             <p className="text-base" style={{ color: 'rgba(255,255,255,0.55)' }}>
               Simple, respectful, and community-led from day one.
@@ -112,7 +112,7 @@ export default function EnrollPage() {
                       className="absolute top-4 right-4 text-xs font-semibold px-2 py-1 rounded-full"
                       style={{ backgroundColor: 'rgba(34,197,94,0.2)', color: '#4ade80', border: '1px solid rgba(34,197,94,0.3)' }}
                     >
-                      Enrolling Now
+                      Requests Open
                     </span>
                   ) : (
                     <span
@@ -161,10 +161,10 @@ export default function EnrollPage() {
 
                   <div className="mt-auto space-y-2">
                     <Link
-                      href={`/enroll/${program.id}`}
+                      href="/contact#booking-request"
                       className="btn-primary w-full text-center text-sm"
                     >
-                      {program.enrollmentOpen ? 'Enroll Now' : 'Register Interest'}
+                      {program.enrollmentOpen ? 'Request a Place' : 'Register Interest'}
                     </Link>
                     <Link
                       href={`/programs/${program.slug}`}
@@ -209,7 +209,7 @@ export default function EnrollPage() {
               <div className="space-y-2">
                 {[
                   'Transport assistance available for YSMP participants',
-                  'All programs are free — funded by donations and grants',
+                  'All programs are free - funded by grants and approved community support',
                   'Interpreter support available on request',
                 ].map(point => (
                   <div key={point} className="flex items-start gap-2">

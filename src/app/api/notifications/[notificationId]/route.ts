@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { requireSessionUser } from '@/lib/api-auth'
 
 // PATCH - Mark notification as read
 export async function PATCH(
@@ -7,15 +8,10 @@ export async function PATCH(
   context: { params: Promise<{ notificationId: string }> }
 ) {
   try {
-    const userId = request.headers.get('x-user-id')
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
     const { notificationId } = await context.params
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
-    }
 
     const body = await request.json()
     const { isRead } = body
@@ -70,15 +66,10 @@ export async function DELETE(
   context: { params: Promise<{ notificationId: string }> }
 ) {
   try {
-    const userId = request.headers.get('x-user-id')
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
     const { notificationId } = await context.params
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
-    }
 
     // Verify notification belongs to user
     const notification = await prisma.notification.findUnique({

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState, useEffect, useCallback } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -76,7 +77,6 @@ export function CommentThread({ postId }: CommentThreadProps) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-id': userId,
         },
         body: JSON.stringify(data),
       })
@@ -102,7 +102,6 @@ export function CommentThread({ postId }: CommentThreadProps) {
         `/api/community/posts/${postId}/comments/${commentId}`,
         {
           method: 'DELETE',
-          headers: { 'x-user-id': userId },
         }
       )
 
@@ -185,10 +184,13 @@ export function CommentThread({ postId }: CommentThreadProps) {
               <div className="flex items-start justify-between mb-2">
                 <Link href={`/community/members/${comment.author.id}`}>
                   <div className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <img
+                    <Image
                       src={avatarUrl(comment.author.name, comment.author.profile?.avatar)}
                       alt={comment.author.name}
+                      width={28}
+                      height={28}
                       className="w-7 h-7 rounded-full object-cover"
+                      unoptimized
                     />
                     <div>
                       <p

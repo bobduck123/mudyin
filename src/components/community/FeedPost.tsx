@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
@@ -64,7 +65,6 @@ export function FeedPost({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-id': userId,
         },
       })
 
@@ -88,7 +88,6 @@ export function FeedPost({
     try {
       const response = await fetch(`/api/community/posts/${id}`, {
         method: 'DELETE',
-        headers: { 'x-user-id': userId },
       })
 
       if (response.ok && onDelete) {
@@ -124,10 +123,13 @@ export function FeedPost({
         style={{ borderColor: 'rgba(210, 168, 85, 0.1)' }}
       >
         <div className="flex items-center gap-3 min-w-0">
-          <img
+          <Image
             src={avatarUrl}
             alt={author.name}
+            width={40}
+            height={40}
             className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+            unoptimized
           />
           <div className="min-w-0">
             <Link href={`/community/members/${author.id}`}>
@@ -227,10 +229,13 @@ export function FeedPost({
                 key={idx}
                 className="rounded-lg overflow-hidden bg-gray-700 aspect-square"
               >
-                <img
+                <Image
                   src={image}
                   alt={`Post image ${idx + 1}`}
+                  width={600}
+                  height={600}
                   className="w-full h-full object-cover"
+                  unoptimized
                 />
               </div>
             ))}

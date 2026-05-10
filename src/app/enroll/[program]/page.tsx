@@ -20,10 +20,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!program) return { title: 'Not Found' }
 
   return {
-    title: `Enroll in ${program.name} — Mudyin`,
+    title: `Request a place in ${program.name} — Mudyin`,
     description: `Register for the ${program.name} — ${program.shortDescription}`,
     openGraph: {
-      title: `Enroll: ${program.name}`,
+      title: `Request: ${program.name}`,
       description: program.shortDescription,
       images: [{ url: program.image, alt: program.imageAlt }],
     },
@@ -55,7 +55,7 @@ export default async function EnrollProgramPage({ params }: Props) {
         </div>
         <div className="container-wide relative z-10">
           <Link
-            href="/enroll"
+            href="/programs"
             className="inline-flex items-center gap-2 text-sm mb-6 hover:underline"
             style={{ color: 'rgba(255,255,255,0.5)' }}
           >
@@ -63,7 +63,7 @@ export default async function EnrollProgramPage({ params }: Props) {
             Back to Programs
           </Link>
 
-          <span className="section-label">Enrollment</span>
+          <span className="section-label">Program Request</span>
           <h1
             className="font-display font-semibold mt-2 mb-3"
             style={{ fontSize: 'clamp(1.75rem, 4vw, 3rem)', color: 'var(--color-foreground)' }}
@@ -98,7 +98,7 @@ export default async function EnrollProgramPage({ params }: Props) {
         <div className="container-wide">
           <div className="grid lg:grid-cols-3 gap-12">
 
-            {/* Enrollment form */}
+            {/* Program Request form */}
             <div className="lg:col-span-2">
               {!program.enrollmentOpen && (
                 <div
@@ -109,14 +109,14 @@ export default async function EnrollProgramPage({ params }: Props) {
                     color: '#fbbf24',
                   }}
                 >
-                  Enrollment for this program is currently closed. Complete the form below to register your interest and we&apos;ll notify you when the next intake opens.
+                  Requests for this program are currently limited. Complete the form below to register your interest and we&apos;ll notify you when the next intake opens.
                 </div>
               )}
               <h2
                 className="font-display font-semibold text-2xl mb-6"
                 style={{ color: 'var(--color-foreground)' }}
               >
-                {program.enrollmentOpen ? 'Enrollment Form' : 'Register Interest'}
+                {program.enrollmentOpen ? 'Program Request Form' : 'Register Interest'}
               </h2>
               <EnrollmentForm program={program.id} />
             </div>

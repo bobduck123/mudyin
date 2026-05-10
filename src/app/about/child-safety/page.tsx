@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Shield, Heart, Phone, AlertTriangle, CheckCircle, BookOpen } from 'lucide-react'
+import { siteConfig } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Child Safety Policy — Mudyin Aboriginal Healing Centre',
@@ -187,8 +188,8 @@ export default function ChildSafetyPage() {
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Heart size={13} style={{ color: 'var(--color-ochre-400)' }} aria-hidden="true" />
-                <a href="mailto:info@mudyin.org.au" style={{ color: 'var(--color-ochre-400)' }} className="hover:underline">
-                  info@mudyin.org.au
+                <a href={`mailto:${siteConfig.email}`} style={{ color: 'var(--color-ochre-400)' }} className="hover:underline">
+                  {siteConfig.email}
                 </a>
               </div>
             </div>

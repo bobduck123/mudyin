@@ -1,21 +1,19 @@
 # Mudyin Frontend Beta Acceptance Checklist
 
 ## 1) Core UX and Branding
-- [ ] Dark-first visual direction across all pages.
-- [ ] Subtle Aboriginal flag color hints used in CTAs and micro-accents.
+- [ ] Calm, grounded healing-centre visual direction across public pages.
+- [ ] No literal Aboriginal flag colour coding is used as decorative branding.
 - [ ] Base palette in use:
-  - `#020202` (base black)
-  - `#DB162F` (red accent)
-  - `#F3DE2C` (yellow accent)
-  - `#DFCED6` (neutral)
-  - `#C37920` (accent)
+  - warm deep brown / charcoal-brown
+  - soft cream / ivory
+  - eucalyptus / sage
+  - terracotta / clay
+  - restrained muted gold accent
 
 ## 2) Priority Page Polish
 - [ ] Home: storytelling-first hero and clear program entry points.
-- [ ] Enroll: motivational/community-led tone.
-- [ ] Community: imagery + actions prioritized in feed cards.
-- [ ] Gallery: masonry layout default.
-- [ ] Marketplace: permanent top-level section.
+- [ ] Booking request and enquiry flows are clear and do not imply confirmed bookings.
+- [ ] Community, gallery, marketplace, and donations are not first-live top-level routes unless backend support is confirmed.
 
 ## 3) Marketplace UX (Frontend-Only)
 - [ ] Ported marketplace UI and reskinned to Mudyin.

@@ -8,7 +8,7 @@ export async function POST(
   context: { params: Promise<{ photoId: string }> }
 ) {
   try {
-    const userId = request.headers.get('x-user-id')
+    const userId: string | null = null
     const { photoId } = await context.params
     const body = await request.json()
 

@@ -1,23 +1,27 @@
 // ─── Static Content Data ─────────────────────────────────────────────────────
+import { getDefaultSite } from '@/lib/white-label/site-registry'
+
+const defaultSite = getDefaultSite()
+
 // Single source of truth for all site content.
 // When Sanity CMS is connected, these objects inform the schema structure.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const siteConfig = {
-  name:        'Mudyin Aboriginal Healing Centre',
-  shortName:   'Mudyin',
-  tagline:     'Two Worlds Strong',
-  description: 'Healing, empowering, and connecting Aboriginal communities through the Young Spirit Mentoring Program and culturally grounded healing services.',
-  url:         'https://mudyin.org.au',
-  email:       'info@mudyin.org.au',
-  phone:       '0478 796 298',
-  abn:         '00 000 000 000', // Update with correct ABN
-  acnc:        'https://www.acnc.gov.au', // Update with ACNC listing
+  name:        defaultSite.canonicalName,
+  shortName:   defaultSite.shortName,
+  tagline:     defaultSite.tagline,
+  description: defaultSite.metadata.description,
+  url:         defaultSite.metadata.url,
+  email:       'info@mudyin.com',
+  phone:       defaultSite.contact.phone,
+  abn:         'Registration details pending operator confirmation',
+  acnc:        undefined as string | undefined,
   address: {
     line1:    'Campbelltown Park',
-    suburb:   'Campbelltown',
-    state:    'NSW',
-    postcode: '2560',
+    suburb:   defaultSite.contact.address.locality,
+    state:    defaultSite.contact.address.region,
+    postcode: defaultSite.contact.address.postcode,
     country:  'Australia',
   },
   social: {
@@ -33,10 +37,10 @@ export const siteConfig = {
 
 // ─── Stats ───────────────────────────────────────────────────────────────────
 export const heroStats = [
-  { label: 'Years of Service',       value: 25,   suffix: '+' },
-  { label: 'Lives Transformed',      value: 5000, suffix: '+' },
-  { label: 'Weekly Participants',    value: 50,   suffix: '+' },
-  { label: 'Active Programs',        value: 15,   suffix: '+' },
+  { label: 'Operating Entity',       value: 1, suffix: '' },
+  { label: 'Program Streams',        value: 3, suffix: '' },
+  { label: 'Active Enquiry Pathway', value: 1, suffix: '' },
+  { label: 'Future-phase Streams',   value: 2, suffix: '' },
 ]
 
 // ─── Programs ────────────────────────────────────────────────────────────────
@@ -89,7 +93,7 @@ export const programs: Program[] = [
       'Pathways to employment and further education',
     ],
     enrollmentOpen: true,
-    color:          '#d2a855',
+    color:          '#c8a75d',
     minAge:         12,
     maxAge:         25,
   },
@@ -324,92 +328,49 @@ export const impactMessages: Record<number, string> = {
 }
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
-export const navLinks = [
-  {
-    label: 'About',
-    href:  '/about/our-story',
-    children: [
-      { label: 'Our Story',  href: '/about/our-story' },
-      { label: 'Our Team',   href: '/about/team' },
-      { label: 'Partners',   href: '/about/partners' },
-    ],
-  },
-  {
-    label: 'Programs',
-    href:  '/programs',
-    children: [
-      { label: 'Young Spirit Mentoring (YSMP)', href: '/programs/ysmp' },
-      { label: 'Thrive Tribe',                  href: '/programs/thrive-tribe' },
-      { label: 'Healing Centre',                href: '/programs/healing-centre' },
-    ],
-  },
-  { label: 'Impact',     href: '/impact' },
-  { label: 'News',       href: '/news' },
-  { label: 'Gallery',    href: '/gallery' },
-  {
-    label: 'Community',
-    href:  '/community',
-    children: [
-      { label: 'Community Hub',   href: '/community' },
-      { label: 'Program Communities', href: '/community/programs' },
-      { label: 'Member Directory', href: '/community/members' },
-      { label: 'Create Post',      href: '/community/create' },
-    ],
-  },
-  {
-    label: 'Marketplace',
-    href: '/marketplace',
-    children: [
-      { label: 'Browse Marketplace', href: '/marketplace' },
-      { label: 'Merchant Dashboard', href: '/marketplace/merchant' },
-      { label: 'Order History', href: '/marketplace/orders' },
-    ],
-  },
-  { label: 'Resources',  href: '/resources' },
-  { label: 'Contact',    href: '/contact' },
-]
+export const navLinks = defaultSite.publicNav
 
 // ─── FAQs ─────────────────────────────────────────────────────────────────────
 export const faqs = [
   {
     category: 'Programs',
-    question: 'Who can participate in YSMP?',
-    answer:   'YSMP is open to Aboriginal and Torres Strait Islander youth aged 12–25. We welcome all young people regardless of background or fitness level.',
+    question: 'What is live for first launch?',
+    answer:   "Mudyin is accepting general enquiries and booking requests. Mudyin Women's Business is open for first-live enquiries, while Aaliyah's Dreaming and Mirabella's Dreaming are labelled as future-phase streams.",
   },
   {
     category: 'Programs',
-    question: 'Is YSMP free to join?',
-    answer:   'Yes. YSMP is free for eligible participants. The program is community-funded and supported by donations and government grants.',
+    question: 'Are the streams separate organisations?',
+    answer:   'No. The public site treats Mudyin streams as sub-programs under MUDYIN PTY LTD unless leadership later approves a different structure.',
   },
   {
     category: 'Programs',
-    question: 'What do participants need to bring?',
-    answer:   'Just themselves and a willingness to show up! Comfortable exercise clothes and runners are helpful. Breakfast is provided.',
+    question: 'Are future-phase streams currently delivering services?',
+    answer:   'No. Future-phase streams may receive expressions of interest, but the site does not represent them as confirmed live services.',
   },
   {
-    category: 'Enrollment',
-    question: 'How long does enrollment take?',
-    answer:   'Our online enrollment form takes about 10–15 minutes to complete. Once submitted, our team reviews applications within 2–3 business days.',
+    category: 'Program Requests',
+    question: 'Is a booking request a confirmed booking?',
+    answer:   'No. A booking request is reviewed by the Mudyin team before suitability, availability, consent requirements, and next steps are confirmed.',
   },
   {
-    category: 'Enrollment',
-    question: 'Is parental consent required for under-18s?',
-    answer:   'Yes. Participants under 18 require a parent or guardian to complete the consent section of the enrollment form. A digital signature is accepted.',
+    category: 'Program Requests',
+    question: 'How soon will Mudyin respond?',
+    answer:   'The first-live response target is 1-2 business days. Response times may change as operational capacity is confirmed.',
   },
   {
-    category: 'Donations',
-    question: 'Are donations tax-deductible?',
-    answer:   'Mudyin holds Deductible Gift Recipient (DGR) status. All donations of $2 or more are tax-deductible. You will receive an official receipt automatically.',
+    category: 'Support',
+    question: 'Can I donate online?',
+    answer:   'Online donations are paused for first launch until payment, charity, and receipt settings are confirmed by the operator.',
   },
   {
-    category: 'Donations',
-    question: 'Can I set up a recurring donation?',
-    answer:   'Yes. You can choose to make a monthly recurring donation from our Donate page. You can cancel or change your giving amount at any time.',
+    category: 'Support',
+    question: 'Can I support Mudyin another way?',
+    answer:   'Please contact Mudyin directly to discuss approved support, partnership, or volunteering options.',
   },
   {
     category: 'Cultural',
     question: 'How does Mudyin respect cultural protocols?',
-    answer:   'All program content is developed with community Elders and reflects Aboriginal cultural values. Our ICIP (Indigenous Cultural and Intellectual Property) page outlines our protocols in full.',
+    answer:   'Public content is kept general unless Mudyin leadership and appropriate knowledge holders approve more specific cultural material. The site avoids tokenistic visual treatment and overstatement.',
   },
 ]
 

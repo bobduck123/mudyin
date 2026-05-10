@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { siteConfig } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Terms of Use — Mudyin Aboriginal Healing Centre',
@@ -10,7 +11,7 @@ const sections = [
   {
     id: 'acceptance',
     heading: '1. Acceptance of Terms',
-    body: 'By accessing or using the Mudyin Aboriginal Healing Centre website (mudyin.org.au), you agree to be bound by these Terms of Use. If you do not agree with any part of these terms, please do not use our website.',
+    body: `By accessing or using the ${siteConfig.name} website (${siteConfig.url}), you agree to be bound by these Terms of Use. If you do not agree with any part of these terms, please do not use our website.`,
   },
   {
     id: 'use',
@@ -40,7 +41,7 @@ const sections = [
   {
     id: 'donations',
     heading: '7. Donations',
-    body: 'All donations made through this website are processed securely. Donations are used in accordance with Mudyin\'s charitable objectives and as required by Australian charity law. Mudyin is a DGR (Deductible Gift Recipient) registered organisation — all donations of $2 or more are tax-deductible under Australian tax law. Refunds are considered on a case-by-case basis.',
+    body: 'Public donations are disabled for first launch until payment, charity, and tax status are confirmed by the operator. Do not treat any donation copy on this site as active fundraising instructions unless it is explicitly confirmed by Mudyin.',
   },
   {
     id: 'liability',
@@ -141,8 +142,8 @@ export default function TermsPage() {
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.65)' }}>
               If you have questions about these terms, contact us at{' '}
-              <a href="mailto:info@mudyin.org.au" style={{ color: 'var(--color-ochre-400)' }} className="hover:underline">
-                info@mudyin.org.au
+              <a href={`mailto:${siteConfig.email}`} style={{ color: 'var(--color-ochre-400)' }} className="hover:underline">
+                {siteConfig.email}
               </a>.
             </p>
             <div className="flex flex-wrap gap-4 text-sm">

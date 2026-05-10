@@ -22,6 +22,9 @@ const eslintConfig = defineConfig([
     "jest.config.js",
     "jest.setup.js",
     "playwright.config.ts",
+    // Generated test artifacts
+    "test-results/**",
+    "playwright-report/**",
   ]),
   {
     rules: {

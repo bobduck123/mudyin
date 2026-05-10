@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Search, Filter } from 'lucide-react'
@@ -178,9 +179,11 @@ export default function MembersDirectoryPage() {
                       {/* Avatar */}
                       <div className="mb-4">
                         {member.profile.avatar ? (
-                          <img
+                          <Image
                             src={member.profile.avatar}
                             alt={member.name}
+                            width={80}
+                            height={80}
                             className="h-20 w-20 rounded-full object-cover mx-auto group-hover:scale-110 transition-transform"
                           />
                         ) : (

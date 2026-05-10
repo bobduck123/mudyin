@@ -1,115 +1,52 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { PageHero } from '@/components/layout/PageHero'
 import { CTABand } from '@/components/sections/CTABand'
-import { programs } from '@/lib/data'
+import { mudyinOperatingEntity, mudyinProgramStreams, statusLabel } from '@/lib/mudyin-operational-model'
 
 export const metadata: Metadata = {
-  title: 'Our Programs',
+  title: 'Programs and Streams',
   description:
-    'Explore Mudyin Aboriginal Healing Centre\'s programs — the Young Spirit Mentoring Program (YSMP), Thrive Tribe wellness program, and Healing Centre Services. Community-led, culturally grounded.',
+    'Mudyin program streams under MUDYIN PTY LTD, with clear first-live and future-phase status.',
 }
 
 export default function ProgramsPage() {
   return (
     <div style={{ backgroundColor: 'var(--color-background)' }}>
       <PageHero
-        title="Our Programs"
-        subtitle="What We Offer"
-        description="Three powerful, culturally grounded programs — built with community, for community. Each one is a doorway to healing, strength, and belonging."
+        title="Programs and Streams"
+        subtitle={mudyinOperatingEntity.legalName}
+        description="Mudyin is using a staged sub-program model. The site accepts enquiries now, while future-phase streams stay clearly labelled until operational approvals are complete."
         breadcrumbs={[{ label: 'Programs' }]}
       />
 
-      {/* Programs grid */}
-      <section className="section-padding py-20 lg:py-28" aria-label="Programs">
+      <section className="section-padding py-20 lg:py-28" aria-label="Program streams">
         <div className="container-wide">
-          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-            {programs.map((program) => (
-              <article
-                key={program.id}
-                className="card-dark flex flex-col overflow-hidden rounded-2xl group"
-                style={{ border: '1px solid rgba(65,70,72,0.4)' }}
-                aria-label={program.name}
-              >
-                {/* Image */}
-                <div className="relative h-56 overflow-hidden">
-                  <Image
-                    src={program.image}
-                    alt={program.imageAlt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        'linear-gradient(to top, rgba(20,20,20,0.85) 0%, rgba(20,20,20,0.2) 60%, transparent 100%)',
-                    }}
-                    aria-hidden="true"
-                  />
-                  {/* Enrollment badge */}
-                  {program.enrollmentOpen && (
-                    <span
-                      className="absolute top-4 right-4 text-xs font-semibold px-3 py-1 rounded-full"
-                      style={{
-                        backgroundColor: 'rgba(157,193,131,0.2)',
-                        border: '1px solid rgba(157,193,131,0.5)',
-                        color: '#9DC183',
-                      }}
-                    >
-                      Enrolling Now
-                    </span>
-                  )}
-                  {/* Tagline on image */}
-                  <span
-                    className="absolute bottom-4 left-4 text-xs font-bold uppercase tracking-widest"
-                    style={{ color: 'var(--color-ochre-400)' }}
-                  >
-                    {program.tagline}
-                  </span>
+          <div className="mb-10 max-w-3xl">
+            <span className="section-label">First-live model</span>
+            <h2 className="font-display mt-3 text-3xl font-semibold text-white">Sub-programs under one operating entity</h2>
+            <p className="mt-4 leading-7 text-white/65">
+              Mudyin Women&apos;s Business, Aaliyah&apos;s Dreaming, and Mirabella&apos;s Dreaming are presented as streams under {mudyinOperatingEntity.legalName}, not as separate live organisations. Public requests are reviewed by the Mudyin team before any activity is confirmed.
+            </p>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            {mudyinProgramStreams.map((stream) => (
+              <article key={stream.slug} className="card-dark flex flex-col rounded-2xl p-7 healing-border">
+                <div className="inline-flex w-fit rounded-full border border-white/15 px-3 py-1 text-xs font-semibold text-white/75">
+                  {statusLabel(stream.status)}
                 </div>
-
-                {/* Content */}
-                <div className="flex flex-col flex-1 p-7">
-                  <h2
-                    className="font-display font-semibold text-xl mb-3"
-                    style={{ color: 'var(--color-foreground)' }}
-                  >
-                    {program.name}
-                  </h2>
-                  <p
-                    className="text-sm leading-relaxed mb-6 flex-1"
-                    style={{ color: 'rgba(255,255,255,0.65)' }}
-                  >
-                    {program.shortDescription}
-                  </p>
-
-                  {/* Key detail */}
-                  <p
-                    className="text-xs mb-6"
-                    style={{ color: 'rgba(255,255,255,0.4)' }}
-                  >
-                    {program.targetAudience} &bull; {program.location}
-                  </p>
-
-                  <div className="flex gap-3">
-                    <Link
-                      href={`/programs/${program.slug}`}
-                      className="btn-outline text-sm flex-1 text-center"
-                      aria-label={`Learn more about ${program.name}`}
-                    >
-                      Learn More
-                    </Link>
-                    <Link
-                      href={`/enroll/${program.slug}`}
-                      className="btn-primary text-sm flex-1 text-center"
-                      aria-label={`Enroll in ${program.name}`}
-                    >
-                      Enroll
-                    </Link>
-                  </div>
+                <h3 className="font-display mt-5 text-2xl font-semibold text-white">{stream.name}</h3>
+                <p className="mt-2 text-sm text-ochre-200/85">{stream.phase}</p>
+                <p className="mt-5 flex-1 text-sm leading-6 text-white/65">{stream.summary}</p>
+                <p className="mt-5 text-xs leading-5 text-white/45">{stream.culturalNote}</p>
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                  <Link href={`/programs/${stream.slug}`} className="btn-outline flex-1 text-center text-sm">
+                    View stream
+                  </Link>
+                  <Link href="/contact#booking-request" className="btn-primary flex-1 text-center text-sm">
+                    Make request
+                  </Link>
                 </div>
               </article>
             ))}
@@ -117,41 +54,24 @@ export default function ProgramsPage() {
         </div>
       </section>
 
-      {/* Not sure section */}
-      <section
-        className="section-padding py-16"
-        style={{
-          borderTop: '1px solid rgba(65,70,72,0.3)',
-          borderBottom: '1px solid rgba(65,70,72,0.3)',
-        }}
-        aria-label="Not sure which program"
-      >
+      <section className="section-padding py-16 healing-border-y" aria-label="Rollout discipline">
         <div className="container-mid text-center">
-          <span className="section-label">Need Guidance?</span>
-          <h2
-            className="font-display font-semibold text-2xl lg:text-3xl mt-3 mb-5"
-            style={{ color: 'var(--color-foreground)' }}
-          >
-            Not sure which program is right for you?
-          </h2>
-          <p
-            className="text-lg leading-relaxed mb-8 max-w-xl mx-auto"
-            style={{ color: 'rgba(255,255,255,0.65)' }}
-          >
-            Our team is here to help. Reach out and we will walk you through
-            your options and find the best fit for you or your family.
+          <span className="section-label">Rollout Discipline</span>
+          <h2 className="font-display mt-3 text-3xl font-semibold text-white">Future-phase means future-phase</h2>
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-white/65">
+            Mudyin will not publicly overstate delivery, accreditation, transport, child programs, clinical capacity, or confirmed sessions. Enquiries help the team understand demand while governance, consent, risk, and program approval controls are completed.
           </p>
-          <Link href="/contact" className="btn-primary">
-            Talk to Our Team
+          <Link href="/governance" className="btn-outline mt-8">
+            Governance summary
           </Link>
         </div>
       </section>
 
       <CTABand
-        heading="Two Worlds Strong — Together"
-        subheading="Every program at Mudyin is built on the belief that when our communities are strong, our young people thrive. Come as you are."
-        primaryCTA={{ label: 'Enroll Today', href: '/enroll' }}
-        secondaryCTA={{ label: 'Support Our Work', href: '/donate' }}
+        heading="Start with an enquiry"
+        subheading="Tell the Mudyin team what you are seeking. A request is reviewed before anything is treated as confirmed."
+        primaryCTA={{ label: 'Booking Request', href: '/contact#booking-request' }}
+        secondaryCTA={{ label: 'General Enquiry', href: '/contact#general-enquiry' }}
       />
     </div>
   )

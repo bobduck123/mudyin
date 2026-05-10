@@ -8,80 +8,83 @@ interface Breadcrumb {
 }
 
 interface Props {
-  title:        string
-  subtitle?:    string
+  title: string
+  subtitle?: string
   description?: string
-  image?:       string
-  imageAlt?:    string
+  video?: string
+  image?: string
+  imageAlt?: string
+  motifOverlay?: boolean
   breadcrumbs?: Breadcrumb[]
-  ctaLabel?:    string
-  ctaHref?:     string
-  compact?:     boolean
+  ctaLabel?: string
+  ctaHref?: string
+  compact?: boolean
 }
 
 export function PageHero({
   title,
   subtitle,
   description,
+  video,
   image,
   imageAlt,
+  motifOverlay = false,
   breadcrumbs,
   ctaLabel,
   ctaHref,
   compact = false,
 }: Props) {
+  const heroImage = image ?? '/images/hero-banner.jpg'
+
   return (
     <section
-      className={`relative flex items-end overflow-hidden blak-motif-organic country-lines ${compact ? 'min-h-[320px] lg:min-h-[400px]' : 'min-h-[480px] lg:min-h-[600px]'}`}
+      className={`relative flex items-end overflow-hidden ${compact ? 'min-h-[320px] lg:min-h-[400px]' : 'min-h-[480px] lg:min-h-[600px]'}`}
       aria-label={`${title} page header`}
     >
-      {/* Background image */}
-      {image && (
+      {video && (
+        <video
+          src={video}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          playsInline
+          loop
+          data-decorative="true"
+        />
+      )}
+
+      {!video && (
         <Image
-          src={image}
-          alt={imageAlt ?? ''}
+          src={heroImage}
+          alt={imageAlt ?? `${title} hero image`}
           fill
           priority
           sizes="100vw"
           className="object-cover"
-          style={{ animation: 'kenBurns 26s ease-in-out infinite alternate' }}
+          style={{ animation: 'none' }}
           data-decorative="true"
         />
       )}
 
-      {/* Fallback gradient background if no image */}
-      {!image && (
+      <div className="absolute inset-0 overlay-dark" aria-hidden="true" data-decorative="true" />
+      {motifOverlay && (
         <div
           data-decorative="true"
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(135deg, #141414 0%, rgba(210,168,85,0.08) 50%, #141414 100%)',
+            background:
+              'radial-gradient(circle at 50% 52%, rgba(200,167,93,0.055) 0 11%, rgba(184,117,85,0.07) 25%, transparent 45%)',
+            opacity: 0.4,
           }}
         />
       )}
-
-      {/* Overlay */}
-      <div className="absolute inset-0 overlay-dark" aria-hidden="true" data-decorative="true" />
-      <div
-        data-decorative="true"
-        className="absolute inset-y-0 left-0 w-1/3"
-        style={{ background: 'linear-gradient(100deg, rgba(219,22,47,0.2), transparent 65%)' }}
-      />
-      <div
-        data-decorative="true"
-        className="absolute inset-y-0 right-0 w-1/3"
-        style={{ background: 'linear-gradient(250deg, rgba(243,222,44,0.16), transparent 65%)' }}
-      />
       <div
         data-decorative="true"
         className="absolute inset-x-0 bottom-0 h-28"
         style={{ background: 'linear-gradient(to top, rgba(2,2,2,0.92), transparent)' }}
       />
 
-      {/* Content */}
       <div className="relative z-10 container-wide section-padding w-full pb-12 lg:pb-16 pt-32 lg:pt-36">
-
-        {/* Breadcrumbs */}
         {breadcrumbs && breadcrumbs.length > 0 && (
           <nav aria-label="Breadcrumb" className="mb-4">
             <ol className="flex items-center gap-1 text-sm flex-wrap">
@@ -119,12 +122,10 @@ export function PageHero({
           </nav>
         )}
 
-        {/* Label */}
         {subtitle && (
           <span className="section-label">{subtitle}</span>
         )}
 
-        {/* Title */}
         <h1
           className="font-display font-semibold text-display-lg lg:text-display-xl mt-2 mb-4 max-w-3xl"
           style={{ color: 'var(--color-foreground)' }}
@@ -132,7 +133,6 @@ export function PageHero({
           {title}
         </h1>
 
-        {/* Description */}
         {description && (
           <p
             className="text-lg max-w-2xl leading-relaxed mb-6"
@@ -142,7 +142,6 @@ export function PageHero({
           </p>
         )}
 
-        {/* CTA */}
         {ctaLabel && ctaHref && (
           <Link href={ctaHref} className="btn-primary">
             {ctaLabel}

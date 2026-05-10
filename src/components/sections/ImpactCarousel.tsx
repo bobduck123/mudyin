@@ -112,9 +112,9 @@ export function ImpactCarousel() {
           className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200"
           style={{
             backgroundColor: 'rgba(20,20,20,0.5)',
-            border: '1px solid rgba(255,255,255,0.15)',
             color: 'rgba(255,255,255,0.7)',
             backdropFilter: 'blur(8px)',
+            boxShadow: '0 8px 20px rgba(0,0,0,0.32)',
           }}
           onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(210,168,85,0.2)' }}
           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(20,20,20,0.5)' }}
@@ -129,9 +129,9 @@ export function ImpactCarousel() {
           className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200"
           style={{
             backgroundColor: 'rgba(20,20,20,0.5)',
-            border: '1px solid rgba(255,255,255,0.15)',
             color: 'rgba(255,255,255,0.7)',
             backdropFilter: 'blur(8px)',
+            boxShadow: '0 8px 20px rgba(0,0,0,0.32)',
           }}
           onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(210,168,85,0.2)' }}
           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(20,20,20,0.5)' }}

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm, type SubmitHandler } from 'react-hook-form'
@@ -140,7 +141,6 @@ export function CreatePostForm({ userId }: CreatePostFormProps) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-id': userId,
         },
         body: JSON.stringify(data),
       })
@@ -283,9 +283,10 @@ export function CreatePostForm({ userId }: CreatePostFormProps) {
               className="w-full rounded-2xl p-8 border-2 border-dashed transition-colors text-left"
               style={{
                 borderColor: isDragActive
-                  ? 'rgba(243, 222, 44, 0.75)'
+                  ? 'rgba(223, 206, 214, 0.68)'
                   : 'rgba(210, 168, 85, 0.35)',
                 backgroundColor: 'rgba(20, 20, 20, 0.55)',
+                boxShadow: isDragActive ? '0 0 0 1px rgba(2,2,2,0.68), 0 0 14px rgba(2,2,2,0.45)' : undefined,
               }}
               onDragOver={(event) => {
                 event.preventDefault()
@@ -320,10 +321,13 @@ export function CreatePostForm({ userId }: CreatePostFormProps) {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {images.map((image, index) => (
                 <div key={index} className="relative rounded-xl overflow-hidden border border-white/10">
-                  <img
+                  <Image
                     src={image}
                     alt={`Selected upload ${index + 1}`}
+                    width={240}
+                    height={112}
                     className="w-full h-28 object-cover"
+                    unoptimized
                   />
                   <button
                     type="button"

@@ -23,6 +23,7 @@ model User {
   // Relations
   profile       UserProfile?
   verification  MemberVerification?
+  adminProfile  AdminProfile?
   photos        GalleryPhoto[]
   posts         CommunityPost[]
   comments      Comment[]
@@ -37,6 +38,101 @@ model User {
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+}
+
+model AdminProfile {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  role                  String   // "super_admin", "admin", "editor"
+  status                String   @default("active") // "active", "disabled"
+  scope                 String[] @default(["mudyin"])
+  mustChangePassword    Boolean  @default(true)
+  bootstrap             Boolean  @default(false)
+  createdById           String?
+  lastLoginAt           DateTime?
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([role])
+  @@index([status])
+  @@index([bootstrap])
+}
+
+model ProgramStream {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  name            String
+  parentEntity    String   @default("MUDYIN PTY LTD")
+  status          String   @default("future_phase") // "active_enquiry", "future_phase", "paused"
+  phase           String
+  summary         String
+  description     String
+  culturalNote    String?
+  enquiryEnabled  Boolean  @default(true)
+  publicEnabled   Boolean  @default(true)
+  sortOrder       Int      @default(0)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([status])
+  @@index([publicEnabled])
+  @@index([sortOrder])
+}
+
+model SitePage {
+  id              String    @id @default(cuid())
+  slug            String    @unique
+  title           String
+  body            String
+  status          String    @default("draft") // "draft", "published", "archived"
+  version         Int       @default(1)
+  ownerRole       String    @default("admin")
+  lastReviewedAt  DateTime?
+  publishedAt     DateTime?
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([status])
+  @@index([ownerRole])
+}
+
+model Inquiry {
+  id                  String    @id @default(cuid())
+  reference           String    @unique
+  kind                String    // "enquiry", "booking_request"
+  status              String    @default("new") // "new", "reviewed", "closed"
+  tenantKey           String    @default("mudyin")
+  siteSlug            String    @default("mudyin")
+  source              String    @default("mudyin-public-frontend")
+
+  name                String
+  email               String
+  phone               String?
+  enquiryType         String
+  preferredService    String?
+  preferredDateTime   String?
+  message             String
+  consent             Boolean   @default(false)
+  origin              String?
+  userAgent           String?
+
+  reviewedById        String?
+  reviewedAt          DateTime?
+  adminNotes          String?
+
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@index([kind])
+  @@index([status])
+  @@index([tenantKey])
+  @@index([siteSlug])
+  @@index([createdAt])
 }
 
 model MemberVerification {

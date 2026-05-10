@@ -265,17 +265,17 @@ export default async function ArticlePage({ params }: Props) {
                   className="font-display font-semibold text-lg mb-3"
                   style={{ color: 'var(--color-foreground)' }}
                 >
-                  Support Our Work
+                  Talk With Us
                 </h3>
                 <p
                   className="text-sm leading-relaxed mb-5"
                   style={{ color: 'rgba(255,255,255,0.65)' }}
                 >
                   Stories like this are made possible by community supporters like you. Your
-                  donation funds programs, mentors, and healing services.
+                  enquiries help the team connect people with programs, mentors, and healing services.
                 </p>
-                <Link href="/donate" className="btn-primary text-sm w-full block text-center">
-                  Donate Now
+                <Link href="/contact#general-enquiry" className="btn-primary text-sm w-full block text-center">
+                  Start an Enquiry
                 </Link>
               </div>
             </aside>
@@ -286,8 +286,8 @@ export default async function ArticlePage({ params }: Props) {
       <CTABand
         heading="Be Part of the Story"
         subheading="Every program, every milestone, every life transformed is made possible by community. Join us."
-        primaryCTA={{ label: 'Enroll in a Program', href: '/enroll' }}
-        secondaryCTA={{ label: 'Support Our Work', href: '/donate' }}
+        primaryCTA={{ label: 'Request a Place', href: '/contact#booking-request' }}
+        secondaryCTA={{ label: 'General Enquiry', href: '/contact#general-enquiry' }}
       />
     </div>
   )

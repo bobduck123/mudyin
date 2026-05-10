@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { parentalConsentSchema } from '@/lib/validators'
 import { randomBytes } from 'crypto'
+import { requireSessionUser } from '@/lib/api-auth'
 
 // Send parental consent request
 export async function POST(request: NextRequest) {
@@ -18,16 +19,9 @@ export async function POST(request: NextRequest) {
 
     const { parentEmail, childName: _childName } = validation.data
 
-    // Get the current user's verification record (this should be called by authenticated user)
-    // For now, we'll accept userId in the request
-    const userId = request.headers.get('x-user-id')
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
-    }
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
 
     const verification = await prisma.memberVerification.findUnique({
       where: { userId },

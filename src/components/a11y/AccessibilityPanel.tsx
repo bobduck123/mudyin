@@ -81,15 +81,13 @@ export function AccessibilityPanel() {
     <div className="fixed bottom-5 right-5 z-[60]">
       {open && (
         <div
-          className="w-72 rounded-2xl p-4 mb-3 shadow-xl"
+          className="w-72 rounded-2xl p-4 mb-3 shadow-xl healing-panel healing-border"
           style={{
-            backgroundColor: 'rgba(2,2,2,0.95)',
-            border: '1px solid rgba(223,206,214,0.35)',
             backdropFilter: 'blur(12px)',
           }}
         >
           <div className="flex items-center justify-between mb-3">
-            <p className="text-sm font-semibold flag-accent-hint">Accessibility</p>
+            <p className="text-sm font-semibold healing-accent-hint">Accessibility</p>
             <button
               onClick={() => setOpen(false)}
               className="btn-ghost p-1"
@@ -145,7 +143,7 @@ export function AccessibilityPanel() {
                       className="px-2 py-1 rounded text-[11px]"
                       style={
                         state.textScale === step
-                          ? { backgroundColor: 'var(--color-flag-yellow)', color: '#020202' }
+                          ? { backgroundColor: 'var(--color-ochre-400)', color: 'var(--color-charcoal-950)' }
                           : { backgroundColor: 'rgba(255,255,255,0.08)' }
                       }
                     >
@@ -171,17 +169,11 @@ export function AccessibilityPanel() {
 
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="h-12 rounded-full inline-flex items-center justify-center gap-2 px-4 shadow-lg"
+        className="h-12 rounded-full inline-flex items-center justify-center gap-2 px-4 shadow-lg btn-clay-glass"
         aria-label="Open accessibility settings"
         aria-expanded={open}
         style={{
-          background:
-            summary > 0
-              ? 'linear-gradient(135deg, rgba(219,22,47,0.35), rgba(243,222,44,0.35))'
-              : 'rgba(195,121,32,0.35)',
-          color: '#020202',
-          border: '1px solid rgba(255,255,255,0.35)',
-          boxShadow: '0 8px 18px rgba(0,0,0,0.35), 0 0 0 1px rgba(243,222,44,0.16)',
+          color: summary > 0 ? '#ffffff' : 'rgba(255,255,255,0.88)',
           backdropFilter: 'blur(8px)',
         }}
       >

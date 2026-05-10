@@ -32,8 +32,8 @@ export default function HealingCentrePage() {
       <div
         className="section-padding py-8"
         style={{
-          backgroundColor: 'rgba(139,37,0,0.08)',
-          borderBottom: '1px solid rgba(139,37,0,0.2)',
+          backgroundColor: 'rgba(184,117,85,0.08)',
+          borderBottom: '1px solid rgba(184,117,85,0.2)',
         }}
       >
         <div className="container-mid text-center">
@@ -146,8 +146,8 @@ export default function HealingCentrePage() {
               <div
                 className="rounded-2xl p-8"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(139,37,0,0.08), rgba(139,37,0,0.02))',
-                  border: '1px solid rgba(139,37,0,0.25)',
+                  background: 'linear-gradient(135deg, rgba(184,117,85,0.08), rgba(184,117,85,0.02))',
+                  border: '1px solid rgba(184,117,85,0.25)',
                 }}
               >
                 <h3
@@ -309,8 +309,8 @@ export default function HealingCentrePage() {
               <div
                 className="rounded-2xl p-5"
                 style={{
-                  backgroundColor: 'rgba(139,37,0,0.08)',
-                  border: '1px solid rgba(139,37,0,0.25)',
+                  backgroundColor: 'rgba(184,117,85,0.08)',
+                  border: '1px solid rgba(184,117,85,0.25)',
                 }}
               >
                 <p

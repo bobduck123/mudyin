@@ -1,8 +1,9 @@
 import type { MetadataRoute } from 'next'
-import { newsArticles, programs } from '@/lib/data'
+import { newsArticles } from '@/lib/data'
+import { getDefaultSite } from '@/lib/white-label/site-registry'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://mudyin.org.au'
+  const baseUrl = getDefaultSite().metadata.url
   const now     = new Date()
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -19,8 +20,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/events`,                  lastModified: now, changeFrequency: 'weekly',  priority: 0.7 },
     { url: `${baseUrl}/resources`,               lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/contact`,                 lastModified: now, changeFrequency: 'yearly',  priority: 0.8 },
-    { url: `${baseUrl}/donate`,                  lastModified: now, changeFrequency: 'yearly',  priority: 0.9 },
-    { url: `${baseUrl}/enroll`,                  lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/icip`,                    lastModified: now, changeFrequency: 'yearly',  priority: 0.5 },
     { url: `${baseUrl}/privacy`,                 lastModified: now, changeFrequency: 'yearly',  priority: 0.3 },
     { url: `${baseUrl}/terms`,                   lastModified: now, changeFrequency: 'yearly',  priority: 0.3 },
@@ -35,12 +34,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority:         0.6,
   }))
 
-  const programEnrollRoutes: MetadataRoute.Sitemap = programs.map(p => ({
-    url:             `${baseUrl}/enroll/${p.id}`,
-    lastModified:    now,
-    changeFrequency: 'monthly' as const,
-    priority:        0.8,
-  }))
-
-  return [...staticRoutes, ...newsRoutes, ...programEnrollRoutes]
+  return [...staticRoutes, ...newsRoutes]
 }

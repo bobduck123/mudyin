@@ -1,17 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { requireSessionUser } from '@/lib/api-auth'
+import { authenticateControlRequest } from '@/lib/control-plane'
+import { getDefaultSite } from '@/lib/white-label/site-registry'
 
 // GET - Fetch user's notifications
 export async function GET(request: NextRequest) {
   try {
-    const userId = request.headers.get('x-user-id')
+    const auth = await requireSessionUser()
 
-    if (!userId) {
+    if (!auth.ok) {
       return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
+        {
+          notifications: [],
+          total: 0,
+          unreadCount: 0,
+          limit: parseInt(request.nextUrl.searchParams.get('limit') || '20'),
+          offset: parseInt(request.nextUrl.searchParams.get('offset') || '0'),
+        },
+        { status: 200 }
       )
     }
+    const userId = auth.userId
 
     const searchParams = request.nextUrl.searchParams
     const limit = parseInt(searchParams.get('limit') || '20')
@@ -65,6 +75,9 @@ export async function GET(request: NextRequest) {
 // POST - Create notification (internal use)
 export async function POST(request: NextRequest) {
   try {
+    const controlAuth = authenticateControlRequest(request, getDefaultSite().siteId)
+    if (!controlAuth.ok) return controlAuth.response
+
     const body = await request.json()
     const {
       userId,

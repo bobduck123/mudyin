@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { PageHero } from '@/components/layout/PageHero'
 import { CTABand } from '@/components/sections/CTABand'
 import { newsArticles } from '@/lib/data'
@@ -19,6 +20,8 @@ function formatDate(dateStr: string): string {
   })
 }
 
+const ritualTags = ['Yarn Circle', 'Story Trails', 'Collective Memory']
+
 export default function NewsPage() {
   const [featured, ...rest] = newsArticles
 
@@ -31,21 +34,30 @@ export default function NewsPage() {
         breadcrumbs={[{ label: 'News' }]}
       />
 
-      <section className="section-padding py-14 lg:py-16">
+      <section className="section-spacing section-padding">
         <div className="container-wide">
-          <div className="engraved-panel country-lines rounded-2xl p-6 lg:p-8 mb-10">
-            <p className="text-xs uppercase tracking-[0.18em] mb-2" style={{ color: 'rgba(255,255,255,0.58)' }}>
-              Campfire Opening
-            </p>
-            <h2 className="font-display text-3xl lg:text-4xl mb-3">What We Carry Forward This Week</h2>
+          <div className="healing-panel grounded-lines rounded-2xl p-6 lg:p-8 mb-10 healing-border">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] mb-2" style={{ color: 'rgba(255,255,255,0.56)' }}>
+                  Campfire Opening
+                </p>
+                <h2 className="font-display text-3xl lg:text-4xl">What We Carry Forward This Week</h2>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {ritualTags.map((tag) => (
+                  <span key={tag} className="healing-chip">{tag}</span>
+                ))}
+              </div>
+            </div>
             <p className="max-w-3xl" style={{ color: 'rgba(255,255,255,0.74)' }}>
-              Stories here are shared as collective memory, not headline churn. Read them as tracks of effort, care, and change across community.
+              Stories here are shared as collective memory, not headline churn. Read them as tracks of effort,
+              care, and change across community.
             </p>
           </div>
 
           <article
-            className="rounded-2xl overflow-hidden grid lg:grid-cols-2 group"
-            style={{ border: '1px solid rgba(223,206,214,0.26)', backgroundColor: 'rgba(2,2,2,0.7)' }}
+            className="rounded-2xl overflow-hidden grid lg:grid-cols-2 group healing-panel healing-border"
             aria-label={featured.title}
           >
             <div className="relative h-72 lg:h-auto overflow-hidden">
@@ -59,14 +71,14 @@ export default function NewsPage() {
               />
               <div
                 className="absolute inset-0"
-                style={{ background: 'linear-gradient(to top, rgba(2,2,2,0.65), transparent 65%)' }}
+                style={{ background: 'linear-gradient(to top, rgba(2,2,2,0.68), transparent 65%)' }}
                 aria-hidden="true"
               />
             </div>
 
-            <div className="p-8 lg:p-10 flex flex-col justify-center country-lines">
+            <div className="p-8 lg:p-10 flex flex-col justify-center grounded-lines">
               <div className="flex items-center gap-3 mb-4">
-                <span className="ritual-chip" style={{ borderColor: 'rgba(219,22,47,0.55)' }}>
+                <span className="healing-chip">
                   {featured.category}
                 </span>
                 <time dateTime={featured.publishedAt} className="text-xs" style={{ color: 'rgba(255,255,255,0.48)' }}>
@@ -90,7 +102,7 @@ export default function NewsPage() {
         </div>
       </section>
 
-      <section className="section-padding py-10 pb-24">
+      <section className="section-padding py-8 pb-24">
         <div className="container-wide">
           <div className="mb-8 flex items-center justify-between gap-4">
             <h2 className="font-display text-2xl lg:text-3xl">Story Trails</h2>
@@ -99,12 +111,14 @@ export default function NewsPage() {
             </p>
           </div>
 
+          <div className="grounded-divider mb-8" />
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
             {rest.map((article) => (
               <article
                 key={article.id}
-                className="rounded-2xl overflow-hidden flex flex-col group country-lines"
-                style={{ border: '1px solid rgba(223,206,214,0.22)', backgroundColor: 'rgba(2,2,2,0.66)' }}
+                className="rounded-2xl overflow-hidden flex flex-col group grounded-lines healing-border"
+                style={{ backgroundColor: 'rgba(2,2,2,0.66)' }}
                 aria-label={article.title}
               >
                 <div className="relative h-52 overflow-hidden flex-shrink-0">
@@ -119,7 +133,7 @@ export default function NewsPage() {
                 </div>
 
                 <div className="p-6 flex flex-col flex-1">
-                  <div className="story-trail mb-4">
+                  <div className="care-trail mb-4">
                     <p className="text-[11px] uppercase tracking-[0.16em]" style={{ color: 'rgba(255,255,255,0.54)' }}>
                       {article.category}
                     </p>
@@ -136,8 +150,8 @@ export default function NewsPage() {
                     <p className="text-xs" style={{ color: 'rgba(255,255,255,0.44)' }}>
                       {article.author}
                     </p>
-                    <Link href={`/news/${article.slug}`} className="text-sm font-semibold hover:underline" style={{ color: 'var(--color-flag-yellow)' }}>
-                      Follow Trail
+                    <Link href={`/news/${article.slug}`} className="text-sm font-semibold inline-flex items-center gap-1" style={{ color: 'var(--color-ochre-400)' }}>
+                      Follow Trail <ArrowRight size={14} />
                     </Link>
                   </div>
                 </div>

@@ -19,6 +19,7 @@ export const authOptions: AuthOptions = {
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email as string },
+          include: { adminProfile: true },
         })
 
         if (!user || !user.password) {
@@ -34,28 +35,63 @@ export const authOptions: AuthOptions = {
           throw new Error('Invalid password')
         }
 
+        if (user.adminProfile?.status === 'active') {
+          await prisma.adminProfile.update({
+            where: { id: user.adminProfile.id },
+            data: { lastLoginAt: new Date() },
+          })
+        }
+
         return {
           id: user.id,
           email: user.email,
           name: user.name,
+          adminRole: user.adminProfile?.status === 'active' ? user.adminProfile.role : null,
+          adminStatus: user.adminProfile?.status ?? null,
+          mustChangePassword: user.adminProfile?.status === 'active' ? user.adminProfile.mustChangePassword : false,
         }
       },
     }),
   ],
   pages: {
-    signIn: '/auth/signin',
+    signIn: '/admin/login',
     newUser: '/auth/register',
   },
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user?: { id: string } | null }) {
+    async jwt({
+      token,
+      user,
+    }: {
+      token: JWT
+      user?:
+        | {
+            id: string
+            adminRole?: string | null
+            adminStatus?: string | null
+            mustChangePassword?: boolean | null
+          }
+        | null
+    }) {
       if (user) {
         token.id = user.id
+        token.adminRole = user.adminRole
+        token.adminStatus = user.adminStatus
+        token.mustChangePassword = user.mustChangePassword
       }
       return token
     },
     async session({ session, token }: { session: Session; token: JWT }) {
       if (session.user) {
-        (session.user as { id?: string }).id = token.id as string
+        const sessionUser = session.user as {
+          id?: string
+          adminRole?: string | null
+          adminStatus?: string | null
+          mustChangePassword?: boolean | null
+        }
+        sessionUser.id = token.id as string
+        sessionUser.adminRole = token.adminRole as string | null
+        sessionUser.adminStatus = token.adminStatus as string | null
+        sessionUser.mustChangePassword = token.mustChangePassword as boolean | null
       }
       return session
     },

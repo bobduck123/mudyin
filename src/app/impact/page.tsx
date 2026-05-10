@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { PageHero } from '@/components/layout/PageHero'
 import { CTABand } from '@/components/sections/CTABand'
 
@@ -36,6 +37,12 @@ const systemChanges = [
   },
 ]
 
+const impactPath = [
+  'Cultural safety in daily delivery',
+  'Sustained participation and trust',
+  'Systems-level improvement and continuity',
+]
+
 export default function ImpactPage() {
   return (
     <div style={{ backgroundColor: 'var(--color-background)' }}>
@@ -46,22 +53,42 @@ export default function ImpactPage() {
         breadcrumbs={[{ label: 'Impact' }]}
       />
 
-      <section className="section-padding py-14">
+      <section className="section-spacing section-padding">
         <div className="container-wide">
-          <div className="engraved-panel rounded-2xl p-6 lg:p-8 country-lines">
-            <p className="text-xs uppercase tracking-[0.16em] mb-2" style={{ color: 'rgba(255,255,255,0.58)' }}>
-              Ritual Interaction: Change Lens
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <a href="#collective" className="ritual-chip">Collective Outcomes</a>
-              <a href="#systems" className="ritual-chip">Systems Level Change</a>
-              <a href="#transparency" className="ritual-chip">Transparency</a>
+          <div className="healing-panel rounded-2xl p-6 lg:p-8 grounded-lines">
+            <div className="grid lg:grid-cols-12 gap-6 items-start">
+              <div className="lg:col-span-7">
+                <p className="text-xs uppercase tracking-[0.16em] mb-2" style={{ color: 'rgba(255,255,255,0.58)' }}>
+                  Ritual Interaction: Change Lens
+                </p>
+                <h2 className="font-display text-3xl lg:text-4xl mb-3">From Individual Story to System Shift</h2>
+                <p style={{ color: 'rgba(255,255,255,0.73)' }}>
+                  Impact is measured as community continuity. The pathway below shows how culturally grounded work
+                  becomes long-term social infrastructure.
+                </p>
+              </div>
+              <div className="lg:col-span-5 rounded-xl p-4 soft-border" style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}>
+                <ol className="space-y-3 text-sm">
+                  {impactPath.map((step, idx) => (
+                    <li key={step} className="care-trail">
+                      <span style={{ color: 'rgba(255,255,255,0.82)' }}>
+                        {idx + 1}. {step}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <a href="#collective" className="healing-chip">Collective Outcomes</a>
+                  <a href="#systems" className="healing-chip">Systems Level Change</a>
+                  <a href="#transparency" className="healing-chip">Transparency</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="collective" className="section-padding py-10 lg:py-14">
+      <section id="collective" className="section-padding py-8 lg:py-12">
         <div className="container-wide">
           <div className="mb-10">
             <span className="section-label">Collective Outcomes</span>
@@ -71,16 +98,16 @@ export default function ImpactPage() {
             {collectiveMetrics.map((metric, idx) => (
               <article
                 key={metric.label}
-                className="rounded-2xl p-6 lg:p-7 country-lines"
+                className="rounded-2xl p-6 lg:p-7 grounded-lines"
                 style={{
-                  backgroundColor: idx === 2 ? 'rgba(223,206,214,0.9)' : 'rgba(2,2,2,0.7)',
-                  border: idx === 2 ? '1px solid rgba(223,206,214,0.95)' : '1px solid rgba(223,206,214,0.25)',
+                  backgroundColor: idx === 2 ? 'rgba(223,206,214,0.9)' : 'rgba(2,2,2,0.72)',
+                  boxShadow: idx === 2 ? '0 14px 28px rgba(0,0,0,0.26)' : '0 14px 28px rgba(0,0,0,0.3)',
                 }}
               >
-                <p className="font-display font-bold mb-2" style={{ fontSize: 'clamp(2.1rem, 5vw, 3.4rem)', color: idx === 2 ? 'var(--color-flag-black)' : 'var(--color-flag-yellow)', lineHeight: 1 }}>
+                <p className="font-display font-bold mb-2" style={{ fontSize: 'clamp(2.1rem, 5vw, 3.4rem)', color: idx === 2 ? 'var(--color-charcoal-950)' : 'var(--color-ochre-400)', lineHeight: 1 }}>
                   {metric.stat}
                 </p>
-                <p className="font-semibold text-sm mb-2" style={{ color: idx === 2 ? 'var(--color-flag-black)' : 'var(--color-foreground)' }}>
+                <p className="font-semibold text-sm mb-2" style={{ color: idx === 2 ? 'var(--color-charcoal-950)' : 'var(--color-foreground)' }}>
                   {metric.label}
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: idx === 2 ? 'rgba(2,2,2,0.74)' : 'rgba(255,255,255,0.66)' }}>
@@ -92,22 +119,23 @@ export default function ImpactPage() {
         </div>
       </section>
 
-      <section id="systems" className="section-padding py-14">
+      <section id="systems" className="section-padding py-12">
         <div className="container-wide">
           <div className="grid lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-5">
               <span className="section-label">Systems Level Change</span>
               <h2 className="font-display text-3xl lg:text-4xl mt-2 mb-4">Beyond Individual Outcomes</h2>
               <p style={{ color: 'rgba(255,255,255,0.72)' }}>
-                We measure impact through stronger social systems: safer service pathways, sustained education engagement, and intergenerational leadership continuity.
+                We measure impact through stronger social systems: safer service pathways, sustained education engagement,
+                and intergenerational leadership continuity.
               </p>
             </div>
             <div className="lg:col-span-7 space-y-4">
               {systemChanges.map((item) => (
                 <article
                   key={item.title}
-                  className="rounded-2xl p-6 story-trail"
-                  style={{ backgroundColor: 'rgba(2,2,2,0.72)', border: '1px solid rgba(223,206,214,0.24)' }}
+                  className="rounded-2xl p-6 care-trail"
+                  style={{ backgroundColor: 'rgba(2,2,2,0.72)', boxShadow: '0 12px 24px rgba(0,0,0,0.3)' }}
                 >
                   <h3 className="font-display text-2xl mb-2">{item.title}</h3>
                   <p style={{ color: 'rgba(255,255,255,0.72)' }}>{item.detail}</p>
@@ -118,9 +146,9 @@ export default function ImpactPage() {
         </div>
       </section>
 
-      <section id="transparency" className="section-padding py-14">
+      <section id="transparency" className="section-padding py-12">
         <div className="container-wide">
-          <div className="rounded-2xl p-7 lg:p-10 country-lines" style={{ border: '1px solid rgba(223,206,214,0.24)', backgroundColor: 'rgba(2,2,2,0.7)' }}>
+          <div className="rounded-2xl p-7 lg:p-10 grounded-lines healing-panel">
             <span className="section-label">Transparency</span>
             <h2 className="font-display text-3xl mt-2 mb-4">Annual Reports</h2>
             <p className="max-w-2xl mb-8" style={{ color: 'rgba(255,255,255,0.7)' }}>
@@ -128,14 +156,17 @@ export default function ImpactPage() {
             </p>
             <div className="grid sm:grid-cols-3 gap-4 max-w-3xl">
               {['2025', '2024', '2023'].map((year) => (
-                <div key={year} className="rounded-xl p-5" style={{ border: '1px solid rgba(223,206,214,0.25)', backgroundColor: 'rgba(255,255,255,0.03)' }}>
-                  <p className="font-display text-3xl mb-2" style={{ color: 'var(--color-flag-yellow)' }}>{year}</p>
+                <div key={year} className="rounded-xl p-5 soft-border" style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}>
+                  <p className="font-display text-3xl mb-2" style={{ color: 'var(--color-ochre-400)' }}>{year}</p>
                   <Link href="/contact?type=general" className="btn-outline text-xs w-full text-center">
                     Request Report
                   </Link>
                 </div>
               ))}
             </div>
+            <Link href="/contact?type=general" className="inline-flex items-center gap-2 text-sm mt-6" style={{ color: 'var(--color-ochre-400)' }}>
+              Ask a transparency question <ArrowRight size={14} />
+            </Link>
           </div>
         </div>
       </section>
@@ -143,7 +174,7 @@ export default function ImpactPage() {
       <CTABand
         heading="Collective Action Sustains Change"
         subheading="Support programs that strengthen families, services, and future leadership."
-        primaryCTA={{ label: 'Donate (Demo)', href: '/donate' }}
+        primaryCTA={{ label: 'Start an Enquiry', href: '/contact#general-enquiry' }}
         secondaryCTA={{ label: 'Our Programs', href: '/programs' }}
       />
     </div>

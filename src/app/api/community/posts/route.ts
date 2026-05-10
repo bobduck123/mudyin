@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { createPostSchema } from '@/lib/validators'
 import { demoId, isDbUnavailableError } from '@/lib/demo-fallback'
+import { requireSessionUser } from '@/lib/api-auth'
 
 function getDemoPosts() {
   return [
@@ -108,7 +109,6 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     )
   } catch (error) {
-    console.error('Community feed fetch error:', error)
     if (isDbUnavailableError(error)) {
       const posts = getDemoPosts()
       return NextResponse.json(
@@ -123,6 +123,7 @@ export async function GET(request: NextRequest) {
         { status: 200 }
       )
     }
+    console.error('Community feed fetch error:', error)
     return NextResponse.json(
       { error: 'Failed to fetch posts' },
       { status: 500 }
@@ -130,17 +131,32 @@ export async function GET(request: NextRequest) {
   }
 }
 
+type PostMutationResult = {
+  id: string
+  content: string
+  images: string[]
+  tags: string[]
+  createdAt: Date | string
+  author: {
+    id: string
+    name: string
+    profile: {
+      avatar: string | null
+      program: string | null
+    } | null
+  }
+  _count: {
+    likes: number
+    comments: number
+  }
+}
+
 // POST - Create new post
 export async function POST(request: NextRequest) {
   try {
-    const userId = request.headers.get('x-user-id')
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
-    }
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
 
     const body = await request.json()
 
@@ -155,7 +171,7 @@ export async function POST(request: NextRequest) {
 
     const { content, images, tags, program, visibility } = validation.data
 
-    let post: any
+    let post: PostMutationResult
 
     try {
       post = await prisma.communityPost.create({

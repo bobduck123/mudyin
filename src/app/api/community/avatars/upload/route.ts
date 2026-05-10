@@ -1,17 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { requireSessionUser } from '@/lib/api-auth'
 
 // POST - Upload avatar
 export async function POST(request: NextRequest) {
   try {
-    const userId = request.headers.get('x-user-id')
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
-    }
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
 
     const formData = await request.formData()
     const file = formData.get('file') as File
@@ -46,7 +42,7 @@ export async function POST(request: NextRequest) {
     // Placeholder avatar URL (will be replaced with actual Cloudinary URL)
     const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
       `User ${userId}`
-    )}&background=d2a855&color=fff`
+    )}&background=c8a75d&color=fff`
 
     // Update user profile with avatar
     const profile = await prisma.userProfile.upsert({

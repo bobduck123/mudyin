@@ -10,7 +10,7 @@ test.describe('Core Navigation Smoke', () => {
   test('community hub route is available', async ({ page }) => {
     await page.goto('/community')
     await expect(page.locator('h1')).toContainText('Community Hub')
-    await expect(page.getByRole('link', { name: /Community Feed/i })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Community Feed', exact: true })).toBeVisible()
     await expect(page.getByRole('link', { name: /Share a Story/i })).toBeVisible()
   })
 

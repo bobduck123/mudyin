@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { isDbUnavailableError } from '@/lib/demo-fallback'
+import { requireModerator } from '@/lib/api-auth'
 
 /**
  * Get moderation queue for moderators
@@ -8,11 +9,8 @@ import { isDbUnavailableError } from '@/lib/demo-fallback'
  */
 export async function GET(request: NextRequest) {
   try {
-    // In production, check moderator role
-    // const userId = extractUserIdFromToken()
-    // if (!await isModerator(userId)) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
-    // }
+    const auth = await requireModerator('review_content')
+    if (!auth.ok) return auth.response
 
     const searchParams = request.nextUrl.searchParams
     const page = parseInt(searchParams.get('page') || '1')
@@ -87,7 +85,6 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     )
   } catch (error) {
-    console.error('Moderation queue fetch error:', error)
     if (isDbUnavailableError(error)) {
       return NextResponse.json(
         {
@@ -106,6 +103,7 @@ export async function GET(request: NextRequest) {
         { status: 200 }
       )
     }
+    console.error('Moderation queue fetch error:', error)
     return NextResponse.json(
       { error: 'Failed to fetch moderation queue' },
       { status: 500 }

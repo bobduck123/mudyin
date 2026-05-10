@@ -1,18 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { checkCelebrationMilestones } from '@/lib/celebrations'
+import { requireSessionUser } from '@/lib/api-auth'
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
-    // Get user ID from session or request body
-    const body = await request.json()
-    const userId = body.userId
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User ID is required' },
-        { status: 400 }
-      )
-    }
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
 
     // Check for new milestones
     const result = await checkCelebrationMilestones(userId)

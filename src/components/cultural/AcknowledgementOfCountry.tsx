@@ -55,7 +55,7 @@ export function AcknowledgementOfCountry({ variant = 'banner' }: Props) {
       aria-label="Acknowledgement of Country"
       className="py-12 px-6"
       style={{
-        background: 'linear-gradient(135deg, rgba(139,37,0,0.1), rgba(210,168,85,0.05))',
+        background: 'linear-gradient(135deg, rgba(184,117,85,0.1), rgba(210,168,85,0.05))',
         borderLeft: '4px solid var(--color-ochre-500)',
       }}
     >

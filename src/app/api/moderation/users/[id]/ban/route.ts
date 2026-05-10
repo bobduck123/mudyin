@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { banUser } from '@/lib/moderation'
 import { prisma } from '@/lib/db'
+import { requireModerator } from '@/lib/api-auth'
 
 /**
  * Ban or unban a user
@@ -10,9 +11,13 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const auth = await requireModerator('ban_users')
+    if (!auth.ok) return auth.response
+
     const { id } = await params
     const body = await request.json()
-    const { action, reason, durationDays, moderatorId } = body
+    const { action, reason, durationDays } = body
+    const moderatorId = auth.userId
 
     if (action === 'ban') {
       const ban = await banUser(
@@ -83,6 +88,9 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const auth = await requireModerator('ban_users')
+    if (!auth.ok) return auth.response
+
     const { id } = await params
     const ban = await prisma.bannedUser.findUnique({
       where: { userId: id },

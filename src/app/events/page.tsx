@@ -22,8 +22,8 @@ const categoryColors: Record<string, { bg: string; border: string; text: string 
     text: '#9DC183',
   },
   Cultural: {
-    bg: 'rgba(139,37,0,0.15)',
-    border: 'rgba(139,37,0,0.35)',
+    bg: 'rgba(184,117,85,0.15)',
+    border: 'rgba(184,117,85,0.35)',
     text: '#e8916a',
   },
 }

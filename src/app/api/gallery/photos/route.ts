@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { uploadPhotoSchema } from '@/lib/validators'
 import { demoId, isDbUnavailableError } from '@/lib/demo-fallback'
+import { requireSessionUser } from '@/lib/api-auth'
 
 function getDemoPhotos() {
   return [
@@ -108,7 +109,6 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     )
   } catch (error) {
-    console.error('Gallery list error:', error)
     if (isDbUnavailableError(error)) {
       const photos = getDemoPhotos()
       return NextResponse.json(
@@ -123,6 +123,7 @@ export async function GET(request: NextRequest) {
         { status: 200 }
       )
     }
+    console.error('Gallery list error:', error)
     return NextResponse.json(
       { error: 'Failed to fetch photos' },
       { status: 500 }
@@ -130,17 +131,27 @@ export async function GET(request: NextRequest) {
   }
 }
 
+type PhotoMutationResult = {
+  id: string
+  uploader: {
+    id: string
+    name: string
+    profile: {
+      avatar: string | null
+    } | null
+  }
+  _count: {
+    likes: number
+    comments: number
+  }
+}
+
 // POST - Upload new photo
 export async function POST(request: NextRequest) {
   try {
-    const userId = request.headers.get('x-user-id')
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
-    }
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
 
     const body = await request.json()
 
@@ -168,7 +179,7 @@ export async function POST(request: NextRequest) {
     // In production: upload to Cloudinary and get URL
     const imageUrl = `https://picsum.photos/800/600?random=${Date.now()}`
 
-    let photo: any
+    let photo: PhotoMutationResult
 
     try {
       photo = await prisma.galleryPhoto.create({

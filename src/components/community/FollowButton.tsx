@@ -36,7 +36,6 @@ export function FollowButton({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-id': currentUserId,
         },
         body: JSON.stringify({
           targetUserId: userId,

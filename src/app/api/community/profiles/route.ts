@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { updateProfileSchema } from '@/lib/validators'
+import { requireSessionUser } from '@/lib/api-auth'
 
 // GET current user's profile or search members
 export async function GET(request: NextRequest) {
@@ -19,8 +20,6 @@ export async function GET(request: NextRequest) {
         select: {
           id: true,
           name: true,
-          email: true,
-          ageGroup: true,
           createdAt: true,
           profile: {
             select: {
@@ -121,14 +120,9 @@ export async function GET(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
-    const userId = request.headers.get('x-user-id')
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
-    }
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
 
     // Validate input
     const validation = updateProfileSchema.safeParse(body)

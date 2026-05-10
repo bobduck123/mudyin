@@ -1,267 +1,153 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
 import { PageHero } from '@/components/layout/PageHero'
 import { AcknowledgementOfCountry } from '@/components/cultural/AcknowledgementOfCountry'
 import { CTABand } from '@/components/sections/CTABand'
-import { timeline, teamMembers } from '@/lib/data'
+import { teamMembers } from '@/lib/data'
+import { CountryMilestoneTrail } from '@/components/about/CountryMilestoneTrail'
 
 export const metadata: Metadata = {
   title: 'Our Story',
   description:
-    'Twenty-five years of Aboriginal-led healing, mentoring, and community building. From Uncle Dave Bell\'s Father & Sons Program in 2001 to the Mudyin Aboriginal Healing Centre today — a story of community, culture, and strength.',
+    'Twenty-five years of Aboriginal-led healing, mentoring, and community building from 2001 to 2026.',
 }
 
 const founder = teamMembers.find((m) => m.id === 'uncle-dave')!
+
+const keyMilestones = [
+  {
+    year: '2001',
+    title: 'Father and Sons Program Began',
+    detail: 'Uncle Dave Bell established a consistent dawn routine for young people: fitness, breakfast, and mentoring in community.',
+  },
+  {
+    year: '2005',
+    title: 'Community Expansion',
+    detail: 'Participation and trust deepened, with growing collaboration between families, mentors, and local services.',
+  },
+  {
+    year: '2010',
+    title: 'YSMP Formalised',
+    detail: 'The Young Spirit Mentoring Program became a defined pathway with stronger structure and ongoing continuity.',
+  },
+  {
+    year: '2020',
+    title: 'Healing Centre Opened',
+    detail: 'Mudyin unified mentoring, wellbeing, and support services under one culturally grounded home.',
+  },
+  {
+    year: '2026',
+    title: 'Digital and Regional Reach',
+    detail: 'The platform and new regional pathways extended program access while retaining community leadership.',
+  },
+]
 
 export default function OurStoryPage() {
   return (
     <div style={{ backgroundColor: 'var(--color-background)' }}>
       <PageHero
         title="Our Story"
-        subtitle="25 Years of Purpose"
-        description="Built on community, grounded in culture, and driven by the belief that every Aboriginal young person deserves to thrive."
+        subtitle="Country trail and milestones"
+        description="A split narrative of origin and systems growth, grounded in community leadership and cultural continuity."
         breadcrumbs={[
           { label: 'About', href: '/about/our-story' },
           { label: 'Our Story' },
         ]}
       />
 
-      {/* Origin story */}
-      <section className="section-padding py-20 lg:py-28" aria-label="Our origin">
+      <section className="section-spacing section-padding" aria-label="Our origin and leadership">
         <div className="container-wide">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <span className="section-label">Where It Began</span>
-              <h2
-                className="font-display font-semibold text-3xl lg:text-4xl mt-3 mb-8"
-                style={{ color: 'var(--color-foreground)' }}
-              >
-                A Father Who Saw What Was Needed
-              </h2>
-              <p
-                className="text-lg leading-relaxed mb-6"
-                style={{ color: 'rgba(255,255,255,0.75)' }}
-              >
-                In 2001, Uncle Dave Bell looked at his community and saw young Aboriginal men
-                drifting — without direction, without mentorship, without a sense of purpose. He
-                had no funding, no formal structure, and no blueprint. What he had was community,
-                culture, and a deep understanding that belonging is the foundation of everything.
+          <div className="grid lg:grid-cols-12 gap-8 items-stretch">
+            <article className="lg:col-span-7 rounded-2xl p-7 healing-panel grounded-lines healing-border">
+              <p className="text-xs uppercase tracking-[0.16em] mb-2" style={{ color: 'rgba(255,255,255,0.56)' }}>
+                Origin Narrative
               </p>
-              <p
-                className="text-lg leading-relaxed mb-6"
-                style={{ color: 'rgba(255,255,255,0.75)' }}
-              >
-                He started the Father &amp; Sons Program — gathering young men at dawn for fitness,
-                breakfast, and conversation. The model was simple: show up, move your body, sit
-                together, talk. From that seed, something extraordinary grew.
+              <h2 className="font-display text-3xl lg:text-4xl mb-4">A community response, built with discipline</h2>
+              <p className="text-lg leading-relaxed mb-5" style={{ color: 'rgba(255,255,255,0.75)' }}>
+                In 2001, Uncle Dave Bell identified a practical gap: many young people needed consistent structure,
+                culturally safe mentorship, and a place of belonging. The response was direct and repeatable.
               </p>
-              <p
-                className="text-lg leading-relaxed mb-8"
-                style={{ color: 'rgba(255,255,255,0.75)' }}
-              >
-                Over 25 years, that program became the Young Spirit Mentoring Program, then Thrive
-                Tribe, then the Mudyin Aboriginal Healing Centre — a full-spectrum organisation
-                serving communities across NSW and Queensland.
+              <p className="text-lg leading-relaxed mb-5" style={{ color: 'rgba(255,255,255,0.75)' }}>
+                Morning sessions created routine. Shared breakfast built trust. Ongoing mentoring strengthened identity
+                and accountability. Over time, this model expanded into a broader service system while staying
+                Aboriginal-led and community-accountable.
               </p>
-              <Link href="/about/team" className="btn-outline">
-                Meet Our Leadership
-              </Link>
-            </div>
+              <p className="text-lg leading-relaxed" style={{ color: 'rgba(255,255,255,0.75)' }}>
+                The result is not a single program story. It is a long-term operating model for collective wellbeing.
+              </p>
+            </article>
 
-            <div className="relative">
-              <div
-                className="rounded-2xl overflow-hidden aspect-square relative"
-                style={{ border: '1px solid rgba(210,168,85,0.2)' }}
-              >
+            <aside className="lg:col-span-5 rounded-2xl overflow-hidden healing-panel healing-border">
+              <div className="relative aspect-[4/5]">
                 <Image
                   src={founder.image}
                   alt={founder.imageAlt}
                   fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes="(max-width: 1024px) 100vw, 40vw"
                   className="object-cover"
                 />
                 <div
                   className="absolute inset-0"
                   style={{
                     background:
-                      'linear-gradient(to top, rgba(20,20,20,0.75) 0%, transparent 60%)',
+                      'radial-gradient(circle at 52% 56%, rgba(200,167,93,0.16) 0 17%, rgba(184,117,85,0.16) 35%, transparent 49%), linear-gradient(to top, rgba(2,2,2,0.8) 0%, rgba(184,117,85,0.16) 30%, rgba(2,2,2,0.26) 62%, transparent 100%)',
                   }}
                   aria-hidden="true"
                 />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <p
-                    className="font-display font-semibold text-xl mb-1"
-                    style={{ color: 'var(--color-foreground)' }}
-                  >
-                    {founder.name}
-                  </p>
-                  <p
-                    className="text-sm"
-                    style={{ color: 'var(--color-ochre-400)' }}
-                  >
-                    {founder.role} — Mudyin Aboriginal Healing Centre
-                  </p>
-                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Founder quote */}
-      <section
-        className="section-padding py-16"
-        style={{
-          background:
-            'linear-gradient(135deg, rgba(210,168,85,0.07) 0%, rgba(20,20,20,0) 100%)',
-          borderTop: '1px solid rgba(210,168,85,0.15)',
-          borderBottom: '1px solid rgba(210,168,85,0.15)',
-        }}
-        aria-label="Founder quote"
-      >
-        <div className="container-mid text-center">
-          <p
-            className="font-display text-2xl lg:text-3xl font-semibold italic leading-relaxed mb-6"
-            style={{ color: 'var(--color-foreground)' }}
-          >
-            &ldquo;{founder.quote}&rdquo;
-          </p>
-          <p className="text-sm font-semibold" style={{ color: 'var(--color-ochre-400)' }}>
-            {founder.name} &mdash; {founder.role}, Mudyin Aboriginal Healing Centre
-          </p>
-        </div>
-      </section>
-
-      {/* Timeline */}
-      <section className="section-padding py-20 lg:py-28" aria-label="Our history">
-        <div className="container-mid">
-          <div className="text-center mb-16">
-            <span className="section-label">25 Years of Purpose</span>
-            <h2
-              className="font-display font-semibold text-3xl lg:text-4xl mt-3"
-              style={{ color: 'var(--color-foreground)' }}
-            >
-              A Journey Built Together
-            </h2>
-          </div>
-
-          <ol
-            className="relative"
-            aria-label="Mudyin history timeline"
-            style={{ borderLeft: '2px solid rgba(210,168,85,0.25)' }}
-          >
-            {timeline.map((item, _index) => (
-              <li
-                key={item.year}
-                className="relative pl-10 pb-12 last:pb-0"
-              >
-                {/* Dot */}
-                <div
-                  className="absolute left-0 top-0 w-4 h-4 rounded-full -translate-x-[9px]"
-                  style={{ backgroundColor: 'var(--color-ochre-500)' }}
-                  aria-hidden="true"
-                />
-
-                <div className="flex items-start gap-6">
-                  <span
-                    className="font-display font-bold text-3xl flex-shrink-0 w-16"
-                    style={{ color: 'var(--color-ochre-400)' }}
-                  >
-                    {item.year}
-                  </span>
-                  <div>
-                    <h3
-                      className="font-display font-semibold text-xl mb-2"
-                      style={{ color: 'var(--color-foreground)' }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p
-                      className="text-base leading-relaxed"
-                      style={{ color: 'rgba(255,255,255,0.68)' }}
-                    >
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* Values section */}
-      <section
-        className="section-padding py-20"
-        style={{
-          background:
-            'linear-gradient(180deg, rgba(20,20,20,0) 0%, rgba(210,168,85,0.04) 100%)',
-          borderTop: '1px solid rgba(65,70,72,0.3)',
-        }}
-        aria-label="Our values"
-      >
-        <div className="container-wide">
-          <div className="text-center mb-16">
-            <span className="section-label">What Drives Us</span>
-            <h2
-              className="font-display font-semibold text-3xl lg:text-4xl mt-3"
-              style={{ color: 'var(--color-foreground)' }}
-            >
-              Grounded in Culture. Led by Community.
-            </h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                title: 'Self-Determination',
-                description:
-                  'Mudyin is Aboriginal-led, Aboriginal-owned, and accountable to Aboriginal community. Our people set the direction.',
-              },
-              {
-                title: 'Cultural Grounding',
-                description:
-                  'Culture is not an add-on to our programs — it is the foundation. Language, land, and ceremony are part of healing.',
-              },
-              {
-                title: 'Strength-Based',
-                description:
-                  'We see the strength in every young person and every family. Our work builds on what is already there.',
-              },
-              {
-                title: 'Genuine Partnership',
-                description:
-                  'We walk alongside — not in front of — our communities. Real partnership means listening first.',
-              },
-            ].map((value) => (
-              <div
-                key={value.title}
-                className="rounded-2xl p-7"
-                style={{
-                  backgroundColor: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(65,70,72,0.4)',
-                }}
-              >
-                <h3
-                  className="font-display font-semibold text-lg mb-3"
-                  style={{ color: 'var(--color-ochre-400)' }}
-                >
-                  {value.title}
-                </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: 'rgba(255,255,255,0.65)' }}
-                >
-                  {value.description}
+              <div className="p-5">
+                <p className="text-xs uppercase tracking-[0.15em] mb-1" style={{ color: 'rgba(255,255,255,0.56)' }}>
+                  Foundational Leadership
+                </p>
+                <h3 className="font-display text-2xl mb-1">{founder.name}</h3>
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.72)' }}>
+                  {founder.role} - Mudyin Aboriginal Healing Centre
                 </p>
               </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding py-10 lg:py-14" aria-label="Milestone trail">
+        <div className="container-wide">
+          <div className="mb-10">
+            <span className="section-label">Five Key Milestones</span>
+            <h2 className="font-display text-3xl lg:text-4xl mt-2">Country Map Trail and Timeline</h2>
+          </div>
+          <CountryMilestoneTrail milestones={keyMilestones} />
+        </div>
+      </section>
+
+      <section className="section-padding py-14" aria-label="Values and governance">
+        <div className="container-wide">
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              {
+                title: 'Aboriginal Governance',
+                description:
+                  'Decisions are made with Aboriginal leadership and direct accountability to community outcomes.',
+              },
+              {
+                title: 'Service Integration',
+                description:
+                  'Programs are designed to connect mentoring, wellbeing, referrals, and long-term support pathways.',
+              },
+              {
+                title: 'Belonging and Safety',
+                description:
+                  'Professional standards are paired with cultural safety so people feel welcome, respected, and supported.',
+              },
+            ].map((item) => (
+              <article key={item.title} className="rounded-2xl p-6 healing-panel healing-border">
+                <h3 className="font-display text-2xl mb-2">{item.title}</h3>
+                <p style={{ color: 'rgba(255,255,255,0.7)' }}>{item.description}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Acknowledgement of Country — full variant */}
       <section className="section-padding py-8" aria-label="Acknowledgement of Country">
         <div className="container-mid">
           <AcknowledgementOfCountry variant="full" />
@@ -270,8 +156,8 @@ export default function OurStoryPage() {
 
       <CTABand
         heading="Be Part of the Next 25 Years"
-        subheading="Mudyin's story is still being written — by every young person who rises at dawn, every Elder who shares their wisdom, and every supporter who believes in our community."
-        primaryCTA={{ label: 'Support Our Work', href: '/donate' }}
+        subheading="Mudyin's story continues through every participant, family, Elder, and partner who walks with us."
+        primaryCTA={{ label: 'Talk With Us', href: '/contact#general-enquiry' }}
         secondaryCTA={{ label: 'Our Programs', href: '/programs' }}
       />
     </div>

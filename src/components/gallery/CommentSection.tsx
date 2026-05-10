@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -169,9 +170,11 @@ export function CommentSection({
                 <div className="flex gap-3 mb-2">
                   {/* Avatar */}
                   {comment.author.profile?.avatar ? (
-                    <img
+                    <Image
                       src={comment.author.profile.avatar}
                       alt={comment.author.name}
+                      width={32}
+                      height={32}
                       className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                     />
                   ) : (

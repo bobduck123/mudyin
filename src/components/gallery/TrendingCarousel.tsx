@@ -59,8 +59,11 @@ export function TrendingCarousel() {
 
   if (isLoading) {
     return (
-      <div className="w-full h-64 bg-gradient-to-b from-gray-200 to-gray-100 rounded-xl flex items-center justify-center">
-        <span className="text-gray-600">Loading trending photos...</span>
+      <div
+        className="w-full h-64 rounded-2xl flex items-center justify-center"
+        style={{ backgroundColor: 'rgba(2,2,2,0.72)', boxShadow: '0 12px 24px rgba(0,0,0,0.3)' }}
+      >
+        <span style={{ color: 'rgba(255,255,255,0.62)' }}>Loading trending photos...</span>
       </div>
     )
   }
@@ -72,8 +75,10 @@ export function TrendingCarousel() {
   const currentPhoto = photos[currentIndex]
 
   return (
-    <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: '16/9' }}>
-      {/* Image */}
+    <div
+      className="relative w-full rounded-2xl overflow-hidden grounded-lines"
+      style={{ aspectRatio: '16/9', boxShadow: '0 14px 28px rgba(0,0,0,0.32)' }}
+    >
       <div className="relative w-full h-full">
         <Image
           src={currentPhoto.imageUrl}
@@ -83,21 +88,21 @@ export function TrendingCarousel() {
           priority
         />
 
-        {/* Overlay gradient */}
         <div
           className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50"
           aria-hidden
         />
 
-        {/* Trending badge */}
-        <div className="absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-semibold text-white flex items-center gap-1" style={{ backgroundColor: 'rgba(210,168,85,0.9)' }}>
-          <span>🔥</span> Trending
+        <div
+          className="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] uppercase tracking-[0.14em] font-semibold text-white"
+          style={{ backgroundColor: 'rgba(210,168,85,0.9)' }}
+        >
+          Trending
         </div>
 
-        {/* Photo info */}
         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
           <Link href={`/gallery/${currentPhoto.id}`}>
-            <h3 className="text-2xl font-bold mb-2 hover:underline">
+            <h3 className="text-2xl font-display font-semibold mb-2 hover:underline">
               {currentPhoto.title}
             </h3>
           </Link>
@@ -134,12 +139,12 @@ export function TrendingCarousel() {
           </div>
         </div>
 
-        {/* Navigation buttons */}
         {photos.length > 1 && (
           <>
             <button
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/20 hover:bg-white/40 text-white transition-colors backdrop-blur-sm"
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition-colors backdrop-blur-sm"
+              style={{ backgroundColor: 'rgba(2,2,2,0.42)', boxShadow: '0 8px 16px rgba(0,0,0,0.3)' }}
               aria-label="Previous trending photo"
             >
               <ChevronLeft size={24} />
@@ -147,7 +152,8 @@ export function TrendingCarousel() {
 
             <button
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/20 hover:bg-white/40 text-white transition-colors backdrop-blur-sm"
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition-colors backdrop-blur-sm"
+              style={{ backgroundColor: 'rgba(2,2,2,0.42)', boxShadow: '0 8px 16px rgba(0,0,0,0.3)' }}
               aria-label="Next trending photo"
             >
               <ChevronRight size={24} />
@@ -155,7 +161,6 @@ export function TrendingCarousel() {
           </>
         )}
 
-        {/* Dots indicator */}
         {photos.length > 1 && (
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
             {photos.map((_, index) => (

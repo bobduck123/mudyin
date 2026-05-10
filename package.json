@@ -9,15 +9,20 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "postinstall": "prisma generate",
+    "seed:mudyin-admin": "node scripts/seed-mudyin-operational-admin.mjs",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
-    "test:all": "npm run test:coverage && npm run test:e2e"
+    "test:all": "npm run test:coverage && npm run test:e2e",
+    "check:mudyin-theme": "node scripts/check-mudyin-theme.mjs",
+    "smoke:hosted": "node scripts/hosted-smoke.mjs",
+    "smoke:local": "node scripts/hosted-smoke.mjs --base http://localhost:3000"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

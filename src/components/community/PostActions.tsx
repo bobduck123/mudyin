@@ -48,7 +48,6 @@ export function PostActions({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-id': userId,
         },
       })
 

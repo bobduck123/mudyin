@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { siteConfig } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy — Mudyin Aboriginal Healing Centre',
@@ -12,8 +13,8 @@ const sections = [
     heading: '1. Information We Collect',
     content: [
       {
-        sub: 'Contact and Enrollment Information',
-        body: 'When you contact us, enroll in a program, or donate, we may collect your name, email address, phone number, date of birth, and information relevant to program participation (including emergency contacts and medical information where required for participant safety).',
+        sub: 'Contact and Program Request Information',
+        body: 'When you contact us or request a program place, we may collect your name, email address, phone number, date of birth, and information relevant to program participation (including emergency contacts and medical information where required for participant safety).',
       },
       {
         sub: 'Website Usage Data',
@@ -39,7 +40,7 @@ const sections = [
       },
       {
         sub: 'Donations',
-        body: 'Donor information is used to process donations, issue tax receipts, and (where consent is given) report on program impact. We do not sell or share donor lists.',
+        body: 'Public donations are disabled for first launch. Donor information should only be collected after payment, charity, receipt, and consent processes are confirmed by the operator.',
       },
       {
         sub: 'Legal Obligations',
@@ -89,7 +90,7 @@ const sections = [
       },
       {
         sub: 'How to Request Access',
-        body: 'Contact us at info@mudyin.org.au or by phone on 0478 796 298. We will respond to access requests within 30 days.',
+        body: `Contact us at ${siteConfig.email} or by phone on ${siteConfig.phone}. We will respond to access requests within 30 days.`,
       },
     ],
   },
@@ -138,7 +139,7 @@ export default function PrivacyPage() {
             Last updated: February 2025
           </p>
           <p className="text-sm leading-relaxed max-w-2xl" style={{ color: 'rgba(255,255,255,0.55)' }}>
-            Mudyin Aboriginal Healing Centre Inc. (ABN: 12 345 678 901) is committed to protecting your privacy in accordance with the{' '}
+            {siteConfig.name} is committed to protecting your privacy in accordance with the{' '}
             <em>Privacy Act 1988</em> (Cth) and the Australian Privacy Principles (APPs).
           </p>
         </div>
@@ -215,12 +216,12 @@ export default function PrivacyPage() {
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.65)' }}>
               For privacy enquiries or complaints, contact our Privacy Officer at{' '}
-              <a href="mailto:info@mudyin.org.au" style={{ color: 'var(--color-ochre-400)' }} className="hover:underline">
-                info@mudyin.org.au
+              <a href={`mailto:${siteConfig.email}`} style={{ color: 'var(--color-ochre-400)' }} className="hover:underline">
+                {siteConfig.email}
               </a>
               {' '}or by phone on{' '}
               <a href="tel:0478796298" style={{ color: 'var(--color-ochre-400)' }} className="hover:underline">
-                0478 796 298
+                {siteConfig.phone}
               </a>.
               If you are not satisfied with our response, you may contact the{' '}
               <a

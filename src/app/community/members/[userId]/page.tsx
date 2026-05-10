@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { prisma } from '@/lib/db'
 import { BadgeDisplay } from '@/components/community/BadgeDisplay'
@@ -90,9 +91,11 @@ export default async function MemberProfilePage({
               <div className="flex gap-6 items-start">
                 {/* Avatar */}
                 {avatar ? (
-                  <img
+                  <Image
                     src={avatar}
                     alt={user.name}
+                    width={96}
+                    height={96}
                     className="h-24 w-24 rounded-full object-cover"
                   />
                 ) : (

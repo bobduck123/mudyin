@@ -37,8 +37,8 @@ export function CelebrationBanner({
     <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
       <div className="pointer-events-auto">
         <div className="card-dark max-w-md mx-auto relative overflow-hidden border-2 border-sage-500 shadow-2xl">
-          {/* Animated background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-sage-500/10 via-ochre-400/10 to-sage-500/10 animate-pulse" />
+          {/* Subtle background accent */}
+          <div className="absolute inset-0 bg-gradient-to-r from-sage-500/5 via-ochre-400/5 to-sage-500/5" />
 
           {/* Content */}
           <div className="relative p-6 text-center">

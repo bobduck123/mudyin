@@ -30,11 +30,11 @@ export function UserProfileMenu() {
   if (status === 'unauthenticated') {
     return (
       <div className="hidden lg:flex items-center gap-3">
-        <Link href="/donate" className="btn-ghost text-sm">
-          Donate
+        <Link href="/contact#general-enquiry" className="btn-ghost text-sm">
+          Enquire
         </Link>
-        <Link href="/enroll" className="btn-primary text-sm px-5 py-2.5">
-          Get Involved
+        <Link href="/contact#booking-request" className="btn-primary text-sm px-5 py-2.5">
+          Request a Booking
         </Link>
       </div>
     )
@@ -49,9 +49,8 @@ export function UserProfileMenu() {
 
   return (
     <div ref={dropdownRef} className="hidden lg:flex items-center gap-3">
-      {/* Donate button */}
-      <Link href="/donate" className="btn-ghost text-sm">
-        Donate
+      <Link href="/contact#booking-request" className="btn-ghost text-sm">
+        Request
       </Link>
 
       {/* Profile Dropdown */}
@@ -81,7 +80,7 @@ export function UserProfileMenu() {
             role="menu"
             className="absolute top-full right-0 mt-2 min-w-[220px] rounded-xl py-2 shadow-card"
             style={{
-              backgroundColor: 'rgba(20,20,20,0.97)',
+              backgroundColor: 'rgba(47,36,29,0.97)',
               border: '1px solid rgba(65,70,72,0.5)',
               backdropFilter: 'blur(16px)',
             }}

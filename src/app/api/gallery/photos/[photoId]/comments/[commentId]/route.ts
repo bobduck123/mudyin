@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { requireSessionUser } from '@/lib/api-auth'
 
 // DELETE - Delete comment
 export async function DELETE(
@@ -7,15 +8,10 @@ export async function DELETE(
   context: { params: Promise<{ photoId: string; commentId: string }> }
 ) {
   try {
-    const userId = request.headers.get('x-user-id')
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
     const { photoId, commentId } = await context.params
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
-    }
 
     // Check comment ownership
     const comment = await prisma.comment.findUnique({

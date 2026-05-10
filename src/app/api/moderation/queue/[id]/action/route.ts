@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { banUser } from '@/lib/moderation'
+import { requireModerator } from '@/lib/api-auth'
 
 /**
  * Moderator takes action on flagged content
@@ -10,9 +11,13 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const auth = await requireModerator('review_content')
+    if (!auth.ok) return auth.response
+
     const { id } = await params
     const body = await request.json()
-    const { action, banDurationDays, reviewNotes, moderatorId } = body
+    const { action, banDurationDays, reviewNotes } = body
+    const moderatorId = auth.userId
 
     // Validate action
     const validActions = ['dismiss', 'remove_content', 'ban_user', 'temp_ban', 'warn']

@@ -6,10 +6,10 @@
 - Keep professional trust while pushing creative ambition (`7.5/10` experimental).
 
 ## Visual Core
-- Dark-first foundation.
-- Aboriginal-flag-informed accents applied both systematically and expressively.
-- Organic/handmade motif system used across headers and section surfaces.
-- Motion-led composition with no large-transform patterns.
+- This brief is superseded for public launch by the calm healing-centre direction.
+- Use earthy neutrals, eucalyptus/sage, clay, soft cream, and restrained muted gold.
+- Do not use literal Aboriginal flag colour coding, symbolic decoration, or motif systems as branding unless supplied as approved Mudyin brand assets.
+- Keep motion restrained and professional.
 
 ## Experience Priorities
 - Community: belonging/safe first impression, warmth over cold utility.

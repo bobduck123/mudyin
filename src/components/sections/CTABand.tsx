@@ -20,9 +20,9 @@ export function CTABand({ heading, subheading, primaryCTA, secondaryCTA }: Props
       className="py-20 lg:py-24 section-padding relative overflow-hidden"
       aria-label="Call to action"
       style={{
-        background: 'linear-gradient(135deg, rgba(139,37,0,0.12) 0%, rgba(20,20,20,1) 40%, rgba(20,20,20,1) 60%, rgba(210,168,85,0.08) 100%)',
-        borderTop:    '1px solid rgba(210,168,85,0.15)',
-        borderBottom: '1px solid rgba(210,168,85,0.15)',
+        background: 'linear-gradient(135deg, rgba(71,57,47,1) 0%, rgba(47,36,29,1) 48%, rgba(111,138,120,0.16) 100%)',
+        borderTop:    '1px solid rgba(255,248,239,0.12)',
+        borderBottom: '1px solid rgba(255,248,239,0.12)',
       }}
     >
       {/* Decorative */}
@@ -30,7 +30,7 @@ export function CTABand({ heading, subheading, primaryCTA, secondaryCTA }: Props
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(210,168,85,0.05) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(111,138,120,0.1) 0%, transparent 70%)',
         }}
       />
 

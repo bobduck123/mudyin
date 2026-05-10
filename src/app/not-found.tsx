@@ -44,7 +44,7 @@ export default function NotFound() {
             Return Home
           </Link>
           <Link href="/programs" className="btn-outline">
-            Explore Our Programs
+            Explore Program Streams
           </Link>
         </div>
 
@@ -59,12 +59,10 @@ export default function NotFound() {
           <nav aria-label="Suggested pages" className="flex flex-wrap justify-center gap-x-8 gap-y-3">
             {[
               { label: 'Our Story',   href: '/about/our-story' },
-              { label: 'YSMP',        href: '/programs/ysmp' },
-              { label: 'Thrive Tribe',href: '/programs/thrive-tribe' },
-              { label: 'Impact',      href: '/impact' },
-              { label: 'News',        href: '/news' },
+              { label: "Women's Business", href: '/programs/womens-business' },
+              { label: "Aaliyah's Dreaming", href: '/programs/aaliyahs-dreaming' },
+              { label: 'Governance', href: '/governance' },
               { label: 'Contact',     href: '/contact' },
-              { label: 'Donate',      href: '/donate' },
             ].map(link => (
               <Link
                 key={link.href}

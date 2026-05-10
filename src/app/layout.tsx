@@ -5,42 +5,35 @@ import { AcknowledgementOfCountry } from '@/components/cultural/AcknowledgementO
 import { Navigation }               from '@/components/layout/Navigation'
 import { Footer }                   from '@/components/layout/Footer'
 import { SessionProviderWrapper }   from '@/components/providers/SessionProvider'
+import { getDefaultSite }           from '@/lib/white-label/site-registry'
 import './globals.css'
+
+const defaultSite = getDefaultSite()
 
 export const viewport: Viewport = {
   width:        'device-width',
   initialScale: 1,
-  themeColor:   '#141414',
+  themeColor:   defaultSite.brand.colors.background,
 }
 
 export const metadata: Metadata = {
   title: {
-    default:  'Mudyin Aboriginal Healing Centre',
-    template: '%s | Mudyin',
+    default:  defaultSite.metadata.title,
+    template: defaultSite.metadata.titleTemplate,
   },
-  description:
-    'Healing, empowering, and connecting Aboriginal communities through the Young Spirit Mentoring Program and culturally grounded healing services. Campbelltown, NSW.',
-  keywords: [
-    'Aboriginal youth programs NSW',
-    'Indigenous mentoring Sydney',
-    'YSMP Campbelltown',
-    'Aboriginal healing centre',
-    'Young Spirit Mentoring Program',
-    'Indigenous wellness Queensland',
-    'Thrive Tribe',
-    'Uncle Dave Bell',
-  ],
-  authors:   [{ name: 'Mudyin Aboriginal Healing Centre' }],
-  creator:   'Mudyin Aboriginal Healing Centre',
-  publisher: 'Mudyin Aboriginal Healing Centre',
-  metadataBase: new URL('https://mudyin.org.au'),
+  description: defaultSite.metadata.description,
+  keywords: defaultSite.metadata.keywords,
+  authors:   [{ name: defaultSite.canonicalName }],
+  creator:   defaultSite.canonicalName,
+  publisher: defaultSite.canonicalName,
+  metadataBase: new URL(defaultSite.metadata.url),
   openGraph: {
-    siteName: 'Mudyin Aboriginal Healing Centre',
+    siteName: defaultSite.canonicalName,
     type:     'website',
-    locale:   'en_AU',
-    url:      'https://mudyin.org.au',
+    locale:   defaultSite.metadata.locale,
+    url:      defaultSite.metadata.url,
     images: [{
-      url:    '/og-default.jpg',
+      url:    defaultSite.brand.ogImagePath,
       width:  1200,
       height: 630,
       alt:    'Mudyin Aboriginal Healing Centre — Two Worlds Strong',
@@ -48,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card:    'summary_large_image',
-    creator: '@mudyin',
+    creator: defaultSite.metadata.socialHandle,
   },
   robots: {
     index:    true,

@@ -1,6 +1,9 @@
 import type { MetadataRoute } from 'next'
+import { getDefaultSite } from '@/lib/white-label/site-registry'
 
 export default function robots(): MetadataRoute.Robots {
+  const site = getDefaultSite()
+
   return {
     rules: [
       {
@@ -9,7 +12,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow:  ['/admin/', '/portal/', '/api/'],
       },
     ],
-    sitemap:  'https://mudyin.org.au/sitemap.xml',
-    host:     'https://mudyin.org.au',
+    sitemap:  `${site.metadata.url}/sitemap.xml`,
+    host:     site.metadata.url,
   }
 }

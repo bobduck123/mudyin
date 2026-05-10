@@ -24,8 +24,8 @@ export default function YSMPPage() {
           { label: 'Programs', href: '/programs' },
           { label: program.name },
         ]}
-        ctaLabel="Enroll in YSMP"
-        ctaHref="/enroll/ysmp"
+        ctaLabel="Request a YSMP Place"
+        ctaHref="/contact#booking-request"
       />
 
       {/* Main content */}
@@ -232,16 +232,16 @@ export default function YSMPPage() {
                         color: '#9DC183',
                       }}
                     >
-                      Enrollment Open
+                      Requests Open
                     </div>
                   )}
                 </dl>
 
                 <Link
-                  href="/enroll/ysmp"
+                  href="/contact#booking-request"
                   className="btn-primary w-full text-center mt-8 block"
                 >
-                  Enroll in YSMP
+                  Request a YSMP Place
                 </Link>
 
                 <Link
@@ -285,8 +285,8 @@ export default function YSMPPage() {
 
       <CTABand
         heading="Ready to Rise with the YSMP Community?"
-        subheading="Enrollment is open. Come as you are — we meet you where you are and walk together from there."
-        primaryCTA={{ label: 'Enroll in YSMP', href: '/enroll/ysmp' }}
+        subheading="Requests are open. Come as you are — we meet you where you are and walk together from there."
+        primaryCTA={{ label: 'Request a YSMP Place', href: '/enroll/ysmp' }}
         secondaryCTA={{ label: 'Contact Us', href: '/contact' }}
       />
     </div>

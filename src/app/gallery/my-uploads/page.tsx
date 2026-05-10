@@ -39,9 +39,7 @@ export default function MyUploadsPage() {
     if (!userId) return
     try {
       setIsLoading(true)
-      const response = await fetch('/api/gallery/my-uploads', {
-        headers: { 'x-user-id': userId },
-      })
+      const response = await fetch('/api/gallery/my-uploads')
       if (!response.ok) throw new Error('Failed to fetch uploads')
 
       const data = await response.json()
@@ -64,7 +62,6 @@ export default function MyUploadsPage() {
     try {
       const response = await fetch(`/api/gallery/photos/${selectedPhoto.id}`, {
         method: 'DELETE',
-        headers: { 'x-user-id': userId },
       })
 
       if (!response.ok) throw new Error('Failed to delete photo')

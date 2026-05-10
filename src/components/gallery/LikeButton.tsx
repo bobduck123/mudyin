@@ -38,7 +38,6 @@ export function LikeButton({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-id': userId,
         },
         body: JSON.stringify({
           action: isLiked ? 'unlike' : 'like',

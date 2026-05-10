@@ -35,6 +35,10 @@ yarn-error.log*
 *.err.log
 *.log
 
+# local-only operational/bootstrap outputs
+.local/
+tmp/
+
 # env files (can opt-in for committing if needed)
 .env*
 

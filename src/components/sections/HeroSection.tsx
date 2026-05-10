@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ArrowDown, Play } from 'lucide-react'
+import Image from 'next/image'
+import { ArrowDown, CalendarCheck2, MessageCircle } from 'lucide-react'
 import { heroStats } from '@/lib/data'
 import { useCountUp } from '@/hooks/useCountUp'
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
@@ -23,20 +24,20 @@ function StatItem({ label, value, suffix, index }: { label: string; value: numbe
         aria-label={`${count.toLocaleString()}${suffix} ${label}`}
       >
         {isInView ? count.toLocaleString() : '0'}
-        <span style={{ color: 'var(--color-ochre-500)' }}>{suffix}</span>
+        <span style={{ color: 'var(--color-sage-300)' }}>{suffix}</span>
       </div>
-      <div className="text-xs tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.52)' }}>
+      <div className="text-xs uppercase" style={{ color: 'rgba(255,255,255,0.56)', letterSpacing: '0.08em' }}>
         {label}
       </div>
     </div>
   )
 }
 
-const storyTrail = [
-  { id: 'community', label: 'Community', href: '/community' },
-  { id: 'impact', label: 'Impact', href: '/impact' },
-  { id: 'marketplace', label: 'Marketplace', href: '/marketplace' },
-  { id: 'resources', label: 'Resources', href: '/resources' },
+const careTrail = [
+  { id: 'programs', label: 'Program Streams', href: '/programs' },
+  { id: 'womens-business', label: "Women's Business", href: '/programs/womens-business' },
+  { id: 'governance', label: 'Governance', href: '/governance' },
+  { id: 'contact', label: 'Contact', href: '/contact' },
 ]
 
 export function HeroSection() {
@@ -51,41 +52,43 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden blak-motif-organic country-lines"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
       aria-label="Hero - Mudyin Aboriginal Healing Centre"
     >
       <div className="absolute inset-0 z-0" aria-hidden="true" data-decorative="true">
         {!videoEnded ? (
           <video
             className="absolute inset-0 w-full h-full object-cover"
-            src="/images/hero-video.mp4"
+            src="/videos/mudyin-hero.mp4"
             autoPlay
             muted
             playsInline
             onEnded={() => setVideoEnded(true)}
           />
         ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src="/images/hero-banner.jpg"
             alt="Mudyin Aboriginal Healing Centre"
-            className="absolute inset-0 w-full h-full object-cover"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
           />
         )}
         <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(to bottom, rgba(20,20,20,0.5) 0%, rgba(20,20,20,0.74) 55%, rgba(20,20,20,0.96) 100%)',
+            background:
+              'linear-gradient(to bottom, rgba(47,36,29,0.42) 0%, rgba(47,36,29,0.72) 55%, rgba(47,36,29,0.96) 100%)',
           }}
         />
         <div
-          className="absolute inset-y-0 left-0 w-1/3"
-          style={{ background: 'linear-gradient(110deg, rgba(219,22,47,0.22), transparent 70%)' }}
-          data-decorative="true"
-        />
-        <div
-          className="absolute inset-y-0 right-0 w-1/3"
-          style={{ background: 'linear-gradient(250deg, rgba(243,222,44,0.18), transparent 70%)' }}
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse at 20% 24%, rgba(111,138,120,0.24), transparent 38%), radial-gradient(ellipse at 78% 74%, rgba(184,117,85,0.16), transparent 42%)',
+            opacity: 0.72,
+          }}
           data-decorative="true"
         />
       </div>
@@ -99,23 +102,22 @@ export function HeroSection() {
             transform: visible ? 'translateY(0)' : 'translateY(14px)',
             transition: 'opacity 0.7s ease-out, transform 0.7s ease-out',
           }}
-          aria-hidden="true"
         >
-          Welcome Home
+          Aboriginal-led care, culture, and connection
         </span>
 
         <div
-          className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs uppercase tracking-widest"
+          className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs uppercase"
           style={{
-            backgroundColor: 'rgba(2,2,2,0.58)',
-            border: '1px solid rgba(243,222,44,0.4)',
+            letterSpacing: '0.08em',
+            backgroundColor: 'rgba(255,248,239,0.1)',
+            border: '1px solid rgba(255,248,239,0.18)',
             color: 'rgba(255,255,255,0.82)',
+            boxShadow: '0 10px 22px rgba(0,0,0,0.28)',
           }}
         >
-          <span style={{ color: 'var(--color-flag-red)' }}>●</span>
-          Community-Led
-          <span style={{ color: 'var(--color-flag-yellow)' }}>●</span>
-          On Country
+          <span className="w-2 h-2 rounded-full healing-disc" aria-hidden="true" />
+          First-live enquiries under MUDYIN PTY LTD
         </div>
 
         <h1
@@ -129,29 +131,30 @@ export function HeroSection() {
             transition: 'opacity 0.8s ease-out 0.1s, transform 0.8s ease-out 0.1s',
           }}
         >
-          Pride in Our Momentum.
+          A calm place to begin.
           <br />
-          Safe in Our Warmth.
+          A strong path to keep walking.
         </h1>
 
         <p
           className="text-lg md:text-xl max-w-3xl mb-9 leading-relaxed"
           style={{
-            color: 'rgba(255,255,255,0.75)',
+            color: 'rgba(255,255,255,0.76)',
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateY(0)' : 'translateY(16px)',
             transition: 'opacity 0.8s ease-out 0.25s, transform 0.8s ease-out 0.25s',
           }}
         >
-          Story first. Impact always. Walk the trails below to see how culture, care, and collective action shape every part of Mudyin.
+          Mudyin is preparing culturally grounded program streams with careful intake,
+          clear future-phase labels, and respectful pathways for enquiries and booking requests.
         </p>
 
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {storyTrail.map((item, idx) => (
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {careTrail.map((item, idx) => (
             <Link
               key={item.id}
               href={item.href}
-              className="ritual-chip"
+              className="healing-chip"
               style={{
                 opacity: visible ? 1 : 0,
                 transform: visible ? 'translateY(0)' : 'translateY(12px)',
@@ -168,26 +171,27 @@ export function HeroSection() {
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateY(0)' : 'translateY(12px)',
-            transition: 'opacity 0.75s ease-out 0.45s, transform 0.75s ease-out 0.45s',
+            transition: 'opacity 0.75s ease-out 0.48s, transform 0.75s ease-out 0.48s',
           }}
         >
-          <Link href="/programs" className="btn-primary text-base px-8 py-4">
-            Explore Programs
+          <Link href="/contact#booking-request" className="btn-primary text-base px-8 py-4">
+            <CalendarCheck2 size={16} aria-hidden="true" />
+            Request a Booking
           </Link>
-          <Link href="/about/our-story" className="btn-outline text-base px-8 py-4">
-            <Play size={16} aria-hidden="true" />
-            Our Story
+          <Link href="/contact#general-enquiry" className="btn-outline text-base px-8 py-4">
+            <MessageCircle size={16} aria-hidden="true" />
+            General Enquiry
           </Link>
         </div>
 
         <div
           className="grid grid-cols-2 lg:grid-cols-4 gap-8 mt-14 pt-10 w-full max-w-3xl"
           style={{
-            borderTop: '1px solid rgba(210,168,85,0.24)',
+            borderTop: '1px solid rgba(255,248,239,0.22)',
             opacity: visible ? 1 : 0,
             transition: 'opacity 0.95s ease-out 0.58s',
           }}
-          aria-label="Key impact statistics"
+          aria-label="First-live readiness summary"
         >
           {heroStats.map((stat, i) => (
             <StatItem key={stat.label} {...stat} index={i} />

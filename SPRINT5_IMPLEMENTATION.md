@@ -283,18 +283,14 @@ Before deploying to production:
 4. Verify API endpoints with Postman/Insomnia
 5. Manual smoke testing on all pages
 
-### Week 1 (Sprint 6)
-1. Add integration tests for critical paths
-2. Performance optimization (caching, pagination)
-3. Accessibility audit with NVDA/JAWS
-4. Mobile responsive testing
-5. Deploy to staging environment
+### M-Series Rollout (Updated)
+Use `docs/M_SERIES_UPGRADE_ROLLOUT.md` as the canonical plan for upgrades.
 
-### Week 2-3 (Sprint 6-7)
-1. Moderation dashboard (if not already started)
-2. User feedback collection
-3. Bug fixes from testing
-4. Production deployment
+1. **M6**: test and runtime hardening (E2E stability, server/runtime cleanup)
+2. **M7**: moderation and operational reliability hardening
+3. **M8**: compliance + deployment launch gate closure
+4. **M9**: white-label foundation (tenant resolution + brand config abstraction)
+5. **M10**: Anu tenant rollout (tenant pack + QA + launch readiness)
 
 ## Support & Questions
 

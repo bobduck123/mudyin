@@ -162,7 +162,7 @@ pa11y http://localhost:3000/community
 ```
 
 **Current Colors**:
-- Ochre (#d2a855) on charcoal (#141414): ✅ Good (~6:1)
+- Muted gold (#c8a75d) on deep brown (#2f241d): Good contrast for accent text.
 - Sage (#9dc183) on charcoal: ✅ Good (~4:1)
 - White on charcoal: ✅ Excellent (~15:1)
 

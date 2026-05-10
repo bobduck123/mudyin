@@ -36,14 +36,14 @@ export const AVAILABLE_BADGES: Record<string, Badge> = {
     name: 'Community Contributor',
     description: 'Active participant in community activities',
     icon: '🤝',
-    color: '#d2a855',
+    color: '#c8a75d',
   },
   'storyteller': {
     id: 'storyteller',
     name: 'Storyteller',
     description: 'Shared meaningful stories with the community',
     icon: '📖',
-    color: '#8b2500',
+    color: '#9d5d41',
   },
   'mentor': {
     id: 'mentor',
@@ -102,14 +102,14 @@ export const AVAILABLE_BADGES: Record<string, Badge> = {
     name: '50 Days Healing',
     description: 'Completed 50 days of healing journey',
     icon: '💙',
-    color: '#d2a855',
+    color: '#c8a75d',
   },
   '100_days_healing': {
     id: '100_days_healing',
     name: '100 Days Strong',
     description: 'Completed 100 days of healing journey',
     icon: '✨',
-    color: '#d2a855',
+    color: '#c8a75d',
   },
   '1_year_healing': {
     id: '1_year_healing',

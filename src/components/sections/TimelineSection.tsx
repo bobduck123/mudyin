@@ -197,8 +197,8 @@ export function TimelineSection() {
               aria-label="Our story sections"
               style={{
                 backgroundColor: 'rgba(30,30,30,0.6)',
-                border: '1px solid rgba(65,70,72,0.4)',
                 display: 'inline-flex',
+                boxShadow: '0 10px 22px rgba(0,0,0,0.3)',
               }}
             >
               {tabs.map(tab => (

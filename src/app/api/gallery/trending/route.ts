@@ -72,7 +72,6 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     )
   } catch (error) {
-    console.error('Trending photos fetch error:', error)
     if (isDbUnavailableError(error)) {
       return NextResponse.json(
         {
@@ -92,6 +91,7 @@ export async function GET(request: NextRequest) {
         { status: 200 }
       )
     }
+    console.error('Trending photos fetch error:', error)
     return NextResponse.json(
       { error: 'Failed to fetch trending photos' },
       { status: 500 }

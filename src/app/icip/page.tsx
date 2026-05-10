@@ -68,8 +68,8 @@ export default function ICIPPage() {
           <div
             className="p-5 rounded-xl mb-10 flex items-start gap-4"
             style={{
-              backgroundColor: 'rgba(139,37,0,0.12)',
-              border: '1px solid rgba(139,37,0,0.3)',
+              backgroundColor: 'rgba(184,117,85,0.12)',
+              border: '1px solid rgba(184,117,85,0.3)',
             }}
           >
             <AlertTriangle size={20} className="flex-shrink-0 mt-0.5" style={{ color: '#f87171' }} aria-hidden="true" />

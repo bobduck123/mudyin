@@ -96,7 +96,7 @@ export function TestimonialsGrid() {
                   style={{
                     backgroundColor: 'rgba(210,168,85,0.1)',
                     color: 'var(--color-ochre-400)',
-                    border: '1px solid rgba(210,168,85,0.2)',
+                    boxShadow: '0 6px 14px rgba(0,0,0,0.24)',
                   }}
                 >
                   {t.program}

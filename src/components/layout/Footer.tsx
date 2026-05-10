@@ -3,31 +3,25 @@
 import Link from 'next/link'
 import { Facebook, Instagram, Youtube, MapPin, Phone, Mail, Heart } from 'lucide-react'
 import { siteConfig } from '@/lib/data'
+import { getDefaultSite } from '@/lib/white-label/site-registry'
 import { AcknowledgementOfCountry } from '@/components/cultural/AcknowledgementOfCountry'
 import { NewsletterForm } from '@/components/forms/NewsletterForm'
 
 const programLinks = [
-  { label: 'Young Spirit Mentoring (YSMP)', href: '/programs/ysmp' },
-  { label: 'Thrive Tribe',                  href: '/programs/thrive-tribe' },
-  { label: 'Healing Centre',                href: '/programs/healing-centre' },
-  { label: 'All Programs',                  href: '/programs' },
+  { label: "Mudyin Women's Business", href: '/programs/womens-business' },
+  { label: "Aaliyah's Dreaming",      href: '/programs/aaliyahs-dreaming' },
+  { label: "Mirabella's Dreaming",    href: '/programs/mirabellas-dreaming' },
+  { label: 'All Streams',             href: '/programs' },
 ]
 
 const involvedLinks = [
-  { label: 'Enroll in a Program',  href: '/enroll' },
-  { label: 'Volunteer',            href: '/contact?type=volunteer' },
-  { label: 'Partner With Us',      href: '/contact?type=partnership' },
-  { label: 'Make a Donation',      href: '/donate' },
-  { label: 'Monthly Giving',       href: '/donate#monthly' },
+  { label: 'Request a Program Place', href: '/contact#booking-request' },
+  { label: 'General Enquiry',         href: '/contact#general-enquiry' },
+  { label: 'Volunteer',               href: '/contact?type=volunteer' },
+  { label: 'Partner With Us',         href: '/contact?type=partnership' },
 ]
 
-const legalLinks = [
-  { label: 'Privacy Policy',         href: '/privacy' },
-  { label: 'Terms of Use',           href: '/terms' },
-  { label: 'Accessibility',          href: '/accessibility' },
-  { label: 'ICIP Protocols',         href: '/icip' },
-  { label: 'Child Safety Policy',    href: '/about/child-safety' },
-]
+const legalLinks = getDefaultSite().footerLinks
 
 export function Footer() {
   const year = new Date().getFullYear()
@@ -38,7 +32,7 @@ export function Footer() {
       <div
         className="section-padding py-16 lg:py-20"
         style={{
-          backgroundColor: 'rgba(10,10,10,1)',
+          backgroundColor: 'rgba(33,25,22,1)',
           borderTop: '1px solid rgba(65,70,72,0.35)',
         }}
       >
@@ -62,14 +56,14 @@ export function Footer() {
                 </span>
                 <span
                   className="font-script text-lg block"
-                  style={{ color: 'rgba(210,168,85,0.5)' }}
+                  style={{ color: 'rgba(200,167,93,0.55)' }}
                 >
                   Two Worlds Strong
                 </span>
               </Link>
 
               <p className="mt-4 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                Healing, empowering, and connecting Aboriginal communities through culture, community, and 25 years of purpose.
+                Culturally grounded first-live enquiries and staged program streams under MUDYIN PTY LTD.
               </p>
 
               {/* Social links */}
@@ -92,8 +86,8 @@ export function Footer() {
                     }}
                     onMouseEnter={e => {
                       const el = e.currentTarget
-                      el.style.backgroundColor = 'rgba(210,168,85,0.15)'
-                      el.style.borderColor = 'rgba(210,168,85,0.4)'
+                      el.style.backgroundColor = 'rgba(111,138,120,0.16)'
+                      el.style.borderColor = 'rgba(111,138,120,0.42)'
                       el.style.color = 'var(--color-ochre-400)'
                     }}
                     onMouseLeave={e => {
@@ -192,7 +186,7 @@ export function Footer() {
                 Stay Connected
               </h3>
               <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                Community stories, program updates, and cultural events — straight to your inbox.
+                Program updates and Mudyin news when they are ready to share.
               </p>
               <NewsletterForm />
             </div>

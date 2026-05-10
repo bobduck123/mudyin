@@ -26,20 +26,20 @@ export function PhotoCard({
   return (
     <Link href={`/gallery/${id}`}>
       <div
-        className="rounded-lg overflow-hidden hover:shadow-lg transition-all group cursor-pointer"
+        className="rounded-2xl overflow-hidden transition-all group cursor-pointer grounded-lines"
         style={{
-          border: '1px solid rgba(210, 168, 85, 0.2)',
-          backgroundColor: 'rgba(2,2,2,0.85)',
+          backgroundColor: 'rgba(2,2,2,0.86)',
+          boxShadow: '0 12px 24px rgba(0,0,0,0.3)',
         }}
       >
         {/* Image Container */}
-        <div className="relative overflow-hidden bg-gray-200 aspect-square">
+        <div className="relative overflow-hidden aspect-square">
           <Image
             src={imageUrl}
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
 
           {/* Overlay on Hover */}
@@ -59,6 +59,9 @@ export function PhotoCard({
 
         {/* Card Footer */}
         <div className="p-4 space-y-3">
+          <p className="text-[11px] uppercase tracking-[0.14em]" style={{ color: 'rgba(255,255,255,0.46)' }}>
+            Story Frame
+          </p>
           {/* Photographer Info */}
           <div className="flex items-center gap-2">
             {photographerAvatar ? (

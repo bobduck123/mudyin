@@ -1,7 +1,7 @@
 'use client'
 
+import Image from 'next/image'
 import { useState, useRef } from 'react'
-import { useSession } from 'next-auth/react'
 import { Upload, X } from 'lucide-react'
 
 interface AvatarUploadProps {
@@ -15,7 +15,6 @@ export function AvatarUpload({
   userName = 'User',
   onUploadSuccess,
 }: AvatarUploadProps) {
-  const { data: session } = useSession()
   const [preview, setPreview] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -59,14 +58,8 @@ export function AvatarUpload({
       const formData = new FormData()
       formData.append('file', fileInputRef.current.files[0])
 
-      const headers: HeadersInit = {}
-      if (session?.user?.id) {
-        headers['x-user-id'] = session.user.id
-      }
-
       const response = await fetch('/api/community/avatars/upload', {
         method: 'POST',
-        headers,
         body: formData,
       })
 
@@ -102,16 +95,21 @@ export function AvatarUpload({
       <div className="flex items-center gap-4">
         <div className="relative">
           {preview ? (
-            <img
+            <Image
               src={preview}
               alt="Avatar preview"
+              width={96}
+              height={96}
               className="h-24 w-24 rounded-full object-cover border-2"
               style={{ borderColor: 'var(--color-ochre-400)' }}
+              unoptimized
             />
           ) : currentAvatar ? (
-            <img
+            <Image
               src={currentAvatar}
               alt={userName}
+              width={96}
+              height={96}
               className="h-24 w-24 rounded-full object-cover"
             />
           ) : (

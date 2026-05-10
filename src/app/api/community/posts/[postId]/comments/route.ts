@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { createCommentSchema } from '@/lib/validators'
+import { requireSessionUser } from '@/lib/api-auth'
 
 // GET - List comments for a post
 export async function GET(
@@ -79,14 +80,9 @@ export async function POST(
   context: { params: Promise<{ postId: string }> }
 ) {
   try {
-    const userId = request.headers.get('x-user-id')
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
-    }
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
 
     const { postId } = await context.params
     const body = await request.json()

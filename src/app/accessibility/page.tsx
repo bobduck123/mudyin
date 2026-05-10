@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CheckCircle, AlertCircle, Mail } from 'lucide-react'
+import { siteConfig } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Accessibility Statement — Mudyin Aboriginal Healing Centre',
@@ -168,8 +169,8 @@ export default function AccessibilityPage() {
             </div>
             <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.65)' }}>
               If you experience an accessibility barrier on our website, we want to hear from you. Contact us at{' '}
-              <a href="mailto:info@mudyin.org.au" style={{ color: 'var(--color-ochre-400)' }} className="hover:underline">
-                info@mudyin.org.au
+              <a href={`mailto:${siteConfig.email}`} style={{ color: 'var(--color-ochre-400)' }} className="hover:underline">
+                {siteConfig.email}
               </a>{' '}
               with:
             </p>

@@ -62,7 +62,7 @@ function StepIndicator({ step, total }: { step: number; total: number }) {
   ]
 
   return (
-    <div className="flex items-center justify-between mb-10" role="list" aria-label="Enrollment progress">
+    <div className="flex items-center justify-between mb-10" role="list" aria-label="Program request progress">
       {steps.map((s, i) => {
         const num = i + 1
         const isActive    = num === step
@@ -148,11 +148,11 @@ export function EnrollmentForm({ program }: Props) {
     setServerError(null)
 
     try {
-      // In production: POST to /api/enroll
+      // First-live mode: treat this as a request, not a confirmed enrolment.
       await new Promise(r => setTimeout(r, 2000))
 
       const ref = generateMockReceiptNumber()
-      console.info('[Enrollment] Submitted:', { program, name: `${allData.firstName} ${allData.lastName}`, ref })
+      console.info('[Program Request] Submitted:', { program, name: `${allData.firstName} ${allData.lastName}`, ref })
       setSuccess(ref)
     } catch {
       setServerError('Something went wrong. Please try again or call 0478 796 298.')
@@ -175,16 +175,16 @@ export function EnrollmentForm({ program }: Props) {
       >
         <CheckCircle2 size={56} className="mx-auto mb-5" style={{ color: 'var(--color-sage-400)' }} aria-hidden="true" />
         <h3 className="font-display font-semibold text-2xl mb-2" style={{ color: 'var(--color-foreground)' }}>
-          Enrollment Submitted!
+          Request submitted
         </h3>
         <p className="mb-2" style={{ color: 'rgba(255,255,255,0.7)' }}>
-          Your application has been received. Our team will be in touch within 2–3 business days.
+          Your request has been received. This is not a confirmed program place; our team will be in touch within 2-3 business days.
         </p>
         <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.45)' }}>
           Reference number: <span className="font-mono font-bold" style={{ color: 'var(--color-ochre-400)' }}>{success}</span>
         </p>
         <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-          A confirmation email has been sent. Check your inbox (and junk folder).
+          Please keep this reference number. The team will confirm next steps with you directly.
         </p>
       </div>
     )
@@ -505,8 +505,8 @@ export function EnrollmentForm({ program }: Props) {
             </button>
             <button type="submit" disabled={submitting} className="btn-primary">
               {submitting
-                ? <><Loader2 size={16} className="animate-spin" aria-hidden="true" /> Submitting…</>
-                : <><CheckCircle2 size={16} aria-hidden="true" /> Submit Enrollment</>
+                ? <><Loader2 size={16} className="animate-spin" aria-hidden="true" /> Submitting...</>
+                : <><CheckCircle2 size={16} aria-hidden="true" /> Submit Request</>
               }
             </button>
           </div>

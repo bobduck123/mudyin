@@ -24,8 +24,8 @@ export default function ThriveTribePage() {
           { label: 'Programs', href: '/programs' },
           { label: program.name },
         ]}
-        ctaLabel="Enroll in Thrive Tribe"
-        ctaHref="/enroll/thrive-tribe"
+        ctaLabel="Request a Thrive Tribe Place"
+        ctaHref="/contact#booking-request"
       />
 
       {/* Main content */}
@@ -139,7 +139,7 @@ export default function ThriveTribePage() {
               <div
                 className="mt-10 rounded-2xl p-7"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(139,37,0,0.1), rgba(210,168,85,0.05))',
+                  background: 'linear-gradient(135deg, rgba(184,117,85,0.1), rgba(210,168,85,0.05))',
                   border: '1px solid rgba(210,168,85,0.2)',
                 }}
               >
@@ -246,16 +246,16 @@ export default function ThriveTribePage() {
                         color: '#9DC183',
                       }}
                     >
-                      Enrolling Now
+                      Requests Open
                     </div>
                   )}
                 </dl>
 
                 <Link
-                  href="/enroll/thrive-tribe"
+                  href="/contact#booking-request"
                   className="btn-primary w-full text-center mt-8 block"
                 >
-                  Enroll in Thrive Tribe
+                  Request a Thrive Tribe Place
                 </Link>
 
                 <Link
@@ -300,8 +300,8 @@ export default function ThriveTribePage() {
 
       <CTABand
         heading="Ready to Thrive?"
-        subheading="The next Thrive Tribe intake is open. Take the first step — your community is waiting."
-        primaryCTA={{ label: 'Enroll in Thrive Tribe', href: '/enroll/thrive-tribe' }}
+        subheading="The next Thrive Tribe intake is open for requests. Take the first step — your community is waiting."
+        primaryCTA={{ label: 'Request a Thrive Tribe Place', href: '/enroll/thrive-tribe' }}
         secondaryCTA={{ label: 'Contact Us', href: '/contact' }}
       />
     </div>

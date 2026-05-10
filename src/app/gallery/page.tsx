@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { Search, Upload } from 'lucide-react'
+import { Search, Upload, Sparkles } from 'lucide-react'
 import { PhotoCard } from '@/components/gallery/PhotoCard'
 import { TrendingCarousel } from '@/components/gallery/TrendingCarousel'
 import { PageHero } from '@/components/layout/PageHero'
@@ -33,22 +33,22 @@ const editorialPlaceholders = [
     id: 'e1',
     title: 'Sunrise Training Circle',
     note: 'Feature Story Placeholder',
-    gradient: 'linear-gradient(135deg, rgba(219,22,47,0.35), rgba(20,20,20,0.9))',
-    titleColor: 'var(--color-flag-red)',
+    gradient: 'radial-gradient(circle at 52% 54%, rgba(200,167,93,0.12) 0 18%, transparent 38%), linear-gradient(180deg, rgba(2,2,2,0.72) 0 52%, rgba(184,117,85,0.2) 100%)',
+    titleColor: 'rgba(255,255,255,0.94)',
   },
   {
     id: 'e2',
     title: 'Healing Session Moments',
     note: 'Feature Story Placeholder',
-    gradient: 'linear-gradient(135deg, rgba(243,222,44,0.25), rgba(20,20,20,0.9))',
-    titleColor: 'var(--color-flag-yellow)',
+    gradient: 'radial-gradient(circle at 50% 50%, rgba(200,167,93,0.16) 0 20%, transparent 40%), linear-gradient(180deg, rgba(2,2,2,0.76) 0 52%, rgba(184,117,85,0.16) 100%)',
+    titleColor: 'rgba(255,255,255,0.94)',
   },
   {
     id: 'e3',
     title: 'Mob Market Day Highlights',
     note: 'Feature Story Placeholder',
-    gradient: 'linear-gradient(135deg, rgba(223,206,214,0.95), rgba(210,210,210,0.82))',
-    titleColor: 'var(--color-flag-black)',
+    gradient: 'radial-gradient(circle at 52% 56%, rgba(200,167,93,0.12) 0 16%, rgba(184,117,85,0.14) 33%, transparent 48%), linear-gradient(180deg, rgba(223,206,214,0.86) 0 52%, rgba(2,2,2,0.54) 100%)',
+    titleColor: 'var(--color-charcoal-950)',
   },
 ]
 
@@ -75,7 +75,7 @@ function GalleryContent() {
       if (!response.ok) throw new Error('Failed to fetch photos')
 
       const data: PhotosResponse = await response.json()
-      setPhotos(pageNum === 1 ? data.photos : [...photos, ...data.photos])
+      setPhotos((prev) => (pageNum === 1 ? data.photos : [...prev, ...data.photos]))
       setTotal(data.total)
     } catch (error) {
       console.error('Fetch photos error:', error)
@@ -105,36 +105,61 @@ function GalleryContent() {
         description="Browse photos from Mudyin programs and events. Share your own story with our community."
       />
 
-      <section className="section-spacing container-wide">
-        <div className="max-w-6xl mx-auto space-y-8">
-          {/* Trending Carousel */}
+      <section className="section-spacing section-padding">
+        <div className="container-wide space-y-8">
+          <div className="healing-panel rounded-2xl p-6 lg:p-8 grounded-lines">
+            <div className="flex flex-wrap justify-between gap-4 mb-5">
+              <div>
+                <p className="text-xs uppercase tracking-[0.16em] mb-2" style={{ color: 'rgba(255,255,255,0.56)' }}>
+                  Visual Story Montage
+                </p>
+                <h2 className="font-display text-3xl lg:text-4xl">Enter Through Story Trails</h2>
+              </div>
+              <div className="flex items-center gap-2 text-xs uppercase tracking-[0.14em]" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                <Sparkles size={14} />
+                Image-led navigation
+              </div>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {editorialPlaceholders.map((item) => (
+                <article
+                  key={item.id}
+                  className="rounded-2xl p-6 min-h-[170px] flex flex-col justify-end"
+                  style={{ background: item.gradient }}
+                >
+                  <p className="text-xs uppercase tracking-[0.16em] mb-2" style={{ color: item.id === 'e3' ? 'rgba(2,2,2,0.65)' : 'rgba(255,255,255,0.65)' }}>
+                    {item.note}
+                  </p>
+                  <h3 className="font-display text-2xl" style={{ color: item.titleColor }}>{item.title}</h3>
+                </article>
+              ))}
+            </div>
+          </div>
+
           <div data-decorative="true">
-            <h2 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-foreground)' }}>
+            <h2 className="text-2xl font-display mb-4" style={{ color: 'var(--color-foreground)' }}>
               Trending Now
             </h2>
             <TrendingCarousel />
           </div>
 
-          {/* Search & Filter Bar */}
-          <div className="space-y-4">
-            <div className="flex gap-4 flex-col md:flex-row md:items-end">
-              {/* Search */}
+          <div className="rounded-2xl p-4 md:p-5 healing-panel">
+            <div className="flex gap-4 flex-col lg:flex-row lg:items-end">
               <div className="relative flex-1">
-                <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }} />
                 <input
                   type="text"
-                  placeholder="Search photos..."
+                  placeholder="Search photos and stories..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:ring-2"
+                  className="input-dark pl-10"
                 />
               </div>
 
-              {/* Program Filter */}
               <select
                 value={program}
                 onChange={(e) => setProgram(e.target.value)}
-                className="px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2"
+                className="input-dark lg:max-w-[230px]"
               >
                 <option value="">All Programs</option>
                 <option value="YSMP">YSMP</option>
@@ -142,83 +167,52 @@ function GalleryContent() {
                 <option value="Healing Centre">Healing Centre</option>
               </select>
 
-              {/* Sort */}
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
-                className="px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2"
+                className="input-dark lg:max-w-[180px]"
               >
                 <option value="newest">Newest</option>
                 <option value="trending">Trending</option>
                 <option value="liked">Most Liked</option>
               </select>
 
-              {/* Upload Button */}
-              <Link
-                href="/gallery/upload"
-                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white transition-opacity hover:opacity-90 whitespace-nowrap"
-                style={{ backgroundColor: 'var(--color-ochre-400)' }}
-              >
+              <Link href="/gallery/upload" className="btn-primary whitespace-nowrap">
                 <Upload size={18} />
                 Upload
               </Link>
             </div>
 
-            {/* Result Count */}
-            <p className="text-sm" style={{ color: 'rgba(255,255,255,0.62)' }}>
+            <p className="text-sm mt-4" style={{ color: 'rgba(255,255,255,0.62)' }}>
               {total > 0 ? `Showing ${Math.min(page * 20, total)} of ${total} photos` : 'No photos found'}
             </p>
           </div>
 
-          {/* Photos Grid */}
           {isLoading && page === 1 ? (
-            <div className="text-center py-12">
-              <p style={{ color: 'rgba(255,255,255,0.62)' }}>Loading photos...</p>
+            <div className="grid md:grid-cols-3 gap-4" data-decorative="true">
+              {[...Array(6)].map((_, index) => (
+                <div
+                  key={index}
+                  className="rounded-2xl overflow-hidden"
+                  style={{ backgroundColor: 'rgba(255,255,255,0.04)' }}
+                >
+                  <div className="h-36 bg-white/10" />
+                  <div className="p-4 space-y-2">
+                    <div className="h-3 w-2/3 bg-white/10 rounded" />
+                    <div className="h-3 w-1/2 bg-white/10 rounded" />
+                  </div>
+                </div>
+              ))}
             </div>
           ) : photos.length === 0 ? (
-            <div className="py-4 space-y-8">
-              <div className="grid md:grid-cols-3 gap-4">
-                {editorialPlaceholders.map((item) => (
-                  <article
-                    key={item.id}
-                    className="rounded-2xl p-6 min-h-[180px] flex flex-col justify-end"
-                    style={{ background: item.gradient, border: '1px solid rgba(255,255,255,0.2)' }}
-                  >
-                    <p className="text-xs uppercase tracking-[0.16em] mb-2" style={{ color: item.id === 'e3' ? 'rgba(2,2,2,0.65)' : 'rgba(255,255,255,0.65)' }}>
-                      {item.note}
-                    </p>
-                    <h3 className="font-display text-2xl" style={{ color: item.titleColor }}>{item.title}</h3>
-                  </article>
-                ))}
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-4" data-decorative="true">
-                {[...Array(6)].map((_, index) => (
-                  <div
-                    key={index}
-                    className="rounded-2xl overflow-hidden animate-pulse"
-                    style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)' }}
-                  >
-                    <div className="h-36 bg-white/10" />
-                    <div className="p-4 space-y-2">
-                      <div className="h-3 w-2/3 bg-white/10 rounded" />
-                      <div className="h-3 w-1/2 bg-white/10 rounded" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="text-center py-6">
-                <p className="mb-4" style={{ color: 'rgba(255,255,255,0.62)' }}>No photos found yet. Curated stories are coming soon.</p>
-                <Link
-                  href="/gallery/upload"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white"
-                  style={{ backgroundColor: 'var(--color-ochre-400)' }}
-                >
-                  <Upload size={18} />
-                  Be the first to upload!
-                </Link>
-              </div>
+            <div className="text-center py-8">
+              <p className="mb-4" style={{ color: 'rgba(255,255,255,0.62)' }}>
+                No photos found yet. Curated stories are coming soon.
+              </p>
+              <Link href="/gallery/upload" className="btn-primary">
+                <Upload size={18} />
+                Be the first to upload
+              </Link>
             </div>
           ) : (
             <>
@@ -246,14 +240,12 @@ function GalleryContent() {
                 ))}
               </div>
 
-              {/* Load More */}
               {page * 20 < total && (
                 <div className="text-center py-8">
                   <button
                     onClick={() => setPage(page + 1)}
                     disabled={isLoading}
-                    className="px-8 py-3 rounded-lg font-semibold text-white transition-opacity disabled:opacity-50"
-                    style={{ backgroundColor: 'var(--color-ochre-400)' }}
+                    className="btn-outline disabled:opacity-50"
                   >
                     Load More Photos
                   </button>
@@ -271,7 +263,7 @@ export default function GalleryPage() {
   return (
     <Suspense fallback={
       <div className="text-center py-12">
-        <p className="text-gray-600">Loading gallery...</p>
+        <p style={{ color: 'rgba(255,255,255,0.65)' }}>Loading gallery...</p>
       </div>
     }>
       <GalleryContent />

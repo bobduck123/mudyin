@@ -77,20 +77,21 @@ export default function CommunityFeedPage() {
   }
 
   return (
-    <div className="min-h-screen blak-motif-organic" style={{ backgroundColor: 'var(--color-charcoal)' }}>
+    <div className="min-h-screen healing-motif-organic" style={{ backgroundColor: 'var(--color-charcoal)' }}>
       {/* Hero Section */}
       <div
         className="px-4 py-8 md:py-12 border-b"
         style={{
           borderColor: 'rgba(210, 168, 85, 0.2)',
-          background: 'linear-gradient(135deg, rgba(219,22,47,0.12), rgba(20,20,20,0.92) 40%, rgba(243,222,44,0.1))',
+          background:
+            'radial-gradient(circle at 52% 54%, rgba(200,167,93,0.12) 0 18%, rgba(184,117,85,0.14) 34%, rgba(2,2,2,0.92) 100%)',
         }}
       >
         <div className="max-w-4xl mx-auto">
           <p className="text-xs uppercase tracking-[0.18em] mb-3" style={{ color: 'rgba(255,255,255,0.58)' }}>
             Community Space
           </p>
-          <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: 'var(--color-flag-yellow)' }}>
+          <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: 'var(--color-foreground)' }}>
             Community Feed
           </h1>
           <p className="mb-6" style={{ color: 'rgba(255,255,255,0.78)' }}>
@@ -99,8 +100,7 @@ export default function CommunityFeedPage() {
 
           <Link href="/community/create">
             <button
-              className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all hover:shadow-lg"
-              style={{ backgroundColor: 'var(--color-ochre-400)', color: 'var(--color-charcoal)' }}
+              className="btn-clay-glass flex items-center gap-2 px-6 py-3 font-semibold transition-all hover:shadow-lg"
             >
               <Plus size={20} />
               Create Post
@@ -176,8 +176,7 @@ export default function CommunityFeedPage() {
               <p className="text-gray-400 mb-4">No posts yet. Be the first to share!</p>
               <Link href="/community/create">
                 <button
-                  className="px-6 py-2 rounded-lg font-medium"
-                  style={{ backgroundColor: 'var(--color-ochre-400)', color: 'var(--color-charcoal)' }}
+                  className="btn-clay-glass px-6 py-2 font-medium"
                 >
                   Create Post
                 </button>

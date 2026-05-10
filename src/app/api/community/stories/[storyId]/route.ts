@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { requireSessionUser } from '@/lib/api-auth'
 
 export async function GET(
   request: NextRequest,
@@ -77,9 +78,13 @@ export async function PUT(
   { params }: { params: Promise<{ storyId: string }> }
 ) {
   try {
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
+
     const { storyId } = await params
     const body = await request.json()
-    const { userId, visibility, storyFrames: _storyFrames } = body
+    const { visibility, storyFrames: _storyFrames } = body
 
     // Verify ownership
     const story = await prisma.communityPost.findUnique({
@@ -140,9 +145,11 @@ export async function DELETE(
   { params }: { params: Promise<{ storyId: string }> }
 ) {
   try {
+    const auth = await requireSessionUser()
+    if (!auth.ok) return auth.response
+    const userId = auth.userId
+
     const { storyId } = await params
-    const body = await request.json()
-    const { userId } = body
 
     // Verify ownership
     const story = await prisma.communityPost.findUnique({

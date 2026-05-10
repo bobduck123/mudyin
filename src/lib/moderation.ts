@@ -300,7 +300,6 @@ export async function flagContentForReview(
 
     return flaggedContent
   } catch (error) {
-    console.error('Error flagging content:', error)
     if (isDbUnavailableError(error)) {
       return {
         id: demoId('flag'),
@@ -312,6 +311,7 @@ export async function flagContentForReview(
         status: 'pending',
       }
     }
+    console.error('Error flagging content:', error)
     return null
   }
 }
