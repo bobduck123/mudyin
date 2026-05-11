@@ -32,7 +32,11 @@ const requestTypes = [
   { value: 'booking', label: 'General booking request' },
 ]
 
-export function BookingRequestForm() {
+type BookingRequestFormProps = {
+  defaultPreferredService?: string
+}
+
+export function BookingRequestForm({ defaultPreferredService = '' }: BookingRequestFormProps) {
   const [status, setStatus] = useState<Status>('idle')
   const [serverMessage, setServerMessage] = useState<string | null>(null)
 
@@ -43,7 +47,11 @@ export function BookingRequestForm() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { enquiryType: 'booking', consent: false as unknown as true },
+    defaultValues: {
+      enquiryType: 'booking',
+      consent: false as unknown as true,
+      preferredService: defaultPreferredService,
+    },
   })
 
   const onSubmit = async (data: FormData) => {
@@ -209,7 +217,7 @@ export function BookingRequestForm() {
           <input
             id="booking-service"
             type="text"
-            placeholder="Women's Business, Aaliyah's Dreaming, Mirabella's Dreaming"
+            placeholder="Thrive Tribe, Young Spirit Mentoring, Culture Country"
             className="input-dark"
             {...register('preferredService')}
           />
@@ -285,7 +293,7 @@ export function BookingRequestForm() {
           }}
         >
           <AlertCircle size={16} aria-hidden="true" />
-          {serverMessage || 'Something went wrong. Please try again or email us directly at info@mudyin.com.'}
+          {serverMessage || 'Something went wrong. Please try again or email us directly at yaama@mudyin.com.'}
         </div>
       )}
 

@@ -8,14 +8,15 @@ import { AcknowledgementOfCountry } from '@/components/cultural/AcknowledgementO
 import { NewsletterForm } from '@/components/forms/NewsletterForm'
 
 const programLinks = [
+  { label: 'Thrive Tribe',            href: '/programs/thrive-tribe' },
+  { label: 'Young Spirit Mentoring',  href: '/programs/young-spirit-mentoring' },
+  { label: 'Culture Country',         href: '/programs/culture-country' },
   { label: "Mudyin Women's Business", href: '/programs/womens-business' },
-  { label: "Aaliyah's Dreaming",      href: '/programs/aaliyahs-dreaming' },
-  { label: "Mirabella's Dreaming",    href: '/programs/mirabellas-dreaming' },
   { label: 'All Streams',             href: '/programs' },
 ]
 
 const involvedLinks = [
-  { label: 'Request a Program Place', href: '/contact#booking-request' },
+  { label: 'Send a Booking Request', href: '/contact#booking-request' },
   { label: 'General Enquiry',         href: '/contact#general-enquiry' },
   { label: 'Volunteer',               href: '/contact?type=volunteer' },
   { label: 'Partner With Us',         href: '/contact?type=partnership' },

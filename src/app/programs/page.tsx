@@ -26,7 +26,10 @@ export default function ProgramsPage() {
             <span className="section-label">First-live model</span>
             <h2 className="font-display mt-3 text-3xl font-semibold text-white">Sub-programs under one operating entity</h2>
             <p className="mt-4 leading-7 text-white/65">
-              Mudyin Women&apos;s Business, Aaliyah&apos;s Dreaming, and Mirabella&apos;s Dreaming are presented as streams under {mudyinOperatingEntity.legalName}, not as separate live organisations. Public requests are reviewed by the Mudyin team before any activity is confirmed.
+              Thrive Tribe, Young Spirit Mentoring, Culture Country, Mudyin Women&apos;s Business,
+              Aaliyah&apos;s Dreaming, and Mirabella&apos;s Dreaming are presented as streams under{' '}
+              {mudyinOperatingEntity.legalName}, not as separate live organisations. Public
+              requests are reviewed by the Mudyin team before any activity is confirmed.
             </p>
           </div>
 

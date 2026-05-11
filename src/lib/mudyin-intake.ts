@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { mudyinPublicConfig } from '@/lib/mudyin-public-config'
 import { prisma } from '@/lib/db'
 import { isDbUnavailableError } from '@/lib/demo-fallback'
+import { sendMudyinIntakeEmail } from '@/lib/mudyin-email'
 
 const baseIntakeSchema = z.object({
   name: z.string().trim().min(2, 'Please enter your full name').max(120),
@@ -46,7 +47,14 @@ type IntakeContext = {
 export type IntakeResult = {
   success: boolean
   reference: string
-  mode: 'anu-forwarded' | 'local-db' | 'local-db-and-anu' | 'fallback-log'
+  mode:
+    | 'email-sent'
+    | 'local-db'
+    | 'local-db-and-email'
+    | 'local-db-and-anu'
+    | 'local-db-email-and-anu'
+    | 'anu-forwarded'
+    | 'fallback-log'
   message: string
 }
 
@@ -131,7 +139,7 @@ function logFallback(context: IntakeContext, reference: string) {
     origin: context.request.headers.get('origin'),
     userAgent: context.request.headers.get('user-agent'),
     data: context.payload,
-    todo: 'Replace fallback logging with durable storage or email delivery before scaling public traffic.',
+    todo: 'Replace fallback logging with durable storage or active email delivery before scaling public traffic.',
   })
 }
 
@@ -179,13 +187,28 @@ async function storeLocally(context: IntakeContext, reference: string): Promise<
 export async function submitMudyinIntake(context: IntakeContext): Promise<IntakeResult> {
   const reference = makeReference(context.kind)
   const storedLocally = await storeLocally(context, reference)
+  const emailResult = await sendMudyinIntakeEmail({ ...context, reference })
   const forwarded = await tryForwardToAnu(context, reference)
+  const emailDelivered = emailResult.delivered
+
+  if (!emailResult.delivered && emailResult.attempted) {
+    console.warn('[Mudyin Intake] Email delivery failed; using safe recorded fallback.', {
+      reference,
+      kind: context.kind,
+      recipient: emailResult.recipient,
+      error: emailResult.error,
+    })
+  }
 
   if (forwarded) {
     return {
       success: true,
       reference,
-      mode: storedLocally ? 'local-db-and-anu' : 'anu-forwarded',
+      mode: storedLocally && emailDelivered
+        ? 'local-db-email-and-anu'
+        : storedLocally
+          ? 'local-db-and-anu'
+          : 'anu-forwarded',
       message: DEFAULT_MESSAGES[context.kind],
     }
   }
@@ -194,7 +217,16 @@ export async function submitMudyinIntake(context: IntakeContext): Promise<Intake
     return {
       success: true,
       reference,
-      mode: 'local-db',
+      mode: emailDelivered ? 'local-db-and-email' : 'local-db',
+      message: DEFAULT_MESSAGES[context.kind],
+    }
+  }
+
+  if (emailDelivered) {
+    return {
+      success: true,
+      reference,
+      mode: 'email-sent',
       message: DEFAULT_MESSAGES[context.kind],
     }
   }

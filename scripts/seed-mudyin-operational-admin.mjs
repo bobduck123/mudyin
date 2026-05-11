@@ -13,6 +13,54 @@ const outputPath = path.resolve(process.cwd(), '.local', 'mudyin-bootstrap-admin
 
 const programStreams = [
   {
+    slug: 'thrive-tribe',
+    name: 'Thrive Tribe',
+    parentEntity: 'MUDYIN PTY LTD',
+    status: 'active_enquiry',
+    phase: 'First-live enquiries and conversation requests',
+    summary:
+      'A community wellbeing and support program focused on connection, resilience, healing, and practical pathways for people seeking culturally grounded support.',
+    description:
+      'Thrive Tribe is included as an original Mudyin program stream for people seeking culturally grounded wellbeing support, connection, resilience, and practical next steps. First-live public requests are handled as enquiries or booking conversations.',
+    culturalNote:
+      'Public copy stays general until Mudyin confirms approved program details, dates, eligibility, and delivery scope.',
+    enquiryEnabled: true,
+    publicEnabled: true,
+    sortOrder: 1,
+  },
+  {
+    slug: 'young-spirit-mentoring',
+    name: 'Young Spirit Mentoring',
+    parentEntity: 'MUDYIN PTY LTD',
+    status: 'active_enquiry',
+    phase: 'First-live enquiries and guidance requests',
+    summary:
+      'A youth mentoring and guidance program supporting young people through identity, confidence, cultural connection, personal growth, and positive future pathways.',
+    description:
+      'Young Spirit Mentoring is included as an original Mudyin program stream for young people, families, and supporters seeking mentoring, guidance, cultural connection, confidence, and positive future pathways.',
+    culturalNote:
+      'The site does not publish unsupported eligibility, transport, dates, or child-program claims; those details must be confirmed directly by Mudyin.',
+    enquiryEnabled: true,
+    publicEnabled: true,
+    sortOrder: 2,
+  },
+  {
+    slug: 'culture-country',
+    name: 'Culture Country',
+    parentEntity: 'MUDYIN PTY LTD',
+    status: 'active_enquiry',
+    phase: 'First-live enquiries and cultural learning requests',
+    summary:
+      'A cultural learning and Country-centred program focused on connection to culture, place, story, knowledge, and community responsibility.',
+    description:
+      'Culture Country is included as an original Mudyin program stream for people seeking culturally grounded learning, connection to place, story, knowledge, and community responsibility.',
+    culturalNote:
+      'Specific cultural material requires Mudyin approval and appropriate cultural authority.',
+    enquiryEnabled: true,
+    publicEnabled: true,
+    sortOrder: 3,
+  },
+  {
     slug: 'womens-business',
     name: "Mudyin Women's Business",
     parentEntity: 'MUDYIN PTY LTD',
@@ -26,7 +74,7 @@ const programStreams = [
       'Cultural material remains general unless approved by Mudyin leadership and appropriate knowledge holders.',
     enquiryEnabled: true,
     publicEnabled: true,
-    sortOrder: 1,
+    sortOrder: 4,
   },
   {
     slug: 'aaliyahs-dreaming',
@@ -42,7 +90,7 @@ const programStreams = [
       'No public claim is made that this stream is currently delivering services, transport, child programs, or clinical support.',
     enquiryEnabled: true,
     publicEnabled: true,
-    sortOrder: 2,
+    sortOrder: 5,
   },
   {
     slug: 'mirabellas-dreaming',
@@ -58,7 +106,7 @@ const programStreams = [
       'The site can receive enquiries, but it does not describe this stream as a confirmed active service.',
     enquiryEnabled: true,
     publicEnabled: true,
-    sortOrder: 3,
+    sortOrder: 6,
   },
 ]
 
@@ -76,7 +124,7 @@ const sitePages = [
     slug: 'programs',
     title: 'Programs and Streams',
     body:
-      'Mudyin presents Womens Business, Aaliyahs Dreaming, and Mirabellas Dreaming as sub-program streams under the parent operating entity. Future-phase streams must not be represented as live delivery until approved.',
+      'Mudyin presents Thrive Tribe, Young Spirit Mentoring, Culture Country, Womens Business, Aaliyahs Dreaming, and Mirabellas Dreaming as sub-program streams under the parent operating entity. Future-phase streams must not be represented as live delivery until approved.',
     status: 'published',
     version: 1,
     ownerRole: 'admin',

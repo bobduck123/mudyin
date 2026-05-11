@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('[Mudyin Booking Request API] Error:', error)
     return NextResponse.json(
-      { success: false, error: 'We could not send your booking request. Please try again or email info@mudyin.com.' },
+      { success: false, error: 'We could not send your booking request. Please try again or email yaama@mudyin.com.' },
       { status: 500 },
     )
   }

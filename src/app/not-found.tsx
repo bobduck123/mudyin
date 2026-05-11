@@ -59,8 +59,9 @@ export default function NotFound() {
           <nav aria-label="Suggested pages" className="flex flex-wrap justify-center gap-x-8 gap-y-3">
             {[
               { label: 'Our Story',   href: '/about/our-story' },
-              { label: "Women's Business", href: '/programs/womens-business' },
-              { label: "Aaliyah's Dreaming", href: '/programs/aaliyahs-dreaming' },
+              { label: 'Thrive Tribe', href: '/programs/thrive-tribe' },
+              { label: 'Young Spirit', href: '/programs/young-spirit-mentoring' },
+              { label: 'Culture Country', href: '/programs/culture-country' },
               { label: 'Governance', href: '/governance' },
               { label: 'Contact',     href: '/contact' },
             ].map(link => (

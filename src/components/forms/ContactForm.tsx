@@ -36,7 +36,11 @@ const enquiryTypes = [
   { value: 'volunteer', label: 'Volunteering' },
 ]
 
-export function ContactForm() {
+type ContactFormProps = {
+  defaultPreferredService?: string
+}
+
+export function ContactForm({ defaultPreferredService = '' }: ContactFormProps) {
   const [status, setStatus] = useState<Status>('idle')
   const [serverMessage, setServerMessage] = useState<string | null>(null)
 
@@ -47,7 +51,10 @@ export function ContactForm() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { consent: false as unknown as true },
+    defaultValues: {
+      consent: false as unknown as true,
+      preferredService: defaultPreferredService,
+    },
   })
 
   const onSubmit = async (data: FormData) => {
@@ -214,7 +221,7 @@ export function ContactForm() {
           <input
             id="contact-service"
             type="text"
-            placeholder="Women's Business, Aaliyah's Dreaming, Mirabella's Dreaming"
+            placeholder="Thrive Tribe, Young Spirit Mentoring, Culture Country"
             className="input-dark"
             {...register('preferredService')}
           />
@@ -286,7 +293,7 @@ export function ContactForm() {
           }}
         >
           <AlertCircle size={16} aria-hidden="true" />
-          {serverMessage || 'Something went wrong. Please try again or email us directly at info@mudyin.com.'}
+          {serverMessage || 'Something went wrong. Please try again or email us directly at yaama@mudyin.com.'}
         </div>
       )}
 

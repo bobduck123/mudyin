@@ -18,6 +18,14 @@ ORIGINS = [
     "https://www.mudyin.com",
     "https://mudyin-live.vercel.app",
 ]
+KEY_ROUTES = [
+    "/",
+    "/contact",
+    "/programs",
+    "/programs/thrive-tribe",
+    "/programs/young-spirit-mentoring",
+    "/programs/culture-country",
+]
 
 
 def request(method: str, url: str, *, headers: dict[str, str] | None = None, body: dict | None = None, timeout: int = 12):
@@ -58,6 +66,11 @@ def main() -> int:
 
     frontend = request("GET", FRONTEND_URL)
     record(results, "frontend_url", "pass" if frontend["ok"] else "fail", f"{FRONTEND_URL} -> {frontend['status']}: {frontend['body'][:160]}")
+
+    for path in KEY_ROUTES:
+        route = request("GET", f"{PUBLIC_URL}{path}")
+        status = "pass" if route["ok"] else "fail"
+        record(results, f"public_route:{path}", status, f"{PUBLIC_URL}{path} -> {route['status']}: {route['body'][:140]}")
 
     health_statuses = []
     for path in ["/health", "/healthz"]:
@@ -107,7 +120,7 @@ def main() -> int:
             "email": "smoke@example.com",
             "phone": "",
             "enquiryType": "general",
-            "preferredService": "",
+            "preferredService": "Thrive Tribe",
             "preferredDateTime": "",
             "message": "Smoke test enquiry from launch readiness script.",
             "consent": True,
@@ -118,7 +131,7 @@ def main() -> int:
             "email": "smoke@example.com",
             "phone": "",
             "enquiryType": "booking",
-            "preferredService": "Healing Centre",
+            "preferredService": "Culture Country",
             "preferredDateTime": "Next available",
             "message": "Smoke test booking request from launch readiness script.",
             "consent": True,

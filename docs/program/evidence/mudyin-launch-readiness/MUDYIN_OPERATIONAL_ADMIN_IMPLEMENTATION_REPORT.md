@@ -28,7 +28,7 @@ The named foundation documents and operations starter kit files were not present
 - Aaliyah's Dreaming and Mirabella's Dreaming are clearly future-phase.
 - Homepage and program copy no longer relies on old YSMP/Thrive/Healing Centre impact claims as first-live public positioning.
 - Booking request language says request only, not confirmed booking.
-- Aboriginal-flag-coded decorative styling check passes.
+- Literal flag-colour decorative styling check passes.
 
 ## Implemented Admin Readiness
 

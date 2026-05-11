@@ -39,16 +39,19 @@ NEXT_PUBLIC_SITE_SLUG=mudyin
 NEXT_PUBLIC_TENANT_KEY=mudyin
 NEXT_PUBLIC_API_BASE_URL=https://anu-back-end.vercel.app
 NEXT_PUBLIC_PUBLIC_SITE_URL=https://www.mudyin.com
+MUDYIN_INTAKE_EMAIL=yaama@mudyin.com
 ```
 
-Optional ANU intake forwarding:
+Optional email delivery and ANU intake forwarding:
 
 ```bash
+RESEND_API_KEY=
+EMAIL_FROM="Mudyin <noreply@mudyin.com>"
 ANU_PUBLIC_ENQUIRIES_ENDPOINT=
 ANU_PUBLIC_BOOKING_REQUEST_ENDPOINT=
 ```
 
-Leave the optional endpoint variables empty until ANU has stable public intake endpoints. The frontend will then use first-live server-side fallback logging and will not expose secrets to the browser.
+Leave the optional ANU endpoint variables empty until ANU has stable public intake endpoints. If `RESEND_API_KEY` is set, public enquiries and booking requests are emailed server-side to `MUDYIN_INTAKE_EMAIL`. If no email provider is configured, the frontend uses local durable storage where available, then first-live server-side fallback logging, and it does not expose secrets to the browser.
 
 ## First-live mode
 

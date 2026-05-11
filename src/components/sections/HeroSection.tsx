@@ -35,8 +35,9 @@ function StatItem({ label, value, suffix, index }: { label: string; value: numbe
 
 const careTrail = [
   { id: 'programs', label: 'Program Streams', href: '/programs' },
-  { id: 'womens-business', label: "Women's Business", href: '/programs/womens-business' },
-  { id: 'governance', label: 'Governance', href: '/governance' },
+  { id: 'thrive-tribe', label: 'Thrive Tribe', href: '/programs/thrive-tribe' },
+  { id: 'young-spirit', label: 'Young Spirit', href: '/programs/young-spirit-mentoring' },
+  { id: 'culture-country', label: 'Culture Country', href: '/programs/culture-country' },
   { id: 'contact', label: 'Contact', href: '/contact' },
 ]
 
@@ -176,7 +177,7 @@ export function HeroSection() {
         >
           <Link href="/contact#booking-request" className="btn-primary text-base px-8 py-4">
             <CalendarCheck2 size={16} aria-hidden="true" />
-            Request a Booking
+            Send Booking Request
           </Link>
           <Link href="/contact#general-enquiry" className="btn-outline text-base px-8 py-4">
             <MessageCircle size={16} aria-hidden="true" />

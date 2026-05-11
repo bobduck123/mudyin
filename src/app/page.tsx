@@ -86,7 +86,7 @@ export default function HomePage() {
       <CTABand
         heading="Ready to talk with Mudyin?"
         subheading="Send a booking request or enquiry and the team will come back to you with the right next step."
-        primaryCTA={{ label: 'Request a Program Place', href: '/contact#booking-request' }}
+        primaryCTA={{ label: 'Send a Booking Request', href: '/contact#booking-request' }}
         secondaryCTA={{ label: 'General Enquiry', href: '/contact#general-enquiry' }}
       />
     </>

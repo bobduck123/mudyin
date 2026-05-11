@@ -29,6 +29,11 @@ function mockRequest(origin = 'https://www.mudyin.com') {
 beforeEach(() => {
   delete process.env.ANU_PUBLIC_ENQUIRIES_ENDPOINT
   delete process.env.ANU_PUBLIC_BOOKING_REQUEST_ENDPOINT
+  delete process.env.RESEND_API_KEY
+  delete process.env.MUDYIN_INTAKE_EMAIL
+  delete process.env.EMAIL_FROM
+  jest.restoreAllMocks()
+  delete (global as unknown as { fetch?: unknown }).fetch
 })
 
 describe('Mudyin first-live public launch config', () => {
@@ -96,6 +101,71 @@ describe('Mudyin intake validation', () => {
     expect(result.success).toBe(true)
     expect(['local-db', 'fallback-log']).toContain(result.mode)
     expect(result.message).toContain('not a confirmed booking')
-    info.mockRestore()
+  })
+
+  it('sends or queues enquiries to yaama@mudyin.com when Resend is configured', async () => {
+    process.env.RESEND_API_KEY = 'test_resend_key'
+    process.env.MUDYIN_INTAKE_EMAIL = 'yaama@mudyin.com'
+    process.env.EMAIL_FROM = 'Mudyin <noreply@mudyin.com>'
+    const fetchSpy = jest.fn().mockResolvedValue({ ok: true, status: 200, text: async () => '{}' })
+    ;(global as unknown as { fetch: typeof fetchSpy }).fetch = fetchSpy
+
+    const result = await submitMudyinIntake({
+      kind: 'enquiry',
+      payload: { ...validBase, preferredService: 'Thrive Tribe' },
+      request: mockRequest(),
+    })
+
+    expect(result.success).toBe(true)
+    expect(['email-sent', 'local-db-and-email']).toContain(result.mode)
+    expect(fetchSpy).toHaveBeenCalledWith(
+      'https://api.resend.com/emails',
+      expect.objectContaining({
+        method: 'POST',
+        body: expect.stringContaining('yaama@mudyin.com'),
+      }),
+    )
+    expect(String(fetchSpy.mock.calls[0][1]?.body)).toContain('[Mudyin] Program enquiry  Thrive Tribe')
+  })
+
+  it('sends or queues booking requests to yaama@mudyin.com when Resend is configured', async () => {
+    process.env.RESEND_API_KEY = 'test_resend_key'
+    process.env.MUDYIN_INTAKE_EMAIL = 'yaama@mudyin.com'
+    const fetchSpy = jest.fn().mockResolvedValue({ ok: true, status: 200, text: async () => '{}' })
+    ;(global as unknown as { fetch: typeof fetchSpy }).fetch = fetchSpy
+
+    const result = await submitMudyinIntake({
+      kind: 'booking_request',
+      payload: { ...validBase, enquiryType: 'booking', preferredService: 'Culture Country' },
+      request: mockRequest(),
+    })
+
+    expect(result.success).toBe(true)
+    expect(['email-sent', 'local-db-and-email']).toContain(result.mode)
+    expect(String(fetchSpy.mock.calls[0][1]?.body)).toContain('Culture Country')
+    expect(String(fetchSpy.mock.calls[0][1]?.body)).toContain('yaama@mudyin.com')
+  })
+
+  it('falls back safely when the email provider fails', async () => {
+    process.env.RESEND_API_KEY = 'test_resend_key'
+    process.env.MUDYIN_INTAKE_EMAIL = 'yaama@mudyin.com'
+    ;(global as unknown as { fetch: jest.Mock }).fetch = jest.fn().mockResolvedValue({
+      ok: false,
+      status: 500,
+      text: async () => 'provider unavailable',
+    })
+
+    const result = await submitMudyinIntake({
+      kind: 'enquiry',
+      payload: { ...validBase, preferredService: 'Young Spirit Mentoring' },
+      request: mockRequest(),
+    })
+
+    expect(result.success).toBe(true)
+    expect(['local-db', 'fallback-log']).toContain(result.mode)
+  })
+
+  it('keeps the honeypot field invalid for direct schema submissions', () => {
+    expect(enquirySchema.safeParse({ ...validBase, website: 'bot-filled' }).success).toBe(false)
   })
 })

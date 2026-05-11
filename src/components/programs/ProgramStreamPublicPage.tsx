@@ -5,6 +5,8 @@ import { type ProgramStreamDefinition, statusLabel } from '@/lib/mudyin-operatio
 
 export function ProgramStreamPublicPage({ stream }: { stream: ProgramStreamDefinition }) {
   const futurePhase = stream.status === 'future_phase'
+  const enquiryHref = `/contact?program=${stream.slug}#general-enquiry`
+  const bookingHref = `/contact?program=${stream.slug}#booking-request`
 
   return (
     <div style={{ backgroundColor: 'var(--color-background)' }}>
@@ -26,6 +28,20 @@ export function ProgramStreamPublicPage({ stream }: { stream: ProgramStreamDefin
             </div>
             <h1 className="font-display mt-5 text-3xl font-semibold text-white">Stream overview</h1>
             <p className="mt-5 whitespace-pre-wrap text-lg leading-8 text-white/70">{stream.description}</p>
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
+              <div className="rounded-xl border border-white/12 bg-white/5 p-5">
+                <h2 className="text-base font-semibold text-white">Who it is for</h2>
+                <p className="mt-2 text-sm leading-6 text-white/65">{stream.audience}</p>
+              </div>
+              <div className="rounded-xl border border-white/12 bg-white/5 p-5">
+                <h2 className="text-base font-semibold text-white">What you can enquire about</h2>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-white/65">
+                  {stream.enquiryTopics.map((topic) => (
+                    <li key={topic}>{topic}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
             <div className="mt-8 rounded-xl border border-sage-300/25 bg-sage-900/25 p-5">
               <h2 className="text-base font-semibold text-white">Cultural care</h2>
               <p className="mt-2 text-sm leading-6 text-white/65">{stream.culturalNote}</p>
@@ -39,11 +55,11 @@ export function ProgramStreamPublicPage({ stream }: { stream: ProgramStreamDefin
               </div>
             )}
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/contact#booking-request" className="btn-primary text-center">
+              <Link href={bookingHref} className="btn-primary text-center">
                 Submit booking request
               </Link>
-              <Link href="/contact#general-enquiry" className="btn-outline text-center">
-                Ask a question
+              <Link href={enquiryHref} className="btn-outline text-center">
+                Enquire about this program
               </Link>
             </div>
           </div>
@@ -53,7 +69,7 @@ export function ProgramStreamPublicPage({ stream }: { stream: ProgramStreamDefin
       <CTABand
         heading="Requests are reviewed before confirmation"
         subheading="Mudyin will contact you to discuss suitability, availability, consent, and next steps."
-        primaryCTA={{ label: 'Contact Mudyin', href: '/contact' }}
+        primaryCTA={{ label: 'Enquire About This Program', href: enquiryHref }}
         secondaryCTA={{ label: 'All Streams', href: '/programs' }}
       />
     </div>

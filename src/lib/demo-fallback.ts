@@ -10,7 +10,8 @@ export function isDbUnavailableError(error: unknown): boolean {
     name.includes('PrismaClientKnownRequestError') ||
     message.includes('Can\'t reach database server') ||
     message.includes('Environment variable not found') ||
-    message.includes('ECONNREFUSED')
+    message.includes('ECONNREFUSED') ||
+    message.includes('PrismaClient is unable to run in this browser environment')
   )
 }
 

@@ -13,7 +13,7 @@ export const siteConfig = {
   tagline:     defaultSite.tagline,
   description: defaultSite.metadata.description,
   url:         defaultSite.metadata.url,
-  email:       'info@mudyin.com',
+  email:       defaultSite.contact.email,
   phone:       defaultSite.contact.phone,
   abn:         'Registration details pending operator confirmation',
   acnc:        undefined as string | undefined,
@@ -38,8 +38,8 @@ export const siteConfig = {
 // ─── Stats ───────────────────────────────────────────────────────────────────
 export const heroStats = [
   { label: 'Operating Entity',       value: 1, suffix: '' },
-  { label: 'Program Streams',        value: 3, suffix: '' },
-  { label: 'Active Enquiry Pathway', value: 1, suffix: '' },
+  { label: 'Program Streams',        value: 6, suffix: '' },
+  { label: 'Active Enquiry Pathways', value: 4, suffix: '' },
   { label: 'Future-phase Streams',   value: 2, suffix: '' },
 ]
 
